@@ -51,3 +51,7 @@
       .table-container button:focus {
         outline: none;
       }
+        .taleb-container h2 {
+        color: #0d8b70;
+        display: none;
+      }
