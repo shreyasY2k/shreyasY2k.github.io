@@ -48,7 +48,6 @@
             height: 100vh;
             z-index: -1;
             pointer-events: none;
-            display: none;
         }
 
         /* Rest of your existing styles... */
@@ -698,24 +697,168 @@
             alpha: true,
             antialias: true
         });
-        
-        // [Continue with Three.js setup and animation code...]
-        
-        // Intersection Observer for animations
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Enhanced particle system
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 7000;
+        const posArray = new Float32Array(particlesCount * 3);
+        const colors = new Float32Array(particlesCount * 3);
+        const sizes = new Float32Array(particlesCount);
+
+        for(let i = 0; i < particlesCount * 3; i += 3) {
+            // Position
+            posArray[i] = (Math.random() - 0.5) * 10;
+            posArray[i + 1] = (Math.random() - 0.5) * 10;
+            posArray[i + 2] = (Math.random() - 0.5) * 10;
+
+            // Color
+            colors[i] = 0.2 + Math.random() * 0.5; // R
+            colors[i + 1] = 0.2 + Math.random() * 0.5; // G
+            colors[i + 2] = 1; // B
+
+            // Size
+            sizes[i/3] = Math.random();
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.015,
+            vertexColors: true,
+            sizeAttenuation: true,
+            transparent: true,
+            opacity: 0.8
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 3;
+
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        });
+
+        // Enhanced animation
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            targetX = mouseX * 0.001;
+            targetY = mouseY * 0.001;
+
+            particlesMesh.rotation.y += 0.001;
+            particlesMesh.rotation.x += (targetY - particlesMesh.rotation.x) * 0.05;
+            particlesMesh.rotation.y += (targetX - particlesMesh.rotation.y) * 0.05;
+
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Wavelike motion
+            const positions = particlesGeometry.attributes.position.array;
+            for(let i = 0; i < positions.length; i += 3) {
+                const x = positions[i];
+                const z = positions[i + 2];
+                positions[i + 1] = Math.sin(elapsedTime + x + z) * 0.1;
+            }
+            particlesGeometry.attributes.position.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsive design
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+
+        // Enhanced scroll animations
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.navigation-dot');
+
+        // Progress bars animation
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const target = parseFloat(bar.getAttribute('data-width'));
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= target) {
+                        clearInterval(interval);
+                    } else {
+                        width++;
+                        bar.style.width = width + '%';
+                    }
+                }, 10);
+            });
+        }
+
+        // Scroll observer
+        const observerOptions = {
+            root: null,
+            threshold: 0.5,
+            rootMargin: "0px"
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.section-content').forEach((content, index) => {
-                        setTimeout(() => {
-                            content.classList.add('visible');
-                        }, index * 100);
+                    // Update navigation dots
+                    navDots.forEach(dot => dot.classList.remove('active'));
+                    const currentDot = document.querySelector(`[data-section="${entry.target.id}"]`);
+                    if (currentDot) currentDot.classList.add('active');
+
+                    // Animate content
+                    entry.target.querySelectorAll('.section-content').forEach(content => {
+                        content.classList.add('visible');
                     });
+
+                    // Trigger progress bar animation in skills section
+                    if (entry.target.id === 'skills') {
+                        animateProgressBars();
+                    }
+
+                    // Particle system interaction
+                    particlesMesh.rotation.x = 0;
+                    particlesMesh.rotation.y = 0;
                 }
             });
-        }, { threshold: 0.3 });
+        }, observerOptions);
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+        sections.forEach(section => observer.observe(section));
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add hover effects for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                particlesMesh.rotation.x += 0.2;
+            });
         });
     </script>
 </body>
