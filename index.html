@@ -3,264 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreyas M Kaushik - Software Engineer</title>
+    <title>Shreyas M Kaushik - Interactive Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        .gradient-bg {
-            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+        #experience-world {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
-        .card {
-            transition: transform 0.2s;
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
         }
-        .card:hover {
-            transform: translateY(-5px);
+        .navigation-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #CBD5E0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .navigation-dot.active {
+            background: #3B82F6;
+            transform: scale(1.2);
+        }
+        .section-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+        }
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
+    <canvas id="experience-world"></canvas>
+
+    <!-- Fixed Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-lg">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <div class="flex space-x-7">
-                    <div class="flex items-center py-4">
-                        <span class="font-semibold text-gray-800 text-lg">Shreyas M Kaushik</span>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="py-4 px-2 text-gray-700 hover:text-blue-600 transition duration-300">About</a>
-                    <a href="#experience" class="py-4 px-2 text-gray-700 hover:text-blue-600 transition duration-300">Experience</a>
-                    <a href="#projects" class="py-4 px-2 text-gray-700 hover:text-blue-600 transition duration-300">Projects</a>
-                    <a href="#blogs" class="py-4 px-2 text-gray-700 hover:text-blue-600 transition duration-300">Blogs</a>
-                    <a href="Resume.pdf" class="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">Resume</a>
+            <div class="flex justify-between items-center h-16">
+                <span class="text-xl font-bold text-gray-800">Shreyas M Kaushik</span>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About</a>
+                    <a href="#experience" class="text-gray-600 hover:text-blue-600 transition">Experience</a>
+                    <a href="#projects" class="text-gray-600 hover:text-blue-600 transition">Projects</a>
+                    <a href="#skills" class="text-gray-600 hover:text-blue-600 transition">Skills</a>
+                    <a href="Resume.pdf" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Resume</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-32 pb-16 gradient-bg">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">Senior Software Engineer</h1>
-                <p class="text-xl text-gray-700 mb-8">Specializing in Node.js, FastAPI, and AI/ML Integration</p>
+    <!-- Vertical Navigation Dots -->
+    <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 space-y-4 hidden md:block">
+        <div class="navigation-dot active" data-section="hero"></div>
+        <div class="navigation-dot" data-section="about"></div>
+        <div class="navigation-dot" data-section="experience"></div>
+        <div class="navigation-dot" data-section="projects"></div>
+        <div class="navigation-dot" data-section="skills"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="snap-y snap-mandatory h-screen overflow-y-scroll">
+        <!-- Hero Section -->
+        <section class="h-screen flex items-center justify-center snap-start relative">
+            <div class="text-center z-10">
+                <h1 class="text-5xl font-bold text-gray-900 mb-4 floating">Welcome to My World</h1>
+                <p class="text-xl text-gray-700 mb-8">Scroll to explore my journey</p>
                 <div class="flex justify-center space-x-6">
-                    <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-700 hover:text-blue-600">
+                    <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-700 hover:text-blue-600 transition">
                         <i class="fas fa-envelope text-2xl"></i>
                     </a>
-                    <a href="https://github.com/shreyasY2k" target="_blank" class="text-gray-700 hover:text-blue-600">
+                    <a href="https://github.com/shreyasY2k" class="text-gray-700 hover:text-blue-600 transition">
                         <i class="fab fa-github text-2xl"></i>
                     </a>
-                    <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="text-gray-700 hover:text-blue-600">
+                    <a href="https://linkedin.com/in/me-shreyasmk" class="text-gray-700 hover:text-blue-600 transition">
                         <i class="fab fa-linkedin text-2xl"></i>
                     </a>
-                    <a href="tel:+918867229568" class="text-gray-700 hover:text-blue-600">
-                        <i class="fas fa-phone text-2xl"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                        I'm a Senior Software Engineer with extensive experience in full-stack development and AI/ML integration. My expertise lies in building scalable applications and implementing efficient solutions that bridge the gap between complex AI models and user-friendly interfaces.
-                    </p>
-                    <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                        At IHX, I've led the development of critical systems that process millions of transactions daily, including the development of a high-performance Persistence Engine and sophisticated Orchestration systems. My work has significantly improved system efficiency, reducing query times from seconds to milliseconds.
-                    </p>
-                    <p class="text-gray-700 text-lg leading-relaxed">
-                        I'm passionate about sharing knowledge through technical writing, with published articles on authentication systems and user management. My focus is on creating robust, scalable solutions while maintaining high standards of security and performance.
-                    </p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Key Highlights</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Expert in Node.js, FastAPI, and TypeScript development</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Strong experience in AI/ML model integration and optimization</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Proficient in cloud services (AWS) and containerization (Docker, Kubernetes)</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Implemented solutions processing 10M+ messages daily</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Reduced system query times from 1-2s to 10-15ms</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2">•</span>
-                            <span class="text-gray-700">Technical writer with published articles on authentication systems</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="py-16">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Professional Experience</h2>
-            
-            <!-- Current Role -->
-            <div class="card bg-white rounded-lg shadow-md p-6 mb-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900">Senior Software Engineer</h3>
-                        <p class="text-gray-600">IHX</p>
+        <!-- About Section -->
+        <section id="about" class="h-screen flex items-center snap-start">
+            <div class="content-section max-w-6xl mx-auto px-4 py-16 rounded-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="section-content">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">The Journey</h2>
+                        <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                            Senior Software Engineer specializing in building bridges between complex AI systems and user-friendly interfaces. My journey involves crafting scalable solutions that process millions of transactions daily while maintaining peak performance.
+                        </p>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Currently leading development of critical systems at IHX, where I've implemented solutions that have significantly improved system efficiency and user experience.
+                        </p>
                     </div>
-                    <span class="text-gray-600">Jul 2024 - Present</span>
-                </div>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Led development of Persistence Engine using TypeORM and Node.js/TypeScript</li>
-                    <li>Architected Orchestration Engine processing over 10 million messages daily</li>
-                    <li>Implemented comprehensive MFA and SSO solution using Keycloak</li>
-                    <li>Designed infrastructure for model security and scaling strategies</li>
-                </ul>
-            </div>
-
-            <!-- Previous Role -->
-            <div class="card bg-white rounded-lg shadow-md p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900">Software Engineer</h3>
-                        <p class="text-gray-600">IHX</p>
-                    </div>
-                    <span class="text-gray-600">Aug 2022 - Jun 2024</span>
-                </div>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Created QC UI Screens for ML model output enhancement</li>
-                    <li>Built secure and efficient API layers for AI model integration</li>
-                    <li>Implemented comprehensive observability using Promtail, Loki, and Grafana</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Key Projects</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Project Cards -->
-                <div class="card bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Persistence Engine</h3>
-                    <p class="text-gray-700 mb-4">Single-layer persistence solution reducing query time from 1-2s to 10-15ms across 10 tables.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Node.js</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeORM</span>
-                    </div>
-                </div>
-
-                <div class="card bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Document Classifier</h3>
-                    <p class="text-gray-700 mb-4">Increased complete claim submissions from 23% to 77% within 2 weeks.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Node.js</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">MongoDB</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">OAuth 2.0</span>
+                    <div class="section-content delay-200">
+                        <div class="bg-white/80 rounded-lg p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Achievement Unlocked!</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-center space-x-3">
+                                    <span class="text-green-500"><i class="fas fa-check-circle"></i></span>
+                                    <span>Reduced query times to 10-15ms</span>
+                                </li>
+                                <li class="flex items-center space-x-3">
+                                    <span class="text-green-500"><i class="fas fa-check-circle"></i></span>
+                                    <span>Processing 10M+ messages daily</span>
+                                </li>
+                                <li class="flex items-center space-x-3">
+                                    <span class="text-green-500"><i class="fas fa-check-circle"></i></span>
+                                    <span>Published technical articles</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Blogs Section -->
-    <section id="blogs" class="py-16">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Technical Blogs</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <a href="https://medium.com/@shreyasmk.mathur/mastering-multi-factor-authentication-in-keycloak-sms-email-and-totp-setup-guide-957305b92be1" 
-                   target="_blank" 
-                   class="card bg-white rounded-lg shadow-md p-6 hover:shadow-lg">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Mastering Multi-Factor Authentication in Keycloak</h3>
-                    <p class="text-gray-700">Comprehensive guide on implementing SMS, Email, and TOTP authentication in Keycloak</p>
-                </a>
+        <!-- Add other sections similarly -->
 
-                <a href="https://medium.com/@shreyasmk.mathur/unlocking-seamless-access-orchestrating-centralized-user-management-with-keycloak-d1c51b13456a" 
-                   target="_blank" 
-                   class="card bg-white rounded-lg shadow-md p-6 hover:shadow-lg">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Unlocking Seamless Access with Keycloak</h3>
-                    <p class="text-gray-700">Guide to orchestrating centralized user management using Keycloak</p>
-                </a>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Skills Section -->
-    <section class="py-16 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Technical Skills</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Programming</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Python</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">JavaScript</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">SQL</span>
-                    </div>
-                </div>
+    <script>
+        // Three.js initialization
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#experience-world'),
+            alpha: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-                <div class="card bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Frameworks</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Node.js</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React.js</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">FastAPI</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Express</span>
-                    </div>
-                </div>
+        // Add animated background particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+        const posArray = new Float32Array(particlesCount * 3);
 
-                <div class="card bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Cloud & DevOps</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">AWS</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Docker</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Kubernetes</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">GitHub Actions</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 5;
+        }
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p>&copy; 2024 Shreyas M Kaushik. All rights reserved.</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="mailto:shreyasmk.mathur@gmail.com" class="hover:text-blue-400">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://github.com/shreyasY2k" target="_blank" class="hover:text-blue-400">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="hover:text-blue-400">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: '#3B82F6'
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 3;
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Scroll animations
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.navigation-dot');
+
+        const observerOptions = {
+            root: null,
+            threshold: 0.5,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Update navigation dots
+                    navDots.forEach(dot => dot.classList.remove('active'));
+                    const currentDot = document.querySelector(`[data-section="${entry.target.id}"]`);
+                    if (currentDot) currentDot.classList.add('active');
+
+                    // Animate content
+                    entry.target.querySelectorAll('.section-content').forEach(content => {
+                        content.classList.add('visible');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    </script>
 </body>
 </html>
