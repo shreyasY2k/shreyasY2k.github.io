@@ -40,29 +40,15 @@
         }
 
         /* Background canvas */
-        /* Background canvas */
-#experience-world {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: -1 !important;
-    pointer-events: none !important;
-    opacity: 0.8;
-}
-
-/* Ensure content sections are properly layered */
-section {
-    position: relative;
-    z-index: 1;
-    background: transparent;
-}
-
-.glass {
-    position: relative;
-    z-index: 2;
-}
+        #experience-world {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
 
         /* Rest of your existing styles... */
 
@@ -177,6 +163,44 @@ section {
                 display: none;
             }
         }
+
+        /* Essential background setup */
+body {
+    position: relative;
+    min-height: 100vh;
+    background: #f3f4f6;
+}
+
+/* Ensure content is above canvas */
+main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Canvas positioning */
+#experience-world {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Ensure glass effect works */
+.glass {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+
+/* Ensure header stays on top */
+header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
     </style>
 </head>
 <body>
@@ -702,93 +726,70 @@ section {
 
     <!-- Scripts -->
     <script>
-        // Make sure the canvas is properly positioned
+        // Remove any existing canvas styles
 const canvas = document.querySelector('#experience-world');
-canvas.style.position = 'fixed';
-canvas.style.top = '0';
-canvas.style.left = '0';
-canvas.style.width = '100%';
-canvas.style.height = '100%';
-canvas.style.zIndex = '-1';
-canvas.style.pointerEvents = 'none';
+if (canvas) {
+    // Clear existing styles
+    canvas.style = '';
+    
+    // Set up Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+    });
 
-// Three.js initialization
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
-    alpha: true,
-    antialias: true
-});
+    // Essential styles for canvas
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.opacity = '0.3'; // Reduced opacity
 
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0x000000, 0); // Make background transparent
-
-// Particles setup
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 500; // Reduced count for better performance
-const posArray = new Float32Array(particlesCount * 3);
-
-for(let i = 0; i < particlesCount * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 15;
-}
-
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.005,
-    color: '#4287f5',
-    transparent: true,
-    opacity: 0.4 // Reduced opacity
-});
-
-const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particlesMesh);
-
-// Camera position
-camera.position.z = 5;
-
-// Mouse movement setup
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
-
-document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX - windowHalfX);
-    mouseY = (event.clientY - windowHalfY);
-});
-
-// Animation
-function animate() {
-    requestAnimationFrame(animate);
-
-    targetX = mouseX * 0.0005; // Reduced movement sensitivity
-    targetY = mouseY * 0.0005;
-
-    particlesMesh.rotation.x += 0.0005; // Slower rotation
-    particlesMesh.rotation.y += 0.0005;
-
-    particlesMesh.rotation.y += (targetX - particlesMesh.rotation.y) * 0.05;
-    particlesMesh.rotation.x += (targetY - particlesMesh.rotation.x) * 0.05;
-
-    renderer.render(scene, camera);
-}
-
-// Start animation
-animate();
-
-// Handle resize
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    // Set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
-}
+    renderer.setClearColor(0x000000, 0);
 
-window.addEventListener('resize', onWindowResize);
+    // Create simple animated dots
+    const dots = new THREE.Group();
+    const dotGeometry = new THREE.CircleGeometry(0.02, 32);
+    const dotMaterial = new THREE.MeshBasicMaterial({ color: 0x4287f5 });
+
+    // Create fewer dots
+    for (let i = 0; i < 50; i++) {
+        const dot = new THREE.Mesh(dotGeometry, dotMaterial);
+        dot.position.x = (Math.random() - 0.5) * 10;
+        dot.position.y = (Math.random() - 0.5) * 10;
+        dot.position.z = (Math.random() - 0.5) * 10;
+        dots.add(dot);
+    }
+
+    scene.add(dots);
+    camera.position.z = 5;
+
+    // Simple animation
+    function animate() {
+        requestAnimationFrame(animate);
+        dots.rotation.y += 0.001;
+        dots.rotation.x += 0.0005;
+        renderer.render(scene, camera);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Start animation
+    animate();
+}
     </script>
 </body>
 </html>
