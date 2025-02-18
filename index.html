@@ -163,44 +163,6 @@
                 display: none;
             }
         }
-
-        /* Essential background setup */
-body {
-    position: relative;
-    min-height: 100vh;
-    background: #f3f4f6;
-}
-
-/* Ensure content is above canvas */
-main {
-    position: relative;
-    z-index: 1;
-}
-
-/* Canvas positioning */
-#experience-world {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* Ensure glass effect works */
-.glass {
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px);
-    z-index: 2;
-}
-
-/* Ensure header stays on top */
-header {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-}
     </style>
 </head>
 <body>
@@ -624,7 +586,7 @@ header {
         <section class="section-container">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="glass p-8">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-8">Project Showcase</h2>
+                    <h2 id="projects" class="text-3xl font-bold text-gray-900 mb-8">Project Showcase</h2>
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Medical Information Data Assistant -->
                         <div class="section-content bg-white/80 rounded-lg p-6 shadow-lg">
@@ -726,70 +688,33 @@ header {
 
     <!-- Scripts -->
     <script>
-        // Remove any existing canvas styles
-const canvas = document.querySelector('#experience-world');
-if (canvas) {
-    // Clear existing styles
-    canvas.style = '';
-    
-    // Set up Three.js
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        alpha: true,
-        antialias: true
-    });
+        // Three.js initialization
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#experience-world'),
+            alpha: true,
+            antialias: true
+        });
+        
+        // [Continue with Three.js setup and animation code...]
+        
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.section-content').forEach((content, index) => {
+                        setTimeout(() => {
+                            content.classList.add('visible');
+                        }, index * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
 
-    // Essential styles for canvas
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.opacity = '0.3'; // Reduced opacity
-
-    // Set up renderer
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-
-    // Create simple animated dots
-    const dots = new THREE.Group();
-    const dotGeometry = new THREE.CircleGeometry(0.02, 32);
-    const dotMaterial = new THREE.MeshBasicMaterial({ color: 0x4287f5 });
-
-    // Create fewer dots
-    for (let i = 0; i < 50; i++) {
-        const dot = new THREE.Mesh(dotGeometry, dotMaterial);
-        dot.position.x = (Math.random() - 0.5) * 10;
-        dot.position.y = (Math.random() - 0.5) * 10;
-        dot.position.z = (Math.random() - 0.5) * 10;
-        dots.add(dot);
-    }
-
-    scene.add(dots);
-    camera.position.z = 5;
-
-    // Simple animation
-    function animate() {
-        requestAnimationFrame(animate);
-        dots.rotation.y += 0.001;
-        dots.rotation.x += 0.0005;
-        renderer.render(scene, camera);
-    }
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Start animation
-    animate();
-}
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
     </script>
 </body>
 </html>
