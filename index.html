@@ -688,33 +688,103 @@
 
     <!-- Scripts -->
     <script>
-        // Three.js initialization
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.querySelector('#experience-world'),
-            alpha: true,
-            antialias: true
-        });
-        
-        // [Continue with Three.js setup and animation code...]
-        
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.section-content').forEach((content, index) => {
-                        setTimeout(() => {
-                            content.classList.add('visible');
-                        }, index * 100);
-                    });
-                }
-            });
-        }, { threshold: 0.3 });
+       // Three.js initialization
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#experience-world'),
+    alpha: true,
+    antialias: true
+});
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// Particles setup
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 1000;
+const posArray = new Float32Array(particlesCount * 3);
+
+for(let i = 0; i < particlesCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 15;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.005,
+    color: '#4287f5',
+    transparent: true,
+    opacity: 0.8
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Camera position
+camera.position.z = 5;
+
+// Mouse movement setup
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX - windowHalfX);
+    mouseY = (event.clientY - windowHalfY);
+});
+
+// Animation
+function animate() {
+    requestAnimationFrame(animate);
+
+    targetX = mouseX * 0.001;
+    targetY = mouseY * 0.001;
+
+    particlesMesh.rotation.x += 0.001;
+    particlesMesh.rotation.y += 0.001;
+
+    particlesMesh.rotation.y += (targetX - particlesMesh.rotation.y) * 0.05;
+    particlesMesh.rotation.x += (targetY - particlesMesh.rotation.x) * 0.05;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// Handle resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+// Add stars
+function addStar() {
+    const geometry = new THREE.SphereGeometry(0.05, 24, 24);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const star = new THREE.Mesh(geometry, material);
+
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    star.position.set(x, y, z);
+    scene.add(star);
+}
+
+// Add multiple stars
+Array(200).fill().forEach(addStar);
+
+// Create a subtle blue atmospheric effect
+const atmosphereGeometry = new THREE.SphereGeometry(7, 32, 32);
+const atmosphereMaterial = new THREE.MeshBasicMaterial({
+    color: 0x0066ff,
+    transparent: true,
+    opacity: 0.1
+});
+const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+scene.add(atmosphere);
     </script>
 </body>
 </html>
