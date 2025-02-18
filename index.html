@@ -14,17 +14,43 @@
             --secondary-color: #10B981;
         }
         
-        body {
+        /* Reset default scrollbar */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Single scrollbar setup */
+        html, body {
             overflow-x: hidden;
+            scroll-behavior: smooth;
             background-color: #f3f4f6;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
-        
+
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        /* Hide scrollbar but keep functionality */
         body::-webkit-scrollbar {
-            display: none;
+            width: 0;
+            background: transparent;
         }
+
+        /* Background canvas */
+        #experience-world {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Rest of your existing styles... */
 
         .floating {
             animation: float 6s ease-in-out infinite;
@@ -331,19 +357,10 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span class="text-gray-700">React</span>
-                                        <span class="text-blue-600">85%</span>
+                                        <span class="text-blue-600">95%</span>
                                     </div>
                                     <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="text-gray-700">HTML</span>
-                                        <span class="text-blue-600">90%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 90%"></div>
+                                        <div class="skill-progress" style="width: 95%"></div>
                                     </div>
                                 </div>
                                 <div class="mt-4 flex flex-wrap gap-2">
@@ -410,6 +427,7 @@
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Kubernetes</span>
                                     <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">GitHub Actions</span>
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Google Cloud Platform</span>
                                 </div>
                             </div>
                         </div>
