@@ -40,15 +40,29 @@
         }
 
         /* Background canvas */
-        #experience-world {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
+        /* Background canvas */
+#experience-world {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+    opacity: 0.8;
+}
+
+/* Ensure content sections are properly layered */
+section {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+.glass {
+    position: relative;
+    z-index: 2;
+}
 
         /* Rest of your existing styles... */
 
@@ -688,33 +702,93 @@
 
     <!-- Scripts -->
     <script>
-        // Three.js initialization
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.querySelector('#experience-world'),
-            alpha: true,
-            antialias: true
-        });
-        
-        // [Continue with Three.js setup and animation code...]
-        
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.section-content').forEach((content, index) => {
-                        setTimeout(() => {
-                            content.classList.add('visible');
-                        }, index * 100);
-                    });
-                }
-            });
-        }, { threshold: 0.3 });
+        // Make sure the canvas is properly positioned
+const canvas = document.querySelector('#experience-world');
+canvas.style.position = 'fixed';
+canvas.style.top = '0';
+canvas.style.left = '0';
+canvas.style.width = '100%';
+canvas.style.height = '100%';
+canvas.style.zIndex = '-1';
+canvas.style.pointerEvents = 'none';
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
+// Three.js initialization
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+    antialias: true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0); // Make background transparent
+
+// Particles setup
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 500; // Reduced count for better performance
+const posArray = new Float32Array(particlesCount * 3);
+
+for(let i = 0; i < particlesCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 15;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.005,
+    color: '#4287f5',
+    transparent: true,
+    opacity: 0.4 // Reduced opacity
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Camera position
+camera.position.z = 5;
+
+// Mouse movement setup
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX - windowHalfX);
+    mouseY = (event.clientY - windowHalfY);
+});
+
+// Animation
+function animate() {
+    requestAnimationFrame(animate);
+
+    targetX = mouseX * 0.0005; // Reduced movement sensitivity
+    targetY = mouseY * 0.0005;
+
+    particlesMesh.rotation.x += 0.0005; // Slower rotation
+    particlesMesh.rotation.y += 0.0005;
+
+    particlesMesh.rotation.y += (targetX - particlesMesh.rotation.y) * 0.05;
+    particlesMesh.rotation.x += (targetY - particlesMesh.rotation.x) * 0.05;
+
+    renderer.render(scene, camera);
+}
+
+// Start animation
+animate();
+
+// Handle resize
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', onWindowResize);
     </script>
 </body>
 </html>
