@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,7 @@
             --card-bg: rgba(30, 41, 59, 0.8);
             --text-light: #f1f5f9;
         }
-        
+
         /* Reset default scrollbar */
         * {
             margin: 0;
@@ -29,7 +30,8 @@
         }
 
         /* Single scrollbar setup */
-        html, body {
+        html,
+        body {
             overflow-x: hidden;
             scroll-behavior: smooth;
             background-color: var(--dark-bg);
@@ -56,18 +58,18 @@
             height: 100%;
             z-index: -1;
         }
-        
+
         .content-section {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border-radius: 1rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .glowing-border {
             position: relative;
         }
-        
+
         .glowing-border::after {
             content: '';
             position: absolute;
@@ -81,7 +83,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .glowing-border:hover::after {
             opacity: 1;
         }
@@ -94,32 +96,40 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .navigation-dot.active {
             background: var(--primary-color);
             transform: scale(1.2);
             box-shadow: 0 0 10px var(--primary-color);
         }
-        
+
         .section-content {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s;
         }
-        
+
         .section-content.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .floating {
             animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .card {
@@ -141,16 +151,16 @@
             cursor: pointer;
             perspective: 1000px;
         }
-        
+
         .interactive-element .inner {
             transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         .interactive-element:hover .inner {
             transform: rotateY(180deg);
         }
-        
+
         .interactive-element .front,
         .interactive-element .back {
             backface-visibility: hidden;
@@ -165,7 +175,7 @@
             justify-content: center;
             padding: 1.5rem;
         }
-        
+
         .interactive-element .back {
             transform: rotateY(180deg);
         }
@@ -191,7 +201,7 @@
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             grid-gap: 1.5rem;
         }
-        
+
         .hexagon {
             position: relative;
             width: 100px;
@@ -204,17 +214,17 @@
             justify-content: center;
             transition: all 0.3s ease;
         }
-        
+
         .hexagon:hover {
             transform: translateY(-10px);
             background: rgba(59, 130, 246, 0.3);
         }
-        
+
         .hexagon i {
             font-size: 2rem;
             color: var(--primary-color);
         }
-        
+
         /* Project showcase */
         .project-showcase {
             position: relative;
@@ -222,7 +232,7 @@
             overflow: hidden;
             border-radius: 1rem;
         }
-        
+
         .project-bg {
             position: absolute;
             top: 0;
@@ -233,11 +243,11 @@
             background-position: center;
             transition: transform 0.3s ease;
         }
-        
+
         .project-showcase:hover .project-bg {
             transform: scale(1.05);
         }
-        
+
         .project-content {
             position: absolute;
             bottom: 0;
@@ -255,12 +265,12 @@
             background: var(--card-bg);
             transition: all 0.3s ease;
         }
-        
+
         .blog-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
         }
-        
+
         .blog-card-overlay {
             position: absolute;
             top: 0;
@@ -271,7 +281,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .blog-card:hover .blog-card-overlay {
             opacity: 1;
         }
@@ -281,7 +291,7 @@
             .nav-dots {
                 display: none;
             }
-            
+
             .hexagon {
                 width: 70px;
                 height: 80px;
@@ -289,10 +299,11 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-900 text-gray-100">
     <!-- Background Canvas -->
     <canvas id="experience-world"></canvas>
-    
+
     <!-- Navigation Dots -->
     <div class="nav-dots fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
         <div class="navigation-dot active mb-4" data-section="home"></div>
@@ -315,7 +326,8 @@
                     <a href="#projects" class="text-gray-300 hover:text-blue-400 transition">Projects</a>
                     <a href="#skills" class="text-gray-300 hover:text-blue-400 transition">Skills</a>
                     <a href="#blogs" class="text-gray-300 hover:text-blue-400 transition">Blogs</a>
-                    <a href="Resume.pdf" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    <a href="Resume.pdf"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
                         Resume
                     </a>
                 </div>
@@ -333,7 +345,8 @@
             <div class="max-w-7xl mx-auto px-4 text-center z-10">
                 <div class="text-6xl mb-6 floating">👨‍💻</div>
                 <h1 class="text-5xl font-bold text-white mb-4">Shreyas M Kaushik</h1>
-                <p class="text-xl text-gray-300 mb-8">Senior Software Engineer | Node.js | FastAPI | AI Integration Specialist</p>
+                <p class="text-xl text-gray-300 mb-8">Senior Software Engineer | Node.js | FastAPI | AI Integration
+                    Specialist</p>
                 <div class="flex justify-center space-x-6 mb-8">
                     <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-300 hover:text-blue-400 transition">
                         <i class="fas fa-envelope text-2xl"></i>
@@ -348,12 +361,13 @@
                         <i class="fab fa-medium text-2xl"></i>
                     </a>
                 </div>
-                <a href="Resume.pdf" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                <a href="Resume.pdf"
+                    class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
                     <i class="fas fa-download mr-2"></i>
                     Download Resume
                 </a>
             </div>
-            
+
             <!-- 3D Elements for Hero will be added with ThreeJS -->
             <div id="hero-3d-elements" class="absolute inset-0 z-0"></div>
         </section>
@@ -366,14 +380,17 @@
                     <div class="grid md:grid-cols-2 gap-8">
                         <div class="section-content">
                             <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                Senior Software Engineer specializing in Node.js and FastAPI, with extensive experience in 
-                                integrating and optimizing AI/ML models through API implementation. My expertise lies in 
-                                building scalable applications and implementing efficient solutions that bridge the gap 
+                                Senior Software Engineer specializing in Node.js and FastAPI, with extensive experience
+                                in
+                                integrating and optimizing AI/ML models through API implementation. My expertise lies in
+                                building scalable applications and implementing efficient solutions that bridge the gap
                                 between complex AI models and user-friendly interfaces.
                             </p>
                             <p class="text-gray-300 text-lg leading-relaxed">
-                                At IHX, I've led the development of critical systems that process millions of transactions 
-                                daily, including the development of a high-performance Persistence Engine and sophisticated 
+                                At IHX, I've led the development of critical systems that process millions of
+                                transactions
+                                daily, including the development of a high-performance Persistence Engine and
+                                sophisticated
                                 Orchestration systems.
                             </p>
                         </div>
@@ -423,7 +440,8 @@
                                 <li>Designed infrastructure for model security and scaling strategies</li>
                             </ul>
                             <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
                                 <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
                                 <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">AWS</span>
                             </div>
@@ -447,7 +465,8 @@
                             <div class="mt-4 flex flex-wrap gap-2">
                                 <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">React</span>
                                 <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">ML Integration</span>
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">ML
+                                    Integration</span>
                             </div>
                         </div>
 
@@ -465,8 +484,10 @@
                                 <li>Implemented automated talent discovery and assessment features</li>
                             </ul>
                             <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Chrome Extension</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">JavaScript</span>
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Chrome
+                                    Extension</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">JavaScript</span>
                             </div>
                         </div>
                     </div>
@@ -485,34 +506,48 @@
                             <div class="card p-6 glowing-border h-full">
                                 <div class="flex justify-between items-start mb-4">
                                     <h3 class="text-xl font-semibold text-white">Persistence Engine</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
+                                    <span
+                                        class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
                                 </div>
                                 <p class="text-gray-300 mb-4">
-                                    A single-layer persistence solution for extraction engines, reducing query time from 1-2s to 10-15ms across 10 tables.
+                                    A single-layer persistence solution for extraction engines, reducing query time from
+                                    1-2s to 10-15ms across 10 tables.
                                     Streamlined data storage processes for multiple extractors.
                                 </p>
                                 <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeORM</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeORM</span>
                                 </div>
                                 <div class="relative h-40 overflow-hidden rounded-lg bg-gray-800 p-2">
                                     <div class="text-blue-400 text-sm font-mono">
                                         <span class="text-green-400">// Persistence Layer Implementation</span>
                                         <br />
-                                        <span class="text-purple-400">import</span> { EntityRepository } <span class="text-purple-400">from</span> <span class="text-green-400">'typeorm'</span>;
+                                        <span class="text-purple-400">import</span> { EntityRepository } <span
+                                            class="text-purple-400">from</span> <span
+                                            class="text-green-400">'typeorm'</span>;
                                         <br />
-                                        <span class="text-purple-400">class</span> <span class="text-yellow-400">GenericRepository</span>&lt;T&gt; {
+                                        <span class="text-purple-400">class</span> <span
+                                            class="text-yellow-400">GenericRepository</span>&lt;T&gt; {
                                         <br />
-                                        &nbsp;&nbsp;<span class="text-purple-400">async</span> <span class="text-yellow-400">findById</span>(id: <span class="text-blue-400">string</span>): <span class="text-purple-400">Promise</span>&lt;T&gt; {
+                                        &nbsp;&nbsp;<span class="text-purple-400">async</span> <span
+                                            class="text-yellow-400">findById</span>(id: <span
+                                            class="text-blue-400">string</span>): <span
+                                            class="text-purple-400">Promise</span>&lt;T&gt; {
                                         <br />
-                                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> <span class="text-purple-400">await</span> <span class="text-yellow-400">this</span>.repository.findOne(id);
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> <span
+                                            class="text-purple-400">await</span> <span
+                                            class="text-yellow-400">this</span>.repository.findOne(id);
                                         <br />
                                         &nbsp;&nbsp;}
                                         <br />
                                         }
                                     </div>
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/70">
+                                    <div
+                                        class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/70">
                                         <span class="text-white">Optimized Query Performance</span>
                                     </div>
                                 </div>
@@ -524,34 +559,45 @@
                             <div class="card p-6 glowing-border h-full">
                                 <div class="flex justify-between items-start mb-4">
                                     <h3 class="text-xl font-semibold text-white">Orchestration Engine</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
+                                    <span
+                                        class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
                                 </div>
                                 <p class="text-gray-300 mb-4">
-                                    A scalable system to process digitization requests and track processes across AI/ML entities.
-                                    Processes over 10 million messages daily and consolidates statuses for client visualization.
+                                    A scalable system to process digitization requests and track processes across AI/ML
+                                    entities.
+                                    Processes over 10 million messages daily and consolidates statuses for client
+                                    visualization.
                                 </p>
                                 <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">AWS SQS</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
+                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">AWS
+                                        SQS</span>
                                 </div>
                                 <div class="relative h-40 overflow-hidden rounded-lg">
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 p-4">
+                                    <div
+                                        class="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 p-4">
                                         <div class="w-full flex items-center justify-between mb-4">
-                                            <div class="h-10 w-10 rounded-lg bg-blue-500/50 flex items-center justify-center">
+                                            <div
+                                                class="h-10 w-10 rounded-lg bg-blue-500/50 flex items-center justify-center">
                                                 <i class="fas fa-file-alt text-white"></i>
                                             </div>
                                             <div class="h-px w-16 bg-blue-400"></div>
-                                            <div class="h-10 w-10 rounded-lg bg-purple-500/50 flex items-center justify-center">
+                                            <div
+                                                class="h-10 w-10 rounded-lg bg-purple-500/50 flex items-center justify-center">
                                                 <i class="fas fa-brain text-white"></i>
                                             </div>
                                             <div class="h-px w-16 bg-blue-400"></div>
-                                            <div class="h-10 w-10 rounded-lg bg-green-500/50 flex items-center justify-center">
+                                            <div
+                                                class="h-10 w-10 rounded-lg bg-green-500/50 flex items-center justify-center">
                                                 <i class="fas fa-check-circle text-white"></i>
                                             </div>
                                         </div>
                                         <div class="text-sm text-gray-300">
-                                            <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded-full text-xs mr-2">10M+</span>
+                                            <span
+                                                class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded-full text-xs mr-2">10M+</span>
                                             messages processed daily
                                         </div>
                                     </div>
@@ -564,24 +610,31 @@
                             <div class="card p-6 glowing-border h-full">
                                 <div class="flex justify-between items-start mb-4">
                                     <h3 class="text-xl font-semibold text-white">Document Classifier</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
+                                    <span
+                                        class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
                                 </div>
                                 <p class="text-gray-300 mb-4">
-                                    Verification system for India's Largest Health Benefits Administrator. Increased "complete claim submissions" from 23% to 77% within 2 weeks.
+                                    Verification system for India's Largest Health Benefits Administrator. Increased
+                                    "complete claim submissions" from 23% to 77% within 2 weeks.
                                 </p>
                                 <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MongoDB</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">OAuth 2.0</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MongoDB</span>
+                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">OAuth
+                                        2.0</span>
                                 </div>
-                                <div class="relative h-40 overflow-hidden rounded-lg bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-4">
+                                <div
+                                    class="relative h-40 overflow-hidden rounded-lg bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-4">
                                     <div class="flex justify-between items-center">
                                         <div class="flex flex-col items-center">
                                             <div class="text-2xl font-bold text-red-400">23%</div>
                                             <div class="text-xs text-gray-300">Before</div>
                                         </div>
                                         <div class="w-32 h-2 bg-gray-700 rounded-full">
-                                            <div class="h-full bg-gradient-to-r from-red-400 to-green-400 rounded-full animate-pulse" style="width: 77%"></div>
+                                            <div class="h-full bg-gradient-to-r from-red-400 to-green-400 rounded-full animate-pulse"
+                                                style="width: 77%"></div>
                                         </div>
                                         <div class="flex flex-col items-center">
                                             <div class="text-2xl font-bold text-green-400">77%</div>
@@ -589,11 +642,15 @@
                                         </div>
                                     </div>
                                     <div class="mt-6 text-center">
-                                        <p class="text-gray-300 text-sm">Complete claim submissions on first instance</p>
+                                        <p class="text-gray-300 text-sm">Complete claim submissions on first instance
+                                        </p>
                                         <div class="mt-2 flex justify-center space-x-2">
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Prescription</div>
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Lab Report</div>
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Invoice</div>
+                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">
+                                                Prescription</div>
+                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Lab Report
+                                            </div>
+                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Invoice
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -605,20 +662,24 @@
                             <div class="card p-6 glowing-border h-full">
                                 <div class="flex justify-between items-start mb-4">
                                     <h3 class="text-xl font-semibold text-white">QC UI Screens</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Completed</span>
+                                    <span
+                                        class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Completed</span>
                                 </div>
                                 <p class="text-gray-300 mb-4">
-                                    Quality Control UI screens for ML model output correction and enhancement. 
+                                    Quality Control UI screens for ML model output correction and enhancement.
                                     Improved ML model accuracy from 64% to 96% through feedback system.
                                 </p>
                                 <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">React</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">React</span>
                                     <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MUI</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Redux</span>
+                                    <span
+                                        class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Redux</span>
                                 </div>
                                 <div class="relative h-40 overflow-hidden rounded-lg bg-gray-800">
                                     <div class="absolute inset-0 p-3">
-                                        <div class="border-b border-gray-700 pb-2 mb-2 flex justify-between items-center">
+                                        <div
+                                            class="border-b border-gray-700 pb-2 mb-2 flex justify-between items-center">
                                             <div class="text-white text-sm">Document Preview</div>
                                             <div class="text-xs text-green-400">Model Accuracy: 96%</div>
                                         </div>
@@ -629,7 +690,8 @@
                                                 <div>Date: <span class="text-green-400">2025-03-10</span></div>
                                                 <div>Amount: <span class="text-green-400">$1,250.00</span></div>
                                             </div>
-                                            <div class="bg-gray-900 rounded p-2 flex items-center justify-center text-gray-500">
+                                            <div
+                                                class="bg-gray-900 rounded p-2 flex items-center justify-center text-gray-500">
                                                 <i class="fas fa-file-medical fa-2x"></i>
                                             </div>
                                         </div>
@@ -642,22 +704,365 @@
             </div>
         </section>
 
- be added later -->
+        <!-- Skills Section -->
+        <section id="skills" class="min-h-screen py-20 flex items-center">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="content-section p-8">
+                    <h2 class="text-3xl font-bold text-white mb-8">Skills & Technologies</h2>
+
+                    <!-- Skills Grid -->
+                    <div class="grid md:grid-cols-3 gap-8 mb-12">
+                        <!-- Frontend -->
                         <div class="section-content">
-                            <div class="card p-6 h-64 flex items-center justify-center">
-                                <p class="text-gray-400">Skills content will be added here</p>
+                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
+                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+                                    <i class="fas fa-code text-blue-400 mr-3"></i>
+                                    Frontend
+                                </h3>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">React</span>
+                                            <span class="text-blue-400">95%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+                                                style="width: 95%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">JavaScript/TypeScript</span>
+                                            <span class="text-blue-400">98%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+                                                style="width: 98%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">HTML/CSS</span>
+                                            <span class="text-blue-400">90%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+                                                style="width: 90%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Tailwind</span>
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MUI</span>
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Redux</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
+
+                        <!-- Backend -->
                         <div class="section-content">
-                            <div class="card p-6 h-64 flex items-center justify-center">
-                                <p class="text-gray-400">More skills content will be added here</p>
+                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
+                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+                                    <i class="fas fa-server text-green-400 mr-3"></i>
+                                    Backend
+                                </h3>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">Node.js</span>
+                                            <span class="text-blue-400">95%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
+                                                style="width: 95%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">FastAPI</span>
+                                            <span class="text-blue-400">90%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
+                                                style="width: 90%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">Express</span>
+                                            <span class="text-blue-400">95%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
+                                                style="width: 95%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeORM</span>
+                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">REST
+                                            APIs</span>
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Django</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
+
+                        <!-- DevOps & Cloud -->
                         <div class="section-content">
-                            <div class="card p-6 h-64 flex items-center justify-center">
-                                <p class="text-gray-400">Additional skills content will be added here</p>
+                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
+                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+                                    <i class="fas fa-cloud text-purple-400 mr-3"></i>
+                                    DevOps & Cloud
+                                </h3>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">AWS</span>
+                                            <span class="text-blue-400">85%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full"
+                                                style="width: 85%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">Docker</span>
+                                            <span class="text-blue-400">90%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full"
+                                                style="width: 90%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-gray-300">CI/CD</span>
+                                            <span class="text-blue-400">85%</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full"
+                                                style="width: 85%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Kubernetes</span>
+                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">GitHub
+                                            Actions</span>
+                                        <span
+                                            class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">GCP</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Stack -->
+                    <div class="section-content bg-gray-800/80 rounded-lg border border-gray-700 p-6 mb-12">
+                        <h3 class="text-2xl font-semibold text-white mb-8">Tech Stack</h3>
+
+                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
+                            <!-- Tech items -->
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-node-js text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Node.js</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-python text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Python</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-react text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">React</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-js text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">JavaScript</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-aws text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">AWS</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-docker text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Docker</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fas fa-database text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">MongoDB</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fas fa-table text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">PostgreSQL</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fas fa-brain text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">AI/ML</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fas fa-key text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Keycloak</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fas fa-chart-line text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Grafana</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
+                                <i class="fab fa-github text-3xl text-blue-400 mb-2"></i>
+                                <span class="text-gray-300 text-sm text-center">Git</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Development Experience -->
+                    <h3 class="text-2xl font-semibold text-white mb-8">AI Development Experience</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="section-content">
+                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700">
+                                <h4 class="text-lg font-semibold text-white mb-4">AI Implementation Highlights</h4>
+                                <ul class="space-y-6">
+                                    <li class="flex items-start">
+                                        <div
+                                            class="mr-4 mt-1 w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center text-blue-400">
+                                            <i class="fas fa-robot"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-200 font-medium">Mistral-7b LLM Integration</p>
+                                            <p class="text-gray-400 text-sm mt-1">Enhanced document processing accuracy
+                                                by 32% through LLM model integration and fine-tuning.</p>
+                                        </div>
+                                    </li>
+
+                                    <li class="flex items-start">
+                                        <div
+                                            class="mr-4 mt-1 w-10 h-10 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-200 font-medium">Document Classification System</p>
+                                            <p class="text-gray-400 text-sm mt-1">Developed AI-powered system processing
+                                                20k+ documents daily with seamless API interfaces for client
+                                                integration.</p>
+                                        </div>
+                                    </li>
+
+                                    <li class="flex items-start">
+                                        <div
+                                            class="mr-4 mt-1 w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center text-green-400">
+                                            <i class="fas fa-code-branch"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-200 font-medium">AI Model Feedback Loop</p>
+                                            <p class="text-gray-400 text-sm mt-1">Created efficient feedback systems to
+                                                improve model accuracy from 64% to 96% through QC UI interfaces.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="section-content">
+                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700">
+                                <h4 class="text-lg font-semibold text-white mb-4">AI Tools & Integration</h4>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300 flex items-center">
+                                                <i class="fas fa-code-branch text-purple-400 mr-2"></i>
+                                                GitHub Copilot
+                                            </span>
+                                            <span class="text-blue-400">Expert</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-purple-400 to-blue-500 rounded-full"
+                                                style="width: 95%"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">Daily use in development workflow</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300 flex items-center">
+                                                <i class="fas fa-comment-dots text-green-400 mr-2"></i>
+                                                Claude API Integration
+                                            </span>
+                                            <span class="text-blue-400">Advanced</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full"
+                                                style="width: 90%"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">Integration for intelligent processing</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300 flex items-center">
+                                                <i class="fas fa-microchip text-blue-400 mr-2"></i>
+                                                Keycloak MultiMFA Development
+                                            </span>
+                                            <span class="text-blue-400">Expert</span>
+                                        </div>
+                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                                                style="width: 95%"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">Custom Java SPI extension development</p>
+                                    </div>
+
+                                    <div class="mt-6 p-4 bg-blue-900/30 rounded-lg">
+                                        <a href="https://github.com/shreyasY2k/KeycloakMultiMFA" target="_blank"
+                                            class="flex items-center justify-between group">
+                                            <span class="text-gray-200 group-hover:text-blue-400 transition-colors">
+                                                <i class="fab fa-github mr-2"></i>
+                                                Keycloak MultiMFA Project
+                                            </span>
+                                            <i class="fas fa-external-link-alt text-blue-400"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -670,107 +1075,134 @@
             <div class="max-w-7xl mx-auto px-4">
                 <div class="content-section p-8">
                     <h2 class="text-3xl font-bold text-white mb-8">Technical Writing</h2>
-                    
+
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Blog 1: MFA in Keycloak -->
                         <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/mastering-multi-factor-authentication-in-keycloak-sms-email-and-totp-setup-guide-957305b92be1" 
-                               target="_blank" 
-                               class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 transform group-hover:scale-105 transition-transform duration-500"></div>
+                            <a href="https://medium.com/@shreyasmk.mathur/mastering-multi-factor-authentication-in-keycloak-sms-email-and-totp-setup-guide-957305b92be1"
+                                target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
                                 <div class="relative p-6 h-full flex flex-col justify-between z-10">
                                     <div>
                                         <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-blue-600/70 text-white rounded-full text-sm">Guide</span>
+                                            <span
+                                                class="px-3 py-1 bg-blue-600/70 text-white rounded-full text-sm">Guide</span>
                                             <i class="fas fa-external-link-alt text-blue-300"></i>
                                         </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Mastering Multi-Factor Authentication in Keycloak</h3>
-                                        <p class="text-gray-300">A comprehensive guide to implementing SMS, Email, and TOTP authentication in Keycloak</p>
+                                        <h3 class="text-xl font-bold text-white mb-2">Mastering Multi-Factor
+                                            Authentication in Keycloak</h3>
+                                        <p class="text-gray-300">A comprehensive guide to implementing SMS, Email, and
+                                            TOTP authentication in Keycloak</p>
                                     </div>
-                                    
+
                                     <div class="mt-4">
                                         <div class="flex items-center text-sm text-gray-400">
                                             <i class="far fa-calendar-alt mr-2"></i>
                                             <span>March 2024</span>
                                         </div>
-                                        
+
                                         <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">MFA</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Security</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">MFA</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Security</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
                             </a>
                         </div>
-                        
+
                         <!-- Blog 2: Centralized User Management -->
                         <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/unlocking-seamless-access-orchestrating-centralized-user-management-with-keycloak-d1c51b13456a" 
-                               target="_blank" 
-                               class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500"></div>
+                            <a href="https://medium.com/@shreyasmk.mathur/unlocking-seamless-access-orchestrating-centralized-user-management-with-keycloak-d1c51b13456a"
+                                target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-br from-purple-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
                                 <div class="relative p-6 h-full flex flex-col justify-between z-10">
                                     <div>
                                         <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-purple-600/70 text-white rounded-full text-sm">Tutorial</span>
+                                            <span
+                                                class="px-3 py-1 bg-purple-600/70 text-white rounded-full text-sm">Tutorial</span>
                                             <i class="fas fa-external-link-alt text-blue-300"></i>
                                         </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Centralized User Management with Keycloak</h3>
-                                        <p class="text-gray-300">Deep dive into orchestrating user management using Keycloak for enterprise applications</p>
+                                        <h3 class="text-xl font-bold text-white mb-2">Centralized User Management with
+                                            Keycloak</h3>
+                                        <p class="text-gray-300">Deep dive into orchestrating user management using
+                                            Keycloak for enterprise applications</p>
                                     </div>
-                                    
+
                                     <div class="mt-4">
                                         <div class="flex items-center text-sm text-gray-400">
                                             <i class="far fa-calendar-alt mr-2"></i>
                                             <span>February 2024</span>
                                         </div>
-                                        
+
                                         <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">IAM</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Enterprise</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">IAM</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Enterprise</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
                             </a>
                         </div>
-                        
+
                         <!-- Blog 3: Custom MFA Plugin -->
                         <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/building-a-custom-multi-factor-authentication-mfa-plugin-for-keycloak-sms-email-telegram-152e33f2a02f" 
-                               target="_blank" 
-                               class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-green-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500"></div>
+                            <a href="https://medium.com/@shreyasmk.mathur/building-a-custom-multi-factor-authentication-mfa-plugin-for-keycloak-sms-email-telegram-152e33f2a02f"
+                                target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-br from-green-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
                                 <div class="relative p-6 h-full flex flex-col justify-between z-10">
                                     <div>
                                         <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-green-600/70 text-white rounded-full text-sm">Development</span>
+                                            <span
+                                                class="px-3 py-1 bg-green-600/70 text-white rounded-full text-sm">Development</span>
                                             <i class="fas fa-external-link-alt text-blue-300"></i>
                                         </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Building a Custom MFA Plugin for Keycloak</h3>
-                                        <p class="text-gray-300">How to build a Java SPI extension for Keycloak supporting SMS, Email, and Telegram authentication</p>
+                                        <h3 class="text-xl font-bold text-white mb-2">Building a Custom MFA Plugin for
+                                            Keycloak</h3>
+                                        <p class="text-gray-300">How to build a Java SPI extension for Keycloak
+                                            supporting SMS, Email, and Telegram authentication</p>
                                     </div>
-                                    
+
                                     <div class="mt-4">
                                         <div class="flex items-center text-sm text-gray-400">
                                             <i class="far fa-calendar-alt mr-2"></i>
                                             <span>March 2025</span>
                                         </div>
-                                        
+
                                         <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Java</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">SPI</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Open Source</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Java</span>
+                                            <span
+                                                class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">SPI</span>
+                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Open
+                                                Source</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
                             </a>
                         </div>
-                        
+
                         <!-- GitHub Repository Card -->
                         <div class="section-content">
                             <div class="card p-6 glowing-border h-80 flex flex-col">
@@ -780,9 +1212,10 @@
                                         KeycloakMultiMFA
                                     </h3>
                                 </div>
-                                
-                                <p class="text-gray-300 mb-4">Open-source Java SPI extension for Keycloak providing multi-channel MFA authentication capabilities.</p>
-                                
+
+                                <p class="text-gray-300 mb-4">Open-source Java SPI extension for Keycloak providing
+                                    multi-channel MFA authentication capabilities.</p>
+
                                 <div class="flex items-center mb-6">
                                     <div class="mr-6 flex items-center">
                                         <i class="fas fa-star text-yellow-400 mr-2"></i>
@@ -793,16 +1226,17 @@
                                         <span class="text-gray-300">8 forks</span>
                                     </div>
                                 </div>
-                                
+
                                 <div class="flex flex-wrap gap-2 mb-6">
                                     <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">Java</span>
                                     <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">Keycloak</span>
                                     <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">SPI</span>
                                     <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">MFA</span>
                                 </div>
-                                
+
                                 <div class="mt-auto">
-                                    <a href="https://github.com/shreyasY2k/KeycloakMultiMFA" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                    <a href="https://github.com/shreyasY2k/KeycloakMultiMFA" target="_blank"
+                                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
                                         <i class="fab fa-github mr-2"></i>
                                         View Repository
                                     </a>
@@ -810,32 +1244,33 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Writing Stats -->
                     <div class="section-content mt-12">
                         <div class="card p-6 glowing-border">
                             <h3 class="text-xl font-semibold text-white mb-6">Writing & Community Impact</h3>
-                            
+
                             <div class="grid md:grid-cols-3 gap-6">
                                 <div class="bg-blue-900/30 rounded-lg p-4 text-center">
                                     <div class="text-3xl font-bold text-blue-400 mb-2">3+</div>
                                     <div class="text-sm text-gray-300">Technical Articles</div>
                                 </div>
-                                
+
                                 <div class="bg-green-900/30 rounded-lg p-4 text-center">
                                     <div class="text-3xl font-bold text-green-400 mb-2">1000+</div>
                                     <div class="text-sm text-gray-300">Article Views</div>
                                 </div>
-                                
+
                                 <div class="bg-purple-900/30 rounded-lg p-4 text-center">
                                     <div class="text-3xl font-bold text-purple-400 mb-2">30+</div>
                                     <div class="text-sm text-gray-300">GitHub Stars</div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-6 p-4 bg-gray-800/50 rounded-lg text-center">
                                 <p class="text-gray-300 italic">
-                                    "Sharing knowledge through writing has been one of the most rewarding aspects of my technical journey."
+                                    "Sharing knowledge through writing has been one of the most rewarding aspects of my
+                                    technical journey."
                                 </p>
                             </div>
                         </div>
@@ -854,38 +1289,44 @@
                         <div class="section-content">
                             <div class="card p-6 glowing-border h-full">
                                 <h3 class="text-xl font-semibold text-white mb-6">Let's Connect</h3>
-                                
+
                                 <p class="text-gray-300 mb-8">
-                                    I'm always interested in hearing about new projects and opportunities. Feel free to reach out if you'd like to collaborate or just have a chat about technology.
+                                    I'm always interested in hearing about new projects and opportunities. Feel free to
+                                    reach out if you'd like to collaborate or just have a chat about technology.
                                 </p>
-                                
+
                                 <div class="space-y-6">
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
                                             <i class="fas fa-envelope text-blue-400"></i>
                                         </div>
                                         <div>
                                             <h4 class="text-white font-medium">Email</h4>
-                                            <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-300 hover:text-blue-400 transition">
+                                            <a href="mailto:shreyasmk.mathur@gmail.com"
+                                                class="text-gray-300 hover:text-blue-400 transition">
                                                 shreyasmk.mathur@gmail.com
                                             </a>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
                                             <i class="fas fa-phone text-blue-400"></i>
                                         </div>
                                         <div>
                                             <h4 class="text-white font-medium">Phone</h4>
-                                            <a href="tel:+918867229568" class="text-gray-300 hover:text-blue-400 transition">
+                                            <a href="tel:+918867229568"
+                                                class="text-gray-300 hover:text-blue-400 transition">
                                                 +91 8867229568
                                             </a>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
                                             <i class="fas fa-map-marker-alt text-blue-400"></i>
                                         </div>
                                         <div>
@@ -896,94 +1337,85 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mt-8">
                                     <h4 class="text-white font-medium mb-4">Social Profiles</h4>
                                     <div class="flex space-x-4">
-                                        <a href="https://github.com/shreyasY2k" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
+                                        <a href="https://github.com/shreyasY2k" target="_blank"
+                                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
                                             <i class="fab fa-github"></i>
                                         </a>
-                                        <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
+                                        <a href="https://linkedin.com/in/me-shreyasmk" target="_blank"
+                                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
                                             <i class="fab fa-linkedin-in"></i>
                                         </a>
-                                        <a href="https://medium.com/@shreyasmk.mathur" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
+                                        <a href="https://medium.com/@shreyasmk.mathur" target="_blank"
+                                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
                                             <i class="fab fa-medium-m"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Contact Form -->
                         <div class="section-content">
                             <div class="card p-6 glowing-border h-full">
                                 <h3 class="text-xl font-semibold text-white mb-6">Send Me a Message</h3>
-                                
+
                                 <form class="space-y-4">
                                     <div>
                                         <label for="name" class="block text-gray-300 mb-2">Name</label>
-                                        <input 
-                                            type="text" 
-                                            id="name" 
+                                        <input type="text" id="name"
                                             class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-                                            placeholder="Your Name"
-                                        >
+                                            placeholder="Your Name">
                                     </div>
-                                    
+
                                     <div>
                                         <label for="email" class="block text-gray-300 mb-2">Email</label>
-                                        <input 
-                                            type="email" 
-                                            id="email" 
+                                        <input type="email" id="email"
                                             class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-                                            placeholder="your.email@example.com"
-                                        >
+                                            placeholder="your.email@example.com">
                                     </div>
-                                    
+
                                     <div>
                                         <label for="subject" class="block text-gray-300 mb-2">Subject</label>
-                                        <input 
-                                            type="text" 
-                                            id="subject" 
+                                        <input type="text" id="subject"
                                             class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-                                            placeholder="What's this about?"
-                                        >
+                                            placeholder="What's this about?">
                                     </div>
-                                    
+
                                     <div>
                                         <label for="message" class="block text-gray-300 mb-2">Message</label>
-                                        <textarea 
-                                            id="message" 
-                                            rows="4" 
+                                        <textarea id="message" rows="4"
                                             class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white resize-none"
-                                            placeholder="Your message here..."
-                                        ></textarea>
+                                            placeholder="Your message here..."></textarea>
                                     </div>
-                                    
-                                    <button 
-                                        type="submit" 
-                                        class="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center"
-                                    >
+
+                                    <button type="submit"
+                                        class="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center">
                                         <i class="fas fa-paper-plane mr-2"></i>
                                         Send Message
                                     </button>
                                 </form>
-                                
+
                                 <div class="mt-6 p-4 bg-blue-900/30 rounded-lg text-center">
                                     <p class="text-gray-300 text-sm">
                                         <i class="fas fa-info-circle text-blue-400 mr-2"></i>
-                                        Messages will be delivered to my email inbox. I typically respond within 24 hours.
+                                        Messages will be delivered to my email inbox. I typically respond within 24
+                                        hours.
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Interactive 3D Element -->
                     <div class="section-content mt-12">
                         <div class="card p-6 glowing-border">
-                            <h3 class="text-xl font-semibold text-white mb-6 text-center">Looking Forward to Collaborating!</h3>
-                            
+                            <h3 class="text-xl font-semibold text-white mb-6 text-center">Looking Forward to
+                                Collaborating!</h3>
+
                             <div id="contact-3d-element" class="h-40 relative">
                                 <!-- 3D network graph will be rendered here by ThreeJS -->
                                 <div class="absolute inset-0 flex items-center justify-center">
@@ -1004,11 +1436,13 @@
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Contact</h3>
                     <div class="space-y-2">
-                        <a href="mailto:shreyasmk.mathur@gmail.com" class="flex items-center text-gray-300 hover:text-blue-400 transition">
+                        <a href="mailto:shreyasmk.mathur@gmail.com"
+                            class="flex items-center text-gray-300 hover:text-blue-400 transition">
                             <i class="fas fa-envelope mr-2"></i>
                             shreyasmk.mathur@gmail.com
                         </a>
-                        <a href="tel:+918867229568" class="flex items-center text-gray-300 hover:text-blue-400 transition">
+                        <a href="tel:+918867229568"
+                            class="flex items-center text-gray-300 hover:text-blue-400 transition">
                             <i class="fas fa-phone mr-2"></i>
                             +91 8867229568
                         </a>
@@ -1020,10 +1454,12 @@
                         <a href="https://github.com/shreyasY2k" class="text-gray-300 hover:text-blue-400 transition">
                             <i class="fab fa-github text-2xl"></i>
                         </a>
-                        <a href="https://linkedin.com/in/me-shreyasmk" class="text-gray-300 hover:text-blue-400 transition">
+                        <a href="https://linkedin.com/in/me-shreyasmk"
+                            class="text-gray-300 hover:text-blue-400 transition">
                             <i class="fab fa-linkedin text-2xl"></i>
                         </a>
-                        <a href="https://medium.com/@shreyasmk.mathur" class="text-gray-300 hover:text-blue-400 transition">
+                        <a href="https://medium.com/@shreyasmk.mathur"
+                            class="text-gray-300 hover:text-blue-400 transition">
                             <i class="fab fa-medium text-2xl"></i>
                         </a>
                     </div>
@@ -1043,11 +1479,11 @@
         const initThreeJSBackground = () => {
             // Scene setup
             const scene = new THREE.Scene();
-            
+
             // Camera setup
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-            
+
             // Renderer setup
             const renderer = new THREE.WebGLRenderer({
                 canvas: document.querySelector('#experience-world'),
@@ -1056,34 +1492,34 @@
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            
+
             // Add ambient light
             const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
             scene.add(ambientLight);
-            
+
             // Add directional light
             const directionalLight = new THREE.DirectionalLight(0x3B82F6, 1);
             directionalLight.position.set(1, 1, 1);
             scene.add(directionalLight);
-            
+
             // Create a cool particle system that represents code/data
             const particlesGeometry = new THREE.BufferGeometry();
             const particlesCount = 5000;
             const posArray = new Float32Array(particlesCount * 3);
             const colorsArray = new Float32Array(particlesCount * 3);
             const sizesArray = new Float32Array(particlesCount);
-            
+
             // Create different layers/zones for particles
-            for(let i = 0; i < particlesCount * 3; i += 3) {
+            for (let i = 0; i < particlesCount * 3; i += 3) {
                 // Position - create a nebula-like distribution
                 const radius = 5 + Math.random() * 5;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.random() * Math.PI;
-                
+
                 posArray[i] = radius * Math.sin(phi) * Math.cos(theta);     // x
                 posArray[i + 1] = radius * Math.cos(phi);                   // y
                 posArray[i + 2] = radius * Math.sin(phi) * Math.sin(theta); // z
-                
+
                 // Colors - blue, cyan, and purple gradient
                 if (i % 9 === 0) {
                     // Blue particles
@@ -1101,15 +1537,15 @@
                     colorsArray[i + 1] = 0.2;   // G
                     colorsArray[i + 2] = 0.8;   // B
                 }
-                
+
                 // Sizes - varied for depth effect
-                sizesArray[i/3] = Math.random() * 3;
+                sizesArray[i / 3] = Math.random() * 3;
             }
-            
+
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
             particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizesArray, 1));
-            
+
             // Simple point material for particles
             const particlesMaterial = new THREE.PointsMaterial({
                 size: 0.015,
@@ -1118,36 +1554,36 @@
                 opacity: 0.8,
                 blending: THREE.AdditiveBlending
             });
-            
+
             const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particlesMesh);
-            
+
             // Create floating code symbols for tech stack representation
             const createCodeSymbols = () => {
                 const symbols = ['<>', '{}', '()', '//', '||', '&&', '=>', '[]', '##'];
                 const codeGroup = new THREE.Group();
-                
+
                 for (let i = 0; i < 15; i++) {
                     // Create a simple cube as a code symbol representation
                     const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.1);
-                    const material = new THREE.MeshStandardMaterial({ 
+                    const material = new THREE.MeshStandardMaterial({
                         color: new THREE.Color(0x3B82F6),
                         transparent: true,
                         opacity: 0.7
                     });
                     const symbolMesh = new THREE.Mesh(geometry, material);
-                    
+
                     // Position randomly within view
                     symbolMesh.position.x = Math.random() * 10 - 5;
                     symbolMesh.position.y = Math.random() * 10 - 5;
                     symbolMesh.position.z = Math.random() * 5 - 10;
-                    
+
                     // Add subtle rotation
                     symbolMesh.rotation.x = Math.random() * Math.PI;
                     symbolMesh.rotation.y = Math.random() * Math.PI;
-                    
+
                     codeGroup.add(symbolMesh);
-                    
+
                     // Animate floating
                     const animateSymbol = () => {
                         symbolMesh.position.y += 0.005 * Math.sin(Date.now() * 0.001 + i);
@@ -1155,16 +1591,16 @@
                         symbolMesh.rotation.y += 0.002;
                         requestAnimationFrame(animateSymbol);
                     };
-                    
+
                     animateSymbol();
                 }
-                
+
                 scene.add(codeGroup);
                 return codeGroup;
             };
-            
+
             const codeSymbols = createCodeSymbols();
-            
+
             // Mouse interaction for parallax effect
             let mouseX = 0;
             let mouseY = 0;
@@ -1172,59 +1608,59 @@
             let targetY = 0;
             const windowHalfX = window.innerWidth / 2;
             const windowHalfY = window.innerHeight / 2;
-            
+
             document.addEventListener('mousemove', (event) => {
                 mouseX = (event.clientX - windowHalfX);
                 mouseY = (event.clientY - windowHalfY);
             });
-            
+
             // Enhanced animation loop
             const clock = new THREE.Clock();
-            
+
             function animate() {
                 requestAnimationFrame(animate);
-                
+
                 const elapsedTime = clock.getElapsedTime();
-                
+
                 // Smooth parallax following of mouse
                 targetX = mouseX * 0.0005;
                 targetY = mouseY * 0.0005;
-                
+
                 particlesMesh.rotation.y += 0.003; // Constant rotation
-                
+
                 // Add camera movement based on mouse position
                 camera.position.x += (targetX - camera.position.x) * 0.05;
                 camera.position.y += (-targetY - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
-                
+
                 // Wave effect through particles
                 const positions = particlesGeometry.attributes.position.array;
                 for (let i = 0; i < positions.length; i += 3) {
                     const x = positions[i];
                     const z = positions[i + 2];
                     const y = positions[i + 1];
-                    
+
                     // Create wave pattern
                     positions[i + 1] = y + Math.sin(elapsedTime + x) * 0.05;
                 }
                 particlesGeometry.attributes.position.needsUpdate = true;
-                
+
                 renderer.render(scene, camera);
             }
-            
+
             animate();
-            
+
             // Handle responsive design
             window.addEventListener('resize', () => {
                 // Update camera
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
-                
+
                 // Update renderer
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             });
-            
+
             return {
                 scene,
                 camera,
@@ -1241,18 +1677,18 @@
             contactCanvas.style.left = '0';
             contactCanvas.style.width = '100%';
             contactCanvas.style.height = '100%';
-            
+
             const contactElement = document.getElementById('contact-3d-element');
             if (contactElement) {
                 contactElement.appendChild(contactCanvas);
-                
+
                 // Set up scene
                 const scene = new THREE.Scene();
-                
+
                 // Camera
                 const camera = new THREE.PerspectiveCamera(75, contactElement.clientWidth / contactElement.clientHeight, 0.1, 1000);
                 camera.position.z = 5;
-                
+
                 // Renderer
                 const renderer = new THREE.WebGLRenderer({
                     canvas: contactCanvas,
@@ -1260,18 +1696,18 @@
                     antialias: true
                 });
                 renderer.setSize(contactElement.clientWidth, contactElement.clientHeight);
-                
+
                 // Create network nodes
                 const createNetworkGraph = () => {
                     const nodesGroup = new THREE.Group();
-                    
+
                     // Create central node
                     const centralGeometry = new THREE.SphereGeometry(0.3, 32, 32);
                     const centralMaterial = new THREE.MeshBasicMaterial({ color: 0x3B82F6 });
                     const centralNode = new THREE.Mesh(centralGeometry, centralMaterial);
-                    
+
                     nodesGroup.add(centralNode);
-                    
+
                     // Create satellite nodes
                     const satellitePositions = [
                         { x: 1.5, y: 0.8, z: 0, color: 0x10B981 },
@@ -1279,41 +1715,41 @@
                         { x: -1.2, y: 1.2, z: 0, color: 0xF59E0B },
                         { x: 1.2, y: -1.2, z: 0, color: 0x8B5CF6 }
                     ];
-                    
+
                     const connections = [];
-                    
+
                     satellitePositions.forEach(pos => {
                         // Create satellite node
                         const geometry = new THREE.SphereGeometry(0.15, 16, 16);
                         const material = new THREE.MeshBasicMaterial({ color: pos.color });
                         const satellite = new THREE.Mesh(geometry, material);
-                        
+
                         satellite.position.set(pos.x, pos.y, pos.z);
                         nodesGroup.add(satellite);
-                        
+
                         // Create connection line
-                        const lineMaterial = new THREE.LineBasicMaterial({ 
+                        const lineMaterial = new THREE.LineBasicMaterial({
                             color: pos.color,
                             transparent: true,
                             opacity: 0.6
                         });
-                        
+
                         const points = [
                             new THREE.Vector3(0, 0, 0),
                             new THREE.Vector3(pos.x, pos.y, pos.z)
                         ];
-                        
+
                         const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
                         const line = new THREE.Line(lineGeometry, lineMaterial);
                         nodesGroup.add(line);
                         connections.push(line);
-                        
+
                         // Animate satellite
                         const animate = () => {
                             const time = Date.now() * 0.001;
                             satellite.position.x = pos.x + Math.sin(time + pos.x) * 0.1;
                             satellite.position.y = pos.y + Math.cos(time + pos.y) * 0.1;
-                            
+
                             // Update connection line
                             const newPoints = [
                                 new THREE.Vector3(0, 0, 0),
@@ -1321,43 +1757,43 @@
                             ];
                             line.geometry.setFromPoints(newPoints);
                             line.geometry.attributes.position.needsUpdate = true;
-                            
+
                             requestAnimationFrame(animate);
                         };
-                        
+
                         animate();
                     });
-                    
+
                     scene.add(nodesGroup);
-                    
+
                     // Animate rotation of entire network
                     const animateGroup = () => {
                         nodesGroup.rotation.y += 0.005;
                         nodesGroup.rotation.z += 0.002;
                         requestAnimationFrame(animateGroup);
                     };
-                    
+
                     animateGroup();
-                    
+
                     return nodesGroup;
                 };
-                
+
                 const networkGraph = createNetworkGraph();
-                
+
                 // Animation loop
                 const animate = () => {
                     requestAnimationFrame(animate);
                     renderer.render(scene, camera);
                 };
-                
+
                 animate();
-                
+
                 // Handle resize
                 window.addEventListener('resize', () => {
                     // Update camera
                     camera.aspect = contactElement.clientWidth / contactElement.clientHeight;
                     camera.updateProjectionMatrix();
-                    
+
                     // Update renderer
                     renderer.setSize(contactElement.clientWidth, contactElement.clientHeight);
                 });
@@ -1369,31 +1805,31 @@
             // Get all sections
             const sections = document.querySelectorAll('section');
             const navDots = document.querySelectorAll('.navigation-dot');
-            
+
             // Create scroll progress indicator
             const createScrollIndicator = () => {
                 const scrollProgress = document.createElement('div');
                 scrollProgress.classList.add('fixed', 'top-0', 'left-0', 'h-1', 'bg-gradient-to-r', 'from-blue-500', 'to-green-500', 'z-50');
                 document.body.appendChild(scrollProgress);
-                
+
                 window.addEventListener('scroll', () => {
                     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                     const progress = (scrollTop / scrollHeight) * 100;
-                    
+
                     scrollProgress.style.width = progress + '%';
                 });
             };
-            
+
             createScrollIndicator();
-            
+
             // Intersection observer for section animations
             const observerOptions = {
                 root: null,
                 threshold: 0.25,
                 rootMargin: "0px"
             };
-            
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1401,12 +1837,12 @@
                         navDots.forEach(dot => dot.classList.remove('active'));
                         const currentDot = document.querySelector(`.navigation-dot[data-section="${entry.target.id}"]`);
                         if (currentDot) currentDot.classList.add('active');
-                        
+
                         // Animate content
                         entry.target.querySelectorAll('.section-content').forEach(content => {
                             content.classList.add('visible');
                         });
-                        
+
                         // Animate skill bars in skills section
                         if (entry.target.id === 'skills') {
                             const progressBars = entry.target.querySelectorAll('.skill-progress');
@@ -1420,9 +1856,9 @@
                     }
                 });
             }, observerOptions);
-            
+
             sections.forEach(section => observer.observe(section));
-            
+
             // Navigation dots click handler
             navDots.forEach(dot => {
                 dot.addEventListener('click', () => {
@@ -1432,15 +1868,15 @@
                     });
                 });
             });
-            
+
             // Smooth scrolling for all anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+                anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
-                    
+
                     document.querySelector(targetId).scrollIntoView({
                         behavior: 'smooth'
                     });
@@ -1452,11 +1888,11 @@
         const initMobileMenu = () => {
             const menuButton = document.querySelector('button.md\\:hidden');
             if (!menuButton) return;
-            
+
             const mobileMenu = document.createElement('div');
-            
+
             mobileMenu.classList.add('mobile-menu', 'fixed', 'inset-0', 'bg-gray-900/95', 'z-50', 'flex', 'flex-col', 'items-center', 'justify-center', 'transform', 'translate-x-full', 'transition-transform', 'duration-300');
-            
+
             mobileMenu.innerHTML = `
                 <button class="absolute top-5 right-5 text-white text-2xl">
                     <i class="fas fa-times"></i>
@@ -1474,20 +1910,20 @@
                     </a>
                 </nav>
             `;
-            
+
             document.body.appendChild(mobileMenu);
-            
+
             // Handle menu toggle
             menuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('translate-x-full');
             });
-            
+
             // Handle close button
             const closeButton = mobileMenu.querySelector('button');
             closeButton.addEventListener('click', () => {
                 mobileMenu.classList.add('translate-x-full');
             });
-            
+
             // Handle menu item clicks (close menu after navigation)
             mobileMenu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
@@ -1500,30 +1936,30 @@
         const initContactForm = () => {
             const form = document.querySelector('#contact form');
             if (!form) return;
-            
-            form.addEventListener('submit', function(e) {
+
+            form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 // Get form values
                 const name = form.querySelector('#name').value;
                 const email = form.querySelector('#email').value;
                 const subject = form.querySelector('#subject').value;
                 const message = form.querySelector('#message').value;
-                
+
                 // In a real implementation, you would send this data to a server
                 // For GitHub Pages, you might use a service like Formspree or EmailJS
-                
+
                 // For now, just show a success message
                 const submitButton = form.querySelector('button[type="submit"]');
                 const originalText = submitButton.innerHTML;
-                
+
                 submitButton.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Message Sent!';
                 submitButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
                 submitButton.classList.add('bg-green-600', 'hover:bg-green-700');
-                
+
                 // Reset the form
                 form.reset();
-                
+
                 // Reset the button after a delay
                 setTimeout(() => {
                     submitButton.innerHTML = originalText;
@@ -1537,10 +1973,10 @@
         const initTypingAnimation = () => {
             const heroSubtitle = document.querySelector('#home p.text-xl');
             if (!heroSubtitle) return;
-            
+
             const originalText = heroSubtitle.textContent;
             heroSubtitle.textContent = '';
-            
+
             const typeText = () => {
                 let i = 0;
                 const typingInterval = setInterval(() => {
@@ -1549,7 +1985,7 @@
                         i++;
                     } else {
                         clearInterval(typingInterval);
-                        
+
                         // Add blinking cursor
                         const cursor = document.createElement('span');
                         cursor.textContent = '|';
@@ -1558,7 +1994,7 @@
                     }
                 }, 40);
             };
-            
+
             // Start typing animation after a short delay
             setTimeout(typeText, 500);
         };
@@ -1570,7 +2006,7 @@
                     card.style.transform = 'translateY(-10px)';
                     card.style.transition = 'transform 0.3s ease';
                 });
-                
+
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
                 });
@@ -1581,25 +2017,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize ThreeJS background
             initThreeJSBackground();
-            
+
             // Initialize scroll animations
             initScrollAnimations();
-            
+
             // Initialize mobile menu
             initMobileMenu();
-            
+
             // Initialize contact form
             initContactForm();
-            
+
             // Initialize typing animation
             initTypingAnimation();
-            
+
             // Initialize card animations
             initCardAnimations();
-            
+
             // Initialize contact 3D element
             initContactElement();
         });
     </script>
 </body>
+
 </html>
