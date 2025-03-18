@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Best Practices - Interactive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .scenario-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .terminal {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .prompt {
+            color: #10b981;
+        }
+
+        .command {
+            color: #e2e8f0;
+        }
+
+        .output {
+            color: #93c5fd;
+        }
+
+        .scenario-content {
+            display: none;
+        }
+
+        .scenario-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .step-container {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            text-align: left;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .option-button:hover {
+            background-color: #e2e8f0;
+        }
+
+        .option-button.correct {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .option-button.incorrect {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            display: block;
+        }
+
+        /* Tabs for content sections */
+        .tab-container {
+            margin-bottom: 1rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #f8fafc;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold mb-6 text-center">GitHub Best Practices - Interactive Guide</h1>
+
+        <!-- Scenario Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Card 1: Branch Strategy -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="branch-strategy">
+                <div class="h-40 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"></path>
+                        <path d="M9 3a3 3 0 0 0-3 3v12a3 3 0 0 1-3 3"></path>
+                        <path d="M21 3a3 3 0 0 0-3 3v3"></path>
+                        <path d="M9 9a3 3 0 0 0 3 3h6"></path>
+                        <path d="M9 21a3 3 0 0 0 6 0v-4.5"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Branch Strategy</h3>
+                    <p>Learn the optimal branch structure for team collaboration with protected branches.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Feature Workflow -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="feature-workflow">
+                <div class="h-40 bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16"></path>
+                        <path d="M4 8h6"></path>
+                        <path d="M4 12h6"></path>
+                        <path d="M4 16h6"></path>
+                        <path d="M4 20h10"></path>
+                        <path d="M14 12h2"></path>
+                        <path d="M16 10v4"></path>
+                        <path d="M20 10v10"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Feature Development</h3>
+                    <p>Step-by-step guide for developing new features in a team environment.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Conflict Resolution -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="conflict-resolution">
+                <div class="h-40 bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center">
+                    <!-- Fallback to HTML entity -->
+                    <span class="text-white text-6xl">⚠️</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Conflict Resolution</h3>
+                    <p>Learn how to handle merge conflicts when working with team members.</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Hotfix Process -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="hotfix-workflow">
+                <div class="h-40 bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12h10"></path>
+                        <path d="M9 4v16"></path>
+                        <path d="m3 9 3 3-3 3"></path>
+                        <path d="M14 8V6c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Hotfix Process</h3>
+                    <p>How to handle critical production issues with the proper hotfix workflow.</p>
+                </div>
+            </div>
+
+            <!-- Card 5: Team Collaboration -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="team-collaboration">
+                <div class="h-40 bg-gradient-to-r from-purple-500 to-violet-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Team Collaboration</h3>
+                    <p>Best practices for multiple developers working on the same feature.</p>
+                </div>
+            </div>
+
+            <!-- Card 6: Commit Practices -->
+            <div class="scenario-card bg-white rounded-lg shadow-md overflow-hidden" data-scenario="commit-practices">
+                <div class="h-40 bg-gradient-to-r from-gray-700 to-gray-900 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z">
+                        </path>
+                        <path d="M10 2c1 .5 2 2 2 5"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Commit Best Practices</h3>
+                    <p>Guidelines for creating clean, meaningful commits with specific file additions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Container -->
+        <div id="content-container" class="max-w-5xl mx-auto">
+            <!-- The active scenario content will be displayed here -->
+            <div class="text-center text-gray-500 italic initial-message">
+                Click on a scenario card above to see its content
+            </div>
+
+            <!-- Branch Strategy Content -->
+            <div id="branch-strategy-content" class="scenario-content">
+                <h2 class="text-3xl font-bold mb-6">Branch Strategy</h2>
+
+                <p class="text-lg mb-6">
+                    A well-structured branch strategy is essential for team collaboration. Our recommended approach uses
+                    protected branches for production and staging environments, with feature branches for development.
+                </p>
+
+                <!-- Branch Strategy Diagram -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Branch Structure Visualization</h3>
+
+                    <div class="branch-diagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" class="w-full">
+                            <!-- Background -->
+                            <rect width="800" height="400" fill="#f8fafc" />
+
+                            <!-- Branch lines -->
+                            <line x1="100" y1="100" x2="700" y2="100" stroke="#ef4444" stroke-width="6" />
+                            <line x1="100" y1="200" x2="700" y2="200" stroke="#f59e0b" stroke-width="6" />
+                            <line x1="100" y1="300" x2="700" y2="300" stroke="#10b981" stroke-width="6" />
+
+                            <!-- Branch names -->
+                            <rect x="20" y="85" width="110" height="30" rx="15" fill="#ef4444" />
+                            <text x="75" y="105" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Production</text>
+
+                            <rect x="20" y="185" width="110" height="30" rx="15" fill="#f59e0b" />
+                            <text x="75" y="205" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Staging</text>
+
+                            <rect x="20" y="285" width="110" height="30" rx="15" fill="#10b981" />
+                            <text x="75" y="305" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Develop</text>
+
+                            <!-- Feature branches -->
+                            <line x1="200" y1="300" x2="230" y2="350" stroke="#3b82f6" stroke-width="3" />
+                            <line x1="230" y1="350" x2="300" y2="350" stroke="#3b82f6" stroke-width="3" />
+                            <line x1="300" y1="350" x2="330" y2="300" stroke="#3b82f6" stroke-width="3" />
+
+                            <rect x="230" y="335" width="100" height="30" rx="15" fill="#3b82f6" />
+                            <text x="280" y="355" font-family="Arial" font-size="12" fill="white"
+                                text-anchor="middle">feature/login</text>
+
+                            <line x1="400" y1="300" x2="430" y2="350" stroke="#3b82f6" stroke-width="3" />
+                            <line x1="430" y1="350" x2="500" y2="350" stroke="#3b82f6" stroke-width="3" />
+                            <line x1="500" y1="350" x2="530" y2="300" stroke="#3b82f6" stroke-width="3" />
+
+                            <rect x="430" y="335" width="100" height="30" rx="15" fill="#3b82f6" />
+                            <text x="480" y="355" font-family="Arial" font-size="12" fill="white"
+                                text-anchor="middle">feature/dashboard</text>
+
+                            <!-- Hotfix branch -->
+                            <line x1="500" y1="100" x2="530" y2="150" stroke="#f97316" stroke-width="3" />
+                            <line x1="530" y1="150" x2="600" y2="150" stroke="#f97316" stroke-width="3" />
+                            <line x1="600" y1="150" x2="630" y2="100" stroke="#f97316" stroke-width="3" />
+                            <line x1="600" y1="150" x2="630" y2="200" stroke="#f97316" stroke-width="3"
+                                stroke-dasharray="5,5" />
+                            <line x1="600" y1="150" x2="630" y2="300" stroke="#f97316" stroke-width="3"
+                                stroke-dasharray="5,5" />
+
+                            <rect x="530" y="135" width="100" height="30" rx="15" fill="#f97316" />
+                            <text x="580" y="155" font-family="Arial" font-size="12" fill="white"
+                                text-anchor="middle">hotfix/critical-bug</text>
+
+                            <!-- Commits -->
+                            <circle cx="150" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="250" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="350" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="500" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="630" cy="100" r="8" fill="#b91c1c" />
+
+                            <circle cx="150" cy="200" r="8" fill="#d97706" />
+                            <circle cx="250" cy="200" r="8" fill="#d97706" />
+                            <circle cx="350" cy="200" r="8" fill="#d97706" />
+                            <circle cx="450" cy="200" r="8" fill="#d97706" />
+                            <circle cx="630" cy="200" r="8" fill="#d97706" />
+
+                            <circle cx="150" cy="300" r="8" fill="#059669" />
+                            <circle cx="200" cy="300" r="8" fill="#059669" />
+                            <circle cx="330" cy="300" r="8" fill="#059669" />
+                            <circle cx="400" cy="300" r="8" fill="#059669" />
+                            <circle cx="530" cy="300" r="8" fill="#059669" />
+                            <circle cx="630" cy="300" r="8" fill="#059669" />
+
+                            <!-- Title -->
+                            <text x="400" y="40" font-family="Arial" font-size="24" fill="#1e293b" text-anchor="middle"
+                                font-weight="bold">GitHub Branch Strategy</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Branch Strategy Explanation -->
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+                    <h3 class="text-xl font-bold mb-4">Branch Types and Their Purpose:</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mt-1.5 mr-2"></div>
+                            <div>
+                                <span class="font-semibold text-red-600">Production Branch</span> (protected):
+                                Contains code that is currently deployed to the production environment. Direct pushes
+                                are not allowed - changes must go through pull requests with appropriate reviews.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-3 h-3 rounded-full bg-amber-500 mt-1.5 mr-2"></div>
+                            <div>
+                                <span class="font-semibold text-amber-600">Staging Branch</span> (protected):
+                                Used for pre-release testing before code goes to production. This branch should mirror
+                                what will be deployed to production.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-3 h-3 rounded-full bg-green-500 mt-1.5 mr-2"></div>
+                            <div>
+                                <span class="font-semibold text-green-600">Develop Branch</span>:
+                                Main integration branch where features are merged for development testing. This is where
+                                features come together before being promoted to staging.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-3 h-3 rounded-full bg-blue-500 mt-1.5 mr-2"></div>
+                            <div>
+                                <span class="font-semibold text-blue-600">Feature Branches</span>:
+                                Created from develop branch, where individual features are built. Each feature gets its
+                                own branch (e.g., feature/login, feature/dashboard).
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-3 h-3 rounded-full bg-orange-500 mt-1.5 mr-2"></div>
+                            <div>
+                                <span class="font-semibold text-orange-600">Hotfix Branches</span>:
+                                Created from production branch for urgent fixes. After fixing the issue, changes are
+                                merged to production, staging, and develop branches.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Branch Protection Rules -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Branch Protection Rules</h3>
+                    <p class="mb-4">To maintain code quality and prevent accidental changes, configure these protection
+                        rules in GitHub:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold text-lg mb-2">For Production Branch:</h4>
+                            <ul class="list-disc pl-6 space-y-1">
+                                <li>Require pull request reviews before merging</li>
+                                <li>Require approval from at least 2 reviewers</li>
+                                <li>Require status checks to pass (CI/CD tests)</li>
+                                <li>Restrict who can push to matching branches</li>
+                                <li>Disable force pushes</li>
+                                <li>Require linear history</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold text-lg mb-2">For Staging Branch:</h4>
+                            <ul class="list-disc pl-6 space-y-1">
+                                <li>Require pull request reviews before merging</li>
+                                <li>Require approval from at least 1 reviewer</li>
+                                <li>Require status checks to pass</li>
+                                <li>Disable force pushes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Branch Strategy Quiz -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Branch Strategy Quiz</h3>
+                    <p class="mb-6">Test your understanding of branch strategy by answering these questions:</p>
+
+                    <div class="space-y-6">
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">1. Where should feature branches be created from?</p>
+                            <div class="space-y-2">
+                                <button class="option-button" data-correct="true">Develop branch</button>
+                                <button class="option-button" data-correct="false">Production branch</button>
+                                <button class="option-button" data-correct="false">Staging branch</button>
+                                <button class="option-button" data-correct="false">Another feature branch</button>
+                            </div>
+                            <div class="feedback bg-green-50 text-green-800 rounded p-3 mt-3 hidden">
+                                <strong>Correct!</strong> Feature branches should always be created from the develop
+                                branch, which is the main integration branch for development.
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">2. When a critical bug is found in production, what kind of
+                                branch should you
+                                create?</p>
+                            <div class="space-y-2">
+                                <button class="option-button" data-correct="false">Feature branch</button>
+                                <button class="option-button" data-correct="true">Hotfix branch</button>
+                                <button class="option-button" data-correct="false">Release branch</button>
+                                <button class="option-button" data-correct="false">Debug branch</button>
+                            </div>
+                            <div class="feedback bg-green-50 text-green-800 rounded p-3 mt-3 hidden">
+                                <strong>Correct!</strong> Hotfix branches are created directly from the production
+                                branch to fix critical issues. This allows you to make emergency fixes without including
+                                unrelated features that might be in develop.
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">3. Which branches should be protected in GitHub?</p>
+                            <div class="space-y-2">
+                                <button class="option-button" data-correct="false">Feature branches only</button>
+                                <button class="option-button" data-correct="false">Develop branch only</button>
+                                <button class="option-button" data-correct="true">Production and staging
+                                    branches</button>
+                                <button class="option-button" data-correct="false">All branches</button>
+                            </div>
+                            <div class="feedback bg-green-50 text-green-800 rounded p-3 mt-3 hidden">
+                                <strong>Correct!</strong> Production and staging branches should be protected to ensure
+                                code quality and prevent accidental pushes. The develop branch may also be protected in
+                                some organizations, but feature branches typically don't need protection.
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <p class="font-semibold mb-2">4. After merging a hotfix to production, what should you do
+                                next?</p>
+                            <div class="space-y-2">
+                                <button class="option-button" data-correct="false">Delete the hotfix branch</button>
+                                <button class="option-button" data-correct="false">Create a new release branch</button>
+                                <button class="option-button" data-correct="true">Merge the hotfix to staging and
+                                    develop branches</button>
+                                <button class="option-button" data-correct="false">Start working on the next
+                                    feature</button>
+                            </div>
+                            <div class="feedback bg-green-50 text-green-800 rounded p-3 mt-3 hidden">
+                                <strong>Correct!</strong> After fixing a production issue, you need to propagate that
+                                fix to staging and develop branches to ensure all branches include the fix in future
+                                deployments.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Development Content -->
+            <div id="feature-workflow-content" class="scenario-content">
+                <h2 class="text-3xl font-bold mb-6">Feature Development Workflow</h2>
+
+                <p class="text-lg mb-6">
+                    Follow this step-by-step guide for developing new features in a team environment.
+                    This workflow ensures clean code integration and minimizes conflicts with other team members'
+                    work.
+                </p>
+
+                <!-- Feature Workflow Animation/Diagram -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Feature Development Flow</h3>
+
+                    <div class="feature-workflow-diagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" class="w-full">
+                            <!-- Background -->
+                            <rect width="800" height="350" fill="#f8fafc" />
+
+                            <!-- Main Branch (develop) -->
+                            <line x1="100" y1="100" x2="700" y2="100" stroke="#10b981" stroke-width="6" />
+
+                            <!-- Develop Label -->
+                            <rect x="20" y="85" width="70" height="30" rx="15" fill="#10b981" />
+                            <text x="55" y="105" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">develop</text>
+
+                            <!-- Feature Branch -->
+                            <line x1="150" y1="100" x2="180" y2="175" stroke="#3b82f6" stroke-width="3"
+                                stroke-dasharray="5,5" />
+                            <line x1="180" y1="175" x2="580" y2="175" stroke="#3b82f6" stroke-width="3" />
+                            <line x1="580" y1="175" x2="610" y2="100" stroke="#3b82f6" stroke-width="3"
+                                stroke-dasharray="5,5" />
+
+                            <!-- Feature Label -->
+                            <rect x="20" y="160" width="150" height="30" rx="15" fill="#3b82f6" />
+                            <text x="95" y="180" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">feature/new-feature</text>
+
+                            <!-- Commit Points -->
+                            <circle cx="150" cy="100" r="10" fill="#059669" />
+                            <text x="150" y="80" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Start</text>
+
+                            <circle cx="180" cy="175" r="10" fill="#2563eb" />
+                            <text x="180" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Create Branch</text>
+
+                            <circle cx="250" cy="175" r="10" fill="#2563eb" />
+                            <text x="250" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Commit 1</text>
+
+                            <circle cx="320" cy="175" r="10" fill="#2563eb" />
+                            <text x="320" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Commit 2</text>
+
+                            <circle cx="390" cy="175" r="10" fill="#2563eb" />
+                            <text x="390" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Commit 3</text>
+
+                            <circle cx="460" cy="175" r="10" fill="#2563eb" />
+                            <text x="460" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Pull Request</text>
+
+                            <circle cx="530" cy="175" r="10" fill="#2563eb" />
+                            <text x="530" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Code Review</text>
+
+                            <circle cx="580" cy="175" r="10" fill="#2563eb" />
+                            <text x="580" y="200" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Approved</text>
+
+                            <circle cx="610" cy="100" r="10" fill="#059669" />
+                            <text x="610" y="80" font-family="Arial" font-size="12" fill="#1e293b"
+                                text-anchor="middle">Merged</text>
+
+                            <!-- Process Steps Text -->
+                            <text x="400" y="250" font-family="Arial" font-size="14" fill="#1e293b"
+                                text-anchor="middle">
+                                Development → Pull Request → Code Review → Merge to develop
+                            </text>
+
+                            <!-- Title -->
+                            <text x="400" y="40" font-family="Arial" font-size="24" fill="#1e293b" text-anchor="middle"
+                                font-weight="bold">Feature Development Workflow</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Step by Step Guide -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Feature Development Steps:</h3>
+
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">1</div>
+                            <h4 class="font-bold text-lg ml-6">Start from an updated develop branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout develop</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch 'develop'</span>
+                                </div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git pull origin develop</span></div>
+                                <div class="terminal-line"><span class="output">Already up to date.</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Always start with the latest version of develop to avoid future merge conflicts.
+                                This ensures your feature branch contains all recent changes.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">2</div>
+                            <h4 class="font-bold text-lg ml-6">Create a feature branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout -b feature/login-page</span></div>
+                                <div class="terminal-line"><span class="output">Switched to a new branch
+                                        'feature/login-page'</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Use descriptive names for your feature branches, prefixed with "feature/".
+                                The name should clearly indicate what you're working on.
+                            </p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">3</div>
+                            <h4 class="font-bold text-lg ml-6">Make changes and commit specific files</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git status</span></div>
+                                <div class="terminal-line"><span class="output">Modified:
+                                        src/components/LoginForm.js</span></div>
+                                <div class="terminal-line"><span class="output">Modified:
+                                        src/styles/login.css</span></div>
+                                <div class="terminal-line"><span class="output">Modified: .env.example</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git add src/components/LoginForm.js
+                                        src/styles/login.css</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git commit -m "Create login form component"</span></div>
+                                <div class="terminal-line"><span class="output">[feature/login-page abc1234] Create
+                                        login form component</span></div>
+                                <div class="terminal-line"><span class="output">2 files changed, 45 insertions(+), 5
+                                        deletions(-)</span></div>
+                            </div>
+
+                            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3">
+                                <p class="font-semibold text-amber-800">Important Best Practice:</p>
+                                <p class="text-amber-700">
+                                    Add files specifically rather than using <code>git add .</code> to ensure only
+                                    relevant changes are committed.
+                                    This prevents accidental inclusion of temporary files, logs, or unrelated
+                                    changes.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">4</div>
+                            <h4 class="font-bold text-lg ml-6">Keep your branch updated with develop</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout develop</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch 'develop'</span>
+                                </div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git pull origin develop</span></div>
+                                <div class="terminal-line"><span class="output">Updating abc1234..def5678</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">Fast-forward</span></div>
+                                <div class="terminal-line"><span class="output">src/api/auth.js | 15
+                                        +++++++++------</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout feature/login-page</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch
+                                        'feature/login-page'</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git merge develop</span></div>
+                                <div class="terminal-line"><span class="output">Updating ghi7890..def5678</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">Fast-forward</span></div>
+                                <div class="terminal-line"><span class="output">src/api/auth.js | 15
+                                        +++++++++------</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Regularly incorporate changes from develop into your feature branch to prevent
+                                complex merge conflicts later.
+                                Do this at least once a day or before creating a pull request.
+                            </p>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">5</div>
+                            <h4 class="font-bold text-lg ml-6">Push your branch to GitHub</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git push origin feature/login-page</span></div>
+                                <div class="terminal-line"><span class="output">Enumerating objects: 14,
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Counting objects: 100% (14/14),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Delta compression using up to 8
+                                        threads</span></div>
+                                <div class="terminal-line"><span class="output">Compressing objects: 100% (8/8),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Writing objects: 100% (8/8), 1.22
+                                        KiB | 1.22 MiB/s, done.</span></div>
+                                <div class="terminal-line"><span class="output">Total 8 (delta 4), reused 0 (delta
+                                        0)</span></div>
+                                <div class="terminal-line"><span class="output">remote: Resolving deltas: 100%
+                                        (4/4), completed with 2 local objects.</span></div>
+                                <div class="terminal-line"><span class="output">To
+                                        github.com:company/project.git</span></div>
+                                <div class="terminal-line"><span class="output"> * [new branch] feature/login-page
+                                        -> feature/login-page</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">6</div>
+                            <h4 class="font-bold text-lg ml-6">Create a Pull Request to develop</h4>
+
+                            <p class="mt-3 text-gray-700">
+                                Go to GitHub repository and create a PR with a clear description of your changes.
+                                Include the following information:
+                            </p>
+
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 mt-3">
+                                <h5 class="font-bold mb-2">Pull Request Title:</h5>
+                                <p class="mb-4 text-gray-800">Add login page with form validation</p>
+
+                                <h5 class="font-bold mb-2">Description:</h5>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200 text-gray-800">
+                                    <p class="mb-2">This PR adds the login page with the following features:</p>
+                                    <ul class="list-disc pl-5 mb-3">
+                                        <li>Responsive login form component</li>
+                                        <li>Form validation for email and password</li>
+                                        <li>Integration with authentication API</li>
+                                        <li>Error handling and user feedback</li>
+                                    </ul>
+                                    <p class="mb-2">Related Issues:</p>
+                                    <p>Closes #142 - Create login page</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Terminal Simulation -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Interactive Practice</h3>
+                    <p class="mb-4">Which commands would you use to start working on a new feature? Select the
+                        correct sequence:</p>
+
+                    <div class="space-y-3 command-sequence">
+                        <button class="option-button" data-order="1" data-command="git checkout develop">git
+                            checkout develop</button>
+                        <button class="option-button" data-order="4"
+                            data-command="git add src/components/UserProfile.js">git add
+                            src/components/UserProfile.js</button>
+                        <button class="option-button" data-order="2" data-command="git pull origin develop">git pull
+                            origin develop</button>
+                        <button class="option-button" data-order="5"
+                            data-command="git commit -m 'Add user profile component'">git commit -m "Add user
+                            profile component"</button>
+                        <button class="option-button" data-order="3"
+                            data-command="git checkout -b feature/user-profile">git checkout -b
+                            feature/user-profile</button>
+                        <button class="option-button" data-order="6"
+                            data-command="git push origin feature/user-profile">git push origin
+                            feature/user-profile</button>
+                    </div>
+
+                    <div class="mt-6">
+                        <button id="check-sequence"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded">
+                            Check Sequence
+                        </button>
+
+                        <div id="sequence-feedback" class="mt-4 p-3 rounded-lg hidden">
+                            <!-- Feedback will be inserted here -->
+                        </div>
+
+                        <div id="terminal-simulation" class="terminal mt-4 hidden">
+                            <!-- Terminal output will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conflict Resolution Content -->
+            <div id="conflict-resolution-content" class="scenario-content">
+                <h2 class="text-3xl font-bold mb-6">Merge Conflict Resolution</h2>
+
+                <p class="text-lg mb-6">
+                    Merge conflicts occur when two branches have made different changes to the same line of code.
+                    Learning how to resolve these conflicts effectively is a critical skill for team collaboration.
+                </p>
+
+                <!-- Conflict Resolution Diagram -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Understanding Merge Conflicts</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3">What Causes Conflicts?</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Two branches modifying the same line of code</li>
+                                <li>One branch deleting a file while another modifies it</li>
+                                <li>Both branches adding files with the same name but different content</li>
+                                <li>Incompatible changes to related code sections</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg mb-3">Conflict Markers</h4>
+                            <div class="bg-gray-50 p-3 rounded border border-gray-200 font-mono text-sm">
+                                <pre class="whitespace-pre-wrap">
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Your changes on current branch
+=======
+Incoming changes from other branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</pre>
+                            </div>
+                            <p class="mt-2 text-gray-700">
+                                Git inserts these markers to show you both versions of the conflicting code.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Conflict Resolution Illustration -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+                        <h4 class="font-bold text-lg mb-3">Visual Example</h4>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border p-3 rounded-lg bg-blue-50">
+                                <h5 class="font-semibold mb-2">Your Branch (HEAD)</h5>
+                                <div class="font-mono text-sm bg-white p-2 rounded">
+                                    <pre>function calculateTotal(items) {
+  return items.reduce((sum, item) => 
+    sum + item.price * item.quantity, 0
+  );
+}</pre>
+                                </div>
+                            </div>
+
+                            <div class="border p-3 rounded-lg bg-green-50">
+                                <h5 class="font-semibold mb-2">Their Branch (develop)</h5>
+                                <div class="font-mono text-sm bg-white p-2 rounded">
+                                    <pre>function calculateTotal(items) {
+  return items
+    .filter(item => item.inStock)
+    .reduce((sum, item) => sum + item.price, 0);
+}</pre>
+                                </div>
+                            </div>
+
+                            <div class="border p-3 rounded-lg bg-amber-50">
+                                <h5 class="font-semibold mb-2">Conflict in Your Editor</h5>
+                                <div class="font-mono text-sm bg-white p-2 rounded">
+                                    <pre>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+  return items.reduce((sum, item) => 
+    sum + item.price * item.quantity, 0
+  );
+=======
+  return items
+    .filter(item => item.inStock)
+    .reduce((sum, item) => sum + item.price, 0);
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; develop</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 border p-3 rounded-lg bg-purple-50">
+                            <h5 class="font-semibold mb-2">Resolved Version (Combined Features)</h5>
+                            <div class="font-mono text-sm bg-white p-2 rounded">
+                                <pre>function calculateTotal(items) {
+  return items
+    .filter(item => item.inStock)
+    .reduce((sum, item) => 
+      sum + item.price * item.quantity, 0
+    );
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step by Step Resolution Process -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Conflict Resolution Steps:</h3>
+
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">1</div>
+                            <h4 class="font-bold text-lg ml-6">Update your local develop branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout develop</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch 'develop'</span>
+                                </div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git pull origin develop</span></div>
+                                <div class="terminal-line"><span class="output">Already up to date.</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Always start with the latest version of develop to ensure you're working with current
+                                code.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">2</div>
+                            <h4 class="font-bold text-lg ml-6">Switch to your feature branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout feature/payment</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch
+                                        'feature/payment'</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">3</div>
+                            <h4 class="font-bold text-lg ml-6">Merge develop into your feature branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git merge develop</span></div>
+                                <div class="terminal-line"><span class="output">Auto-merging
+                                        src/utils/payments.js</span></div>
+                                <div class="terminal-line"><span class="output">CONFLICT (content): Merge conflict in
+                                        src/utils/payments.js</span></div>
+                                <div class="terminal-line"><span class="output">Automatic merge failed; fix conflicts
+                                        and then commit the result.</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Git will automatically merge what it can and mark conflicts it can't resolve
+                                automatically.
+                            </p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">4</div>
+                            <h4 class="font-bold text-lg ml-6">Check status to see conflicting files</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git status</span></div>
+                                <div class="terminal-line"><span class="output">On branch feature/payment</span></div>
+                                <div class="terminal-line"><span class="output">You have unmerged paths.</span></div>
+                                <div class="terminal-line"><span class="output"> (fix conflicts and run "git
+                                        commit")</span></div>
+                                <div class="terminal-line"><span class="output"> (use "git merge --abort" to abort the
+                                        merge)</span></div>
+                                <div class="terminal-line"><span class="output"></span></div>
+                                <div class="terminal-line"><span class="output">Unmerged paths:</span></div>
+                                <div class="terminal-line"><span class="output"> (use "git add <file>..." to mark
+                                            resolution)</span></div>
+                                <div class="terminal-line"><span class="output"> both modified:
+                                        src/utils/payments.js</span></div>
+                            </div>
+
+                            <div class="mt-3 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <p class="text-blue-800">
+                                    <strong>Tip:</strong> If you want to abort the merge and try a different approach,
+                                    you can use:
+                                    <br>
+                                    <code class="bg-blue-100 px-2 py-1 rounded">git merge --abort</code>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">5</div>
+                            <h4 class="font-bold text-lg ml-6">Open conflicting files in your editor</h4>
+
+                            <p class="mt-3 text-gray-700 mb-3">
+                                You'll see conflict markers showing both versions of the code:
+                            </p>
+
+                            <div
+                                class="bg-gray-50 p-4 rounded-lg border border-gray-200 font-mono text-sm whitespace-pre-wrap">
+                                function calculateTotal(items) {
+                                <<<<<<< HEAD return items.reduce((sum, item)=>
+                                    sum + item.price * item.quantity, 0
+                                    );
+                                    =======
+                                    return items
+                                    .filter(item => item.inStock)
+                                    .reduce((sum, item) => sum + item.price, 0);
+                                    >>>>>>> develop
+                                    }
+                            </div>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">6</div>
+                            <h4 class="font-bold text-lg ml-6">Edit the file to resolve conflicts</h4>
+
+                            <p class="mt-3 text-gray-700 mb-3">
+                                Modify the file to include the best parts of both changes, and remove the conflict
+                                markers:
+                            </p>
+
+                            <div
+                                class="bg-green-50 p-4 rounded-lg border border-green-200 font-mono text-sm whitespace-pre-wrap">
+                                function calculateTotal(items) {
+                                return items
+                                .filter(item => item.inStock)
+                                .reduce((sum, item) =>
+                                sum + item.price * item.quantity, 0
+                                );
+                                }
+                            </div>
+
+                            <div class="mt-3 bg-amber-50 p-3 rounded-lg border border-amber-200">
+                                <p class="text-amber-800">
+                                    <strong>Important:</strong> Make sure to remove ALL conflict markers
+                                    (<code>&lt;&lt;&lt;</code>, <code>=====</code>, <code>&gt;&gt;&gt;</code>)
+                                    from the file. The file must not contain any of these markers after resolution.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 7 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">7</div>
+                            <h4 class="font-bold text-lg ml-6">Mark as resolved and complete the merge</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git add src/utils/payments.js</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git status</span></div>
+                                <div class="terminal-line"><span class="output">On branch feature/payment</span></div>
+                                <div class="terminal-line"><span class="output">All conflicts fixed but you are still
+                                        merging.</span></div>
+                                <div class="terminal-line"><span class="output"> (use "git commit" to conclude
+                                        merge)</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git commit -m "Merge develop and resolve conflicts in payment
+                                        calculation"</span></div>
+                                <div class="terminal-line"><span class="output">[feature/payment abc1234] Merge develop
+                                        and resolve conflicts in payment calculation</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 8 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">8</div>
+                            <h4 class="font-bold text-lg ml-6">Push your resolved branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git push origin feature/payment</span></div>
+                                <div class="terminal-line"><span class="output">Enumerating objects: 7, done.</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">Counting objects: 100% (7/7),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Delta compression using up to 8
+                                        threads</span></div>
+                                <div class="terminal-line"><span class="output">Compressing objects: 100% (3/3),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Writing objects: 100% (3/3), 375 bytes |
+                                        375.00 KiB/s, done.</span></div>
+                                <div class="terminal-line"><span class="output">Total 3 (delta 2), reused 0 (delta
+                                        0)</span></div>
+                                <div class="terminal-line"><span class="output">remote: Resolving deltas: 100% (2/2),
+                                        completed with 2 local objects.</span></div>
+                                <div class="terminal-line"><span class="output">To github.com:company/project.git</span>
+                                </div>
+                                <div class="terminal-line"><span class="output"> def5678..ghi9012 feature/payment ->
+                                        feature/payment</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Your PR should now be mergeable and the conflicts resolved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conflict Resolution Best Practices -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Best Practices for Conflict Resolution</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3">Prevention</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Pull from develop regularly to keep your branch updated</li>
+                                <li>Coordinate with team members working on similar areas</li>
+                                <li>Keep feature branches short-lived and focused</li>
+                                <li>Follow modular code design to minimize overlapping changes</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg mb-3">Resolution Tips</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Understand both changes before resolving conflicts</li>
+                                <li>Consult with the developer who made the other changes</li>
+                                <li>Use visual diff tools like VS Code's merge editor</li>
+                                <li>Test your code after resolving conflicts</li>
+                                <li>Commit descriptive merge messages</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h4 class="font-bold text-lg mb-2">Using Visual Merge Tools</h4>
+                        <p class="mb-3">
+                            Most modern code editors have built-in merge conflict resolution tools:
+                        </p>
+                        <ul class="list-disc pl-6 space-y-1">
+                            <li><strong>VS Code</strong>: Opens files with conflicts in a special merge editor with
+                                "Accept Current", "Accept Incoming", and "Accept Both" options</li>
+                            <li><strong>IntelliJ/WebStorm</strong>: Provides a visual three-panel merge tool</li>
+                            <li><strong>Git GUI tools</strong> like GitKraken and Sourcetree have visual conflict
+                                resolution</li>
+                        </ul>
+                        <p class="mt-3">
+                            You can configure your preferred merge tool with:
+                            <br>
+                            <code
+                                class="bg-blue-100 px-2 py-1 rounded">git config --global merge.tool [your-tool-name]</code>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Conflict Resolution Exercise -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Interactive Conflict Resolution</h3>
+                    <p class="mb-4">Practice resolving a merge conflict by selecting the correct resolution:</p>
+
+                    <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                        <h4 class="font-bold mb-2">Conflict in user-profile.js:</h4>
+                        <div class="bg-white p-3 rounded border font-mono text-sm mb-4">
+                            <pre><<<<<<< HEAD
+function formatUserName(name) {
+  return name.trim().toUpperCase();
+}
+=======
+function formatUserName(name) {
+  return name.toLowerCase().replace(/\s+/g, '-');
+}
+>>>>>>> develop</pre>
+                        </div>
+
+                        <p class="mb-2">Select the best resolution for this conflict:</p>
+
+                        <div class="space-y-3">
+                            <button class="option-button conflict-option" data-correct="false">
+                                <pre>function formatUserName(name) {
+  return name.trim().toUpperCase();
+}</pre>
+                            </button>
+
+                            <button class="option-button conflict-option" data-correct="false">
+                                <pre>function formatUserName(name) {
+  return name.toLowerCase().replace(/\s+/g, '-');
+}</pre>
+                            </button>
+
+                            <button class="option-button conflict-option" data-correct="true">
+                                <pre>function formatUserName(name) {
+  return name.trim().toLowerCase().replace(/\s+/g, '-');
+}</pre>
+                            </button>
+
+                            <button class="option-button conflict-option" data-correct="false">
+                                <pre>function formatUserName(name) {
+  // Keep both implementations
+  const upperVersion = name.trim().toUpperCase();
+  const slugVersion = name.toLowerCase().replace(/\s+/g, '-');
+  return { upperVersion, slugVersion };
+}</pre>
+                            </button>
+                        </div>
+
+                        <div class="conflict-feedback mt-4 p-3 rounded-lg bg-green-50 text-green-800 hidden">
+                            <p><strong>Correct!</strong> You've combined the best parts of both changes - trimming the
+                                name from your version and converting to lowercase with hyphen replacement from the
+                                develop branch version.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotfix Workflow Content -->
+            <div id="hotfix-workflow-content" class="scenario-content">
+                <h2 class="text-3xl font-bold mb-6">Hotfix Process</h2>
+
+                <p class="text-lg mb-6">
+                    When a critical bug is discovered in production, you need a process to fix it quickly while
+                    minimizing risk. The hotfix workflow provides a structured approach to handling these urgent
+                    situations.
+                </p>
+
+                <!-- Hotfix Workflow Diagram -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Hotfix Flow Visualization</h3>
+
+                    <div class="hotfix-diagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" class="w-full">
+                            <!-- Background -->
+                            <rect width="800" height="400" fill="#f8fafc" />
+
+                            <!-- Branch lines -->
+                            <line x1="100" y1="100" x2="700" y2="100" stroke="#ef4444" stroke-width="6" />
+                            <line x1="100" y1="200" x2="700" y2="200" stroke="#f59e0b" stroke-width="6" />
+                            <line x1="100" y1="300" x2="700" y2="300" stroke="#10b981" stroke-width="6" />
+
+                            <!-- Branch names -->
+                            <rect x="20" y="85" width="110" height="30" rx="15" fill="#ef4444" />
+                            <text x="75" y="105" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Production</text>
+
+                            <rect x="20" y="185" width="110" height="30" rx="15" fill="#f59e0b" />
+                            <text x="75" y="205" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Staging</text>
+
+                            <rect x="20" y="285" width="110" height="30" rx="15" fill="#10b981" />
+                            <text x="75" y="305" font-family="Arial" font-size="14" fill="white"
+                                text-anchor="middle">Develop</text>
+
+                            <!-- Hotfix branch -->
+                            <line x1="300" y1="100" x2="330" y2="150" stroke="#f97316" stroke-width="3" />
+                            <line x1="330" y1="150" x2="430" y2="150" stroke="#f97316" stroke-width="3" />
+                            <line x1="430" y1="150" x2="460" y2="100" stroke="#f97316" stroke-width="3" />
+                            <line x1="430" y1="150" x2="460" y2="200" stroke="#f97316" stroke-width="3"
+                                stroke-dasharray="5,5" />
+                            <line x1="430" y1="150" x2="460" y2="300" stroke="#f97316" stroke-width="3"
+                                stroke-dasharray="5,5" />
+
+                            <rect x="330" y="135" width="100" height="30" rx="15" fill="#f97316" />
+                            <text x="380" y="155" font-family="Arial" font-size="12" fill="white"
+                                text-anchor="middle">hotfix/auth-issue</text>
+
+                            <!-- Commits -->
+                            <circle cx="150" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="300" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="460" cy="100" r="8" fill="#b91c1c" />
+                            <circle cx="550" cy="100" r="8" fill="#b91c1c" />
+
+                            <circle cx="150" cy="200" r="8" fill="#d97706" />
+                            <circle cx="250" cy="200" r="8" fill="#d97706" />
+                            <circle cx="350" cy="200" r="8" fill="#d97706" />
+                            <circle cx="460" cy="200" r="8" fill="#d97706" />
+                            <circle cx="550" cy="200" r="8" fill="#d97706" />
+
+                            <circle cx="150" cy="300" r="8" fill="#059669" />
+                            <circle cx="250" cy="300" r="8" fill="#059669" />
+                            <circle cx="350" cy="300" r="8" fill="#059669" />
+                            <circle cx="460" cy="300" r="8" fill="#059669" />
+                            <circle cx="550" cy="300" r="8" fill="#059669" />
+
+                            <!-- Arrows -->
+                            <polygon points="445,140 430,150 445,160" fill="#f97316" />
+                            <polygon points="450,180 460,200 470,180" fill="#f97316" />
+                            <polygon points="450,280 460,300 470,280" fill="#f97316" />
+
+                            <!-- Labels -->
+                            <text x="310" y="115" font-family="Arial" font-size="12" fill="#1e293b">1. Create hotfix
+                                branch</text>
+                            <text x="320" y="125" font-family="Arial" font-size="12" fill="#1e293b">2. Fix issue</text>
+                            <text x="485" y="90" font-family="Arial" font-size="12" fill="#1e293b">3. Merge to
+                                production</text>
+                            <text x="485" y="190" font-family="Arial" font-size="12" fill="#1e293b">4. Merge to
+                                staging</text>
+                            <text x="485" y="290" font-family="Arial" font-size="12" fill="#1e293b">5. Merge to
+                                develop</text>
+                            <text x="600" y="150" font-family="Arial" font-size="12" fill="#1e293b"
+                                font-weight="bold">Then deploy to production</text>
+
+                            <!-- Title -->
+                            <text x="400" y="40" font-family="Arial" font-size="24" fill="#1e293b" text-anchor="middle"
+                                font-weight="bold">Hotfix Workflow</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- What Makes a Good Hotfix? -->
+                <div class="bg-red-50 p-6 rounded-lg border border-red-200 mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-red-800">What Makes a Good Hotfix?</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-red-700">Do:</h4>
+                            <ul class="list-disc pl-6 space-y-2 text-red-900">
+                                <li>Focus <strong>only</strong> on fixing the specific issue</li>
+                                <li>Write thorough tests to verify the fix</li>
+                                <li>Document what caused the issue</li>
+                                <li>Keep the changes as minimal as possible</li>
+                                <li>Consider performance impacts in production</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-red-700">Don't:</h4>
+                            <ul class="list-disc pl-6 space-y-2 text-red-900">
+                                <li>Include unrelated code improvements</li>
+                                <li>Refactor surrounding code</li>
+                                <li>Fix other minor bugs you notice</li>
+                                <li>Add new features</li>
+                                <li>Change more files than necessary</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step by Step Guide -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Hotfix Process Steps:</h3>
+
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">1</div>
+                            <h4 class="font-bold text-lg ml-6">Start from production branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout production</span></div>
+                                <div class="terminal-line"><span class="output">Switched to branch 'production'</span>
+                                </div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git pull origin production</span></div>
+                                <div class="terminal-line"><span class="output">Already up to date.</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Always start with the latest version of production to fix the issue as it appears in the
+                                live environment.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">2</div>
+                            <h4 class="font-bold text-lg ml-6">Create a hotfix branch</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git checkout -b hotfix/auth-timeout</span></div>
+                                <div class="terminal-line"><span class="output">Switched to a new branch
+                                        'hotfix/auth-timeout'</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Use a descriptive name with the prefix "hotfix/" that clearly indicates what you're
+                                fixing.
+                            </p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">3</div>
+                            <h4 class="font-bold text-lg ml-6">Fix the issue with minimal changes</h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git status</span></div>
+                                <div class="terminal-line"><span class="output">On branch hotfix/auth-timeout</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">nothing to commit, working tree
+                                        clean</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command"># Make your fix</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git add src/services/auth.js</span></div>
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git commit -m "Fix authentication timeout issue (#253)"</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">[hotfix/auth-timeout abc1234] Fix
+                                        authentication timeout issue (#253)</span></div>
+                                <div class="terminal-line"><span class="output">1 file changed, 3 insertions(+), 1
+                                        deletion(-)</span></div>
+                            </div>
+
+                            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3">
+                                <p class="font-semibold text-amber-800">Important Best Practice:</p>
+                                <p class="text-amber-700">
+                                    Reference the issue number in your commit message to create an automatic link in
+                                    GitHub.
+                                    This helps with tracking and creates a record of what the hotfix addresses.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">4</div>
+                            <h4 class="font-bold text-lg ml-6">Test thoroughly</h4>
+
+                            <p class="mt-3 text-gray-700">
+                                Run all relevant unit tests and manually test the fix to ensure it resolves the issue
+                                without introducing new problems.
+                            </p>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">npm run test:auth</span></div>
+                                <div class="terminal-line"><span class="output">✓ Auth Service tests completed
+                                        successfully</span></div>
+                                <div class="terminal-line"><span class="output">✓ Authentication timeout test
+                                        passed</span></div>
+                                <div class="terminal-line"><span class="output">All tests passed!</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">5</div>
+                            <h4 class="font-bold text-lg ml-6">Push your branch and create the first PR to production
+                            </h4>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">git push origin hotfix/auth-timeout</span></div>
+                                <div class="terminal-line"><span class="output">Enumerating objects: 5, done.</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">Counting objects: 100% (5/5),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Delta compression using up to 8
+                                        threads</span></div>
+                                <div class="terminal-line"><span class="output">Compressing objects: 100% (3/3),
+                                        done.</span></div>
+                                <div class="terminal-line"><span class="output">Writing objects: 100% (3/3), 320 bytes |
+                                        320.00 KiB/s, done.</span></div>
+                                <div class="terminal-line"><span class="output">Total 3 (delta 2), reused 0 (delta
+                                        0)</span></div>
+                                <div class="terminal-line"><span class="output">remote: Resolving deltas: 100% (2/2),
+                                        completed with 2 local objects.</span></div>
+                                <div class="terminal-line"><span class="output">To github.com:company/project.git</span>
+                                </div>
+                                <div class="terminal-line"><span class="output"> * [new branch] hotfix/auth-timeout ->
+                                        hotfix/auth-timeout</span></div>
+                            </div>
+
+                            <p class="mt-3 text-gray-700">
+                                Create a Pull Request targeting the <strong>production</strong> branch first.
+                            </p>
+
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 mt-3">
+                                <h5 class="font-bold mb-2">Production PR Title:</h5>
+                                <p class="mb-4 text-gray-800">HOTFIX: Fix authentication timeout issue (#253)</p>
+
+                                <h5 class="font-bold mb-2">Description:</h5>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200 text-gray-800">
+                                    <p class="mb-2">This hotfix addresses the critical authentication timeout issue
+                                        affecting production:</p>
+                                    <ul class="list-disc pl-5 mb-3">
+                                        <li>Increases the token expiration time from 15 to 30 minutes</li>
+                                        <li>Adds proper error handling for timeout scenarios</li>
+                                        <li>Updates error message to be more user-friendly</li>
+                                    </ul>
+                                    <p class="mb-2">This issue was causing users to be logged out during long form
+                                        submissions.</p>
+                                    <p class="mb-2"><strong>Root Cause:</strong> The timeout was set too low for complex
+                                        operations.</p>
+                                    <p class="mb-2"><strong>Testing:</strong> Verified with automated tests and manual
+                                        testing of the submission flow.</p>
+                                    <p>Fixes #253</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">6</div>
+                            <h4 class="font-bold text-lg ml-6">After the production PR is approved and merged</h4>
+
+                            <p class="mt-3 text-gray-700 mb-3">
+                                Create additional Pull Requests to merge the hotfix to:
+                            </p>
+
+                            <ol class="list-decimal pl-8 space-y-2 text-gray-800">
+                                <li><strong>Staging branch</strong> - to keep staging in sync with production</li>
+                                <li><strong>Develop branch</strong> - to ensure the fix is included in future releases
+                                </li>
+                            </ol>
+
+                            <div class="mt-3 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <p class="text-blue-800">
+                                    <strong>Important:</strong> The order matters! Always merge to production first,
+                                    then to staging, and finally to develop.
+                                    This ensures that the hotfix is properly propagated across all environments.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 7 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">7</div>
+                            <h4 class="font-bold text-lg ml-6">Deploy to production</h4>
+
+                            <p class="mt-3 text-gray-700">
+                                After the hotfix is merged to production, deploy it immediately following your standard
+                                production deployment process.
+                            </p>
+
+                            <div class="terminal mt-3">
+                                <div class="terminal-line"><span class="prompt">user@laptop:~/project$</span> <span
+                                        class="command">npm run deploy:production</span></div>
+                                <div class="terminal-line"><span class="output">Deploying to production...</span></div>
+                                <div class="terminal-line"><span class="output">Building assets...</span></div>
+                                <div class="terminal-line"><span class="output">Running tests...</span></div>
+                                <div class="terminal-line"><span class="output">Uploading build artifacts...</span>
+                                </div>
+                                <div class="terminal-line"><span class="output">Deployment successful!</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 8 -->
+                        <div class="step-container bg-white p-4 rounded-lg shadow">
+                            <div class="step-number">8</div>
+                            <h4 class="font-bold text-lg ml-6">Monitor the fix in production</h4>
+
+                            <p class="mt-3 text-gray-700">
+                                Watch logs, error rates, and key metrics closely after deploying to ensure the fix
+                                resolves the issue without causing any new problems.
+                            </p>
+
+                            <div class="mt-3 bg-green-50 p-3 rounded-lg border border-green-200">
+                                <p class="text-green-800">
+                                    <strong>Post-Hotfix:</strong> Create a follow-up task to address the root cause more
+                                    thoroughly in the develop branch if needed.
+                                    Sometimes hotfixes are minimal by necessity, and a more comprehensive solution can
+                                    be implemented for the next release.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Hotfix Challenge -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Hotfix Challenge</h3>
+                    <p class="mb-4">A critical security bug has been found in production! Drag and drop the steps in the
+                        correct order to resolve it:</p>
+
+                    <div id="hotfix-game" class="mb-6">
+                        <div class="mb-4 p-3 bg-gray-100 rounded-lg">
+                            <div id="hotfix-steps" class="space-y-2">
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="3">
+                                    Make the fix and commit changes
+                                </div>
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="1">
+                                    Checkout production branch and pull latest changes
+                                </div>
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="5">
+                                    Create PR from hotfix to staging
+                                </div>
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="2">
+                                    Create a hotfix branch
+                                </div>
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="4">
+                                    Create PR from hotfix to production
+                                </div>
+                                <div class="hotfix-step bg-white p-3 border rounded-lg cursor-move" data-order="6">
+                                    Create PR from hotfix to develop
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="check-hotfix" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Check Order
+                        </button>
+
+                        <div id="hotfix-feedback" class="mt-4 p-3 rounded-lg hidden">
+                            <!-- Feedback will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Collaboration Content -->
+            <div id="team-collaboration-content" class="scenario-content">
+                <h2 class="text-3xl font-bold mb-6">Team Collaboration</h2>
+
+                <p class="text-lg mb-6">
+                    When multiple developers work on the same feature or codebase, effective coordination is essential.
+                    This section covers strategies for smooth collaboration while minimizing conflicts and maintaining
+                    code quality.
+                </p>
+
+                <!-- Collaboration Strategies Diagram -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Team Collaboration Approaches</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-center text-indigo-700">Shared Feature Branch</h4>
+                            <div class="collaboration-diagram mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" class="w-full">
+                                    <!-- Background -->
+                                    <rect width="400" height="250" fill="#f8fafc" />
+
+                                    <!-- Develop branch -->
+                                    <line x1="50" y1="50" x2="350" y2="50" stroke="#10b981" stroke-width="4" />
+                                    <text x="30" y="55" font-family="Arial" font-size="12" fill="#1e293b"
+                                        text-anchor="end">develop</text>
+
+                                    <!-- Feature branch -->
+                                    <line x1="100" y1="50" x2="120" y2="100" stroke="#818cf8" stroke-width="2"
+                                        stroke-dasharray="5,5" />
+                                    <line x1="120" y1="100" x2="300" y2="100" stroke="#818cf8" stroke-width="2" />
+                                    <line x1="300" y1="100" x2="320" y2="50" stroke="#818cf8" stroke-width="2"
+                                        stroke-dasharray="5,5" />
+                                    <text x="30" y="105" font-family="Arial" font-size="12" fill="#1e293b"
+                                        text-anchor="end">feature/shared</text>
+
+                                    <!-- Dev 1 work -->
+                                    <circle cx="150" cy="100" r="6" fill="#4f46e5" />
+                                    <text x="150" y="85" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="middle">Dev 1</text>
+
+                                    <!-- Dev 2 work -->
+                                    <circle cx="200" cy="100" r="6" fill="#7c3aed" />
+                                    <text x="200" y="85" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="middle">Dev 2</text>
+
+                                    <!-- Dev 3 work -->
+                                    <circle cx="250" cy="100" r="6" fill="#6366f1" />
+                                    <text x="250" y="85" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="middle">Dev 3</text>
+
+                                    <!-- Developer flows -->
+                                    <g stroke-width="1" stroke-dasharray="3,2">
+                                        <line x1="150" y1="140" x2="150" y2="100" stroke="#4f46e5" />
+                                        <line x1="200" y1="170" x2="200" y2="100" stroke="#7c3aed" />
+                                        <line x1="250" y1="140" x2="250" y2="100" stroke="#6366f1" />
+                                    </g>
+
+                                    <!-- Developer icons -->
+                                    <circle cx="150" cy="160" r="15" fill="#4f46e5" />
+                                    <text x="150" y="164" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D1</text>
+
+                                    <circle cx="200" cy="190" r="15" fill="#7c3aed" />
+                                    <text x="200" y="194" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D2</text>
+
+                                    <circle cx="250" cy="160" r="15" fill="#6366f1" />
+                                    <text x="250" y="164" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D3</text>
+                                </svg>
+                            </div>
+                            <ul class="list-disc pl-6 space-y-1">
+                                <li>Everyone works directly on the same branch</li>
+                                <li>Simple setup, direct collaboration</li>
+                                <li>Regular communication essential</li>
+                                <li>Pull before starting work each day</li>
+                                <li>Higher potential for conflicts</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-center text-purple-700">Task Branches</h4>
+                            <div class="collaboration-diagram mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" class="w-full">
+                                    <!-- Background -->
+                                    <rect width="400" height="250" fill="#f8fafc" />
+
+                                    <!-- Develop branch -->
+                                    <line x1="50" y1="50" x2="350" y2="50" stroke="#10b981" stroke-width="4" />
+                                    <text x="30" y="55" font-family="Arial" font-size="12" fill="#1e293b"
+                                        text-anchor="end">develop</text>
+
+                                    <!-- Feature branch -->
+                                    <line x1="100" y1="50" x2="120" y2="100" stroke="#818cf8" stroke-width="2"
+                                        stroke-dasharray="5,5" />
+                                    <line x1="120" y1="100" x2="300" y2="100" stroke="#818cf8" stroke-width="2" />
+                                    <line x1="300" y1="100" x2="320" y2="50" stroke="#818cf8" stroke-width="2"
+                                        stroke-dasharray="5,5" />
+                                    <text x="30" y="105" font-family="Arial" font-size="12" fill="#1e293b"
+                                        text-anchor="end">feature/auth</text>
+
+                                    <!-- Task branches -->
+                                    <line x1="150" y1="100" x2="150" y2="140" stroke="#4f46e5" stroke-width="1" />
+                                    <line x1="150" y1="140" x2="200" y2="140" stroke="#4f46e5" stroke-width="1" />
+                                    <line x1="200" y1="140" x2="200" y2="100" stroke="#4f46e5" stroke-width="1"
+                                        stroke-dasharray="3,2" />
+                                    <text x="140" y="140" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="end">task/ui</text>
+
+                                    <line x1="200" y1="100" x2="200" y2="170" stroke="#7c3aed" stroke-width="1" />
+                                    <line x1="200" y1="170" x2="250" y2="170" stroke="#7c3aed" stroke-width="1" />
+                                    <line x1="250" y1="170" x2="250" y2="100" stroke="#7c3aed" stroke-width="1"
+                                        stroke-dasharray="3,2" />
+                                    <text x="190" y="170" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="end">task/api</text>
+
+                                    <line x1="250" y1="100" x2="250" y2="140" stroke="#6366f1" stroke-width="1" />
+                                    <line x1="250" y1="140" x2="280" y2="140" stroke="#6366f1" stroke-width="1" />
+                                    <line x1="280" y1="140" x2="280" y2="100" stroke="#6366f1" stroke-width="1"
+                                        stroke-dasharray="3,2" />
+                                    <text x="240" y="140" font-family="Arial" font-size="10" fill="#1e293b"
+                                        text-anchor="end">task/tests</text>
+
+                                    <!-- Developer icons -->
+                                    <circle cx="175" cy="140" r="6" fill="#4f46e5" />
+                                    <circle cx="150" cy="190" r="15" fill="#4f46e5" />
+                                    <text x="150" y="194" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D1</text>
+
+                                    <circle cx="225" cy="170" r="6" fill="#7c3aed" />
+                                    <circle cx="200" cy="210" r="15" fill="#7c3aed" />
+                                    <text x="200" y="214" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D2</text>
+
+                                    <circle cx="265" cy="140" r="6" fill="#6366f1" />
+                                    <circle cx="250" cy="190" r="15" fill="#6366f1" />
+                                    <text x="250" y="194" font-family="Arial" font-size="12" fill="white"
+                                        text-anchor="middle">D3</text>
+                                </svg>
+                            </div>
+                            <ul class="list-disc pl-6 space-y-1">
+                                <li>Each developer creates personal task branches</li>
+                                <li>Task branches merge to the feature branch</li>
+                                <li>Better isolation and organization</li>
+                                <li>Task-specific code reviews</li>
+                                <li>More branches but fewer direct conflicts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collaboration Best Practices -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Collaboration Best Practices:</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card 1 -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold text-lg mb-3 text-indigo-700">Before Starting Work</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Discuss the feature implementation with your team</li>
+                                <li>Break down the feature into smaller tasks</li>
+                                <li>Decide on which files each person will modify</li>
+                                <li>Pull the latest changes before starting</li>
+                                <li>Agree on coding standards and patterns</li>
+                            </ul>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold text-lg mb-3 text-indigo-700">During Development</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Commit frequently with focused changes</li>
+                                <li>Pull and integrate changes regularly</li>
+                                <li>Communicate when working on shared files</li>
+                                <li>Keep the team updated on your progress</li>
+                                <li>Request early feedback on complex solutions</li>
+                            </ul>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold text-lg mb-3 text-indigo-700">When Submitting Work</h4>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Pull the latest changes before pushing</li>
+                                <li>Ensure all tests pass before creating a PR</li>
+                                <li>Write detailed PR descriptions</li>
+                                <li>Request reviews from relevant team members</li>
+                                <li>Address review comments promptly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conflict Prevention Strategies -->
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-800">Conflict Prevention Strategies</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-blue-700">Code Organization</h4>
+                            <ul class="list-disc pl-6 space-y-2 text-blue-900">
+                                <li>Use modular code architecture</li>
+                                <li>Separate concerns into different files</li>
+                                <li>Minimize dependencies between components</li>
+                                <li>Follow consistent coding patterns</li>
+                                <li>Keep files focused on single responsibilities</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-blue-700">Communication</h4>
+                            <ul class="list-disc pl-6 space-y-2 text-blue-900">
+                                <li>Hold daily stand-ups or check-ins</li>
+                                <li>Use branch naming to indicate who's working on what</li>
+                                <li>Comment on issues/tasks with status updates</li>
+                                <li>Use pull requests for early feedback</li>
+                                <li>Document architectural decisions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-white rounded-lg">
+                        <p class="text-blue-800 mb-1">
+                            <strong>Pro Tip:</strong> Create a CODEOWNERS file in your repository to automatically
+                            assign reviewers based on file paths:
+                        </p>
+                        <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto">
+# Frontend components
+/src/components/ @frontend-team
+
+# Backend services
+/src/services/ @backend-team
+
+# Authentication files
+/src/auth/ @security-team @backend-team
+            </pre>
+                    </div>
+                </div>
+
+                <!-- Collaboration Scenarios -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-bold mb-4">Common Collaboration Scenarios</h3>
+
+                    <!-- Scenario tabs -->
+                    <div class="tab-container">
+                        <div class="tab-buttons flex border-b mb-4">
+                            <button class="tab-button active px-4 py-2" data-tab="scenario1">Same Feature</button>
+                            <button class="tab-button px-4 py-2" data-tab="scenario2">Complex Feature</button>
+                            <button class="tab-button px-4 py-2" data-tab="scenario3">Refactoring</button>
+                        </div>
+
+                        <!-- Scenario 1 content -->
+                        <div id="scenario1" class="tab-content active">
+                            <h4 class="font-bold text-lg mb-3">Multiple Developers on Same Feature</h4>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Scenario:</h5>
+                                    <p class="mb-4">Three developers need to implement a new user dashboard with charts,
+                                        filters, and data tables.</p>
+
+                                    <h5 class="font-semibold mb-2">Approach:</h5>
+                                    <ul class="list-disc pl-6 space-y-1 mb-4">
+                                        <li>Create a shared <code>feature/dashboard</code> branch</li>
+                                        <li>Divide responsibilities by component:
+                                            <ul class="list-disc pl-6 mt-1">
+                                                <li>Dev 1: Chart components</li>
+                                                <li>Dev 2: Filter components</li>
+                                                <li>Dev 3: Data table components</li>
+                                            </ul>
+                                        </li>
+                                        <li>Set up daily check-ins to coordinate integration</li>
+                                        <li>Create shared interfaces/contracts first</li>
+                                    </ul>
+
+                                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                        <h6 class="font-semibold mb-1">Terminal:</h6>
+                                        <div class="terminal text-xs">
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git checkout develop</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git pull origin develop</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git checkout -b feature/dashboard</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git push -u origin feature/dashboard</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span class="command">#
+                                                    Create shared interfaces</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git add src/interfaces/dashboard.ts</span></div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git commit -m "Add dashboard interfaces"</span>
+                                            </div>
+                                            <div class="terminal-line"><span
+                                                    class="prompt">dev1@laptop:~/project$</span> <span
+                                                    class="command">git push</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5 class="font-semibold mb-2">Success Factors:</h5>
+                                    <ul class="list-disc pl-6 space-y-2">
+                                        <li>Clear component boundaries</li>
+                                        <li>Agreement on data structures</li>
+                                        <li>Regular communication</li>
+                                        <li>Frequent small pushes</li>
+                                        <li>Shared understanding of acceptance criteria</li>
+                                    </ul>
+
+                                    <div class="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                                        <h6 class="font-semibold mb-1 text-amber-800">Common Pitfalls:</h6>
+                                        <ul class="list-disc pl-6 space-y-1 text-amber-800">
+                                            <li>Working on the same files without coordination</li>
+                                            <li>Not pulling frequently enough</li>
+                                            <li>Making large, sweeping changes</li>
+                                            <li>Pushing broken code to the shared branch</li>
+                                            <li>Not following agreed-upon patterns and interfaces</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2 content -->
+                        <div id="scenario2" class="tab-content">
+                            <h4 class="font-bold text-lg mb-3">Breaking Down a Complex Feature</h4>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Scenario:</h5>
+                                    <p class="mb-4">Building a complete payment processing system with frontend, API,
+                                        database changes, and third-party integrations.</p>
+
+                                    <h5 class="font-semibold mb-2">Approach:</h5>
+                                    <ul class="list-disc pl-6 space-y-1 mb-4">
+                                        <li>Create a main <code>feature/payments</code> branch</li>
+                                        <li>Create sub-feature branches:
+                                            <ul class="list-disc pl-6 mt-1">
+                                                <li><code>feature/payments-ui</code></li>
+                                                <li><code>feature/payments-api</code></li>
+                                                <li><code>feature/payments-integration</code></li>
+                                            </ul>
+                                        </li>
+                                        <li>Merge sub-features into the main feature branch</li>
+                                        <li>Test integration on the main feature branch</li>
+                                        <li>Create final PR from <code>feature/payments</code> to <code>develop</code>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <div class="bg-gray-50 p-3 rounded border border-gray-200 mb-4">
+                                        <h6 class="font-semibold mb-1">Branch Flow:</h6>
+                                        <pre class="text-xs">
+develop
+  └── feature/payments
+       ├── feature/payments-ui
+       ├── feature/payments-api
+       └── feature/payments-integration
+                            </pre>
+                                    </div>
+
+                                    <h5 class="font-semibold mb-2">Benefits:</h5>
+                                    <ul class="list-disc pl-6 space-y-2">
+                                        <li>Allows parallel development</li>
+                                        <li>Easier to review smaller components</li>
+                                        <li>Integration testing before merging to develop</li>
+                                        <li>Clear responsibility for each part</li>
+                                        <li>Lower risk of breaking changes</li>
+                                    </ul>
+
+                                    <div class="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                                        <h6 class="font-semibold mb-1 text-green-800">Pro Tip:</h6>
+                                        <p class="text-green-800">
+                                            Use feature flags to integrate incomplete features into develop without
+                                            exposing them to users. This allows for earlier integration and testing.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 3 content -->
+                        <div id="scenario3" class="tab-content">
+                            <h4 class="font-bold text-lg mb-3">Collaborative Refactoring</h4>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Scenario:</h5>
+                                    <p class="mb-4">Your team needs to refactor a core part of the application that many
+                                        developers rely on.</p>
+
+                                    <h5 class="font-semibold mb-2">Approach:</h5>
+                                    <ul class="list-disc pl-6 space-y-1 mb-4">
+                                        <li>Create a <code>refactor/core-service</code> branch</li>
+                                        <li>Clearly document the plan and interfaces</li>
+                                        <li>Set aside dedicated time for team refactoring</li>
+                                        <li>Use pair programming for critical sections</li>
+                                        <li>Maintain backward compatibility where possible</li>
+                                        <li>Write thorough tests before and after changes</li>
+                                    </ul>
+
+                                    <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                                        <h6 class="font-semibold mb-1 text-indigo-800">Communication is Key:</h6>
+                                        <p class="text-indigo-800">
+                                            For major refactoring, consider a brief code freeze or coordinated work
+                                            session where the entire team focuses on the refactoring together.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5 class="font-semibold mb-2">Refactoring Strategies:</h5>
+                                    <ol class="list-decimal pl-6 space-y-2 mb-4">
+                                        <li><strong>Strangler Pattern:</strong> Gradually replace old functionality with
+                                            new implementations</li>
+                                        <li><strong>Branch by Abstraction:</strong> Create abstractions that allow both
+                                            old and new implementations to coexist</li>
+                                        <li><strong>Parallel Implementation:</strong> Build the new system alongside the
+                                            old one, then switch over</li>
+                                    </ol>
+
+                                    <h5 class="font-semibold mb-2">Success Metrics:</h5>
+                                    <ul class="list-disc pl-6 space-y-1">
+                                        <li>Comprehensive test coverage</li>
+                                        <li>No regressions in functionality</li>
+                                        <li>Improved code metrics (complexity, etc.)</li>
+                                        <li>Clear documentation of changes</li>
+                                        <li>Team understanding of the new implementation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Collaboration Challenge -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Collaboration Challenge</h3>
+                    <p class="mb-4">You're working with a teammate on a feature branch. Choose the best action for each
+                        situation:</p>
+
+                    <div class="space-y-6">
+                        <div class="p-4 border rounded-lg">
+                            <p class="font-semibold mb-3">Scenario 1: Your teammate tells you they're working on the
+                                UserProfile.js file. You also need to make changes to it. What should you do?</p>
+
+                            <div class="space-y-2">
+                                <button class="option-button collab-option" data-scenario="1" data-correct="false">
+                                    Make your changes anyway and resolve conflicts later
+                                </button>
+                                <button class="option-button collab-option" data-scenario="1" data-correct="true">
+                                    Coordinate with your teammate to decide who changes what, or work on it together
+                                </button>
+                                <button class="option-button collab-option" data-scenario="1" data-correct="false">
+                                    Tell your teammate to work on something else since you need the file
+                                </button>
+                                <button class="option-button collab-option" data-scenario="1" data-correct="false">
+                                    Create a separate branch from develop to make your changes
+                                </button>
+                            </div>
+
+                            <div class="collab-feedback mt-4 p-3 rounded-lg bg-green-50 text-green-800 hidden"
+                                data-scenario="1">
+                                <p><strong>Correct!</strong> Communication is key when working on the same files.
+                                    Coordinate with your teammate to avoid duplicating work or creating conflicts.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded-lg">
+                            <p class="font-semibold mb-3">Scenario 2: You're about to start work on the shared feature
+                                branch. Which of these should you do first?</p>
+
+                            <div class="space-y-2">
+                                <button class="option-button collab-option" data-scenario="2" data-correct="false">
+                                    Create a new branch from the feature branch
+                                </button>
+                                <button class="option-button collab-option" data-scenario="2" data-correct="false">
+                                    Start coding immediately to be efficient
+                                </button>
+                                <button class="option-button collab-option" data-scenario="2" data-correct="true">
+                                    Pull the latest changes from the remote feature branch
+                                </button>
+                                <button class="option-button collab-option" data-scenario="2" data-correct="false">
+                                    Push your local changes to the remote
+                                </button>
+                            </div>
+
+                            <div class="collab-feedback mt-4 p-3 rounded-lg bg-green-50 text-green-800 hidden"
+                                data-scenario="2">
+                                <p><strong>Correct!</strong> Always pull the latest changes before starting work to
+                                    ensure you have the most up-to-date code, especially when collaborating with others.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded-lg">
+                            <p class="font-semibold mb-3">Scenario 3: Your team is working on a complex feature with
+                                multiple components. What's the best way to organize the work?</p>
+
+                            <div class="space-y-2">
+                                <button class="option-button collab-option" data-scenario="3" data-correct="false">
+                                    Everyone works directly on develop to avoid branch complexity
+                                </button>
+                                <button class="option-button collab-option" data-scenario="3" data-correct="false">
+                                    Create a separate feature branch for each developer
+                                </button>
+                                <button class="option-button collab-option" data-scenario="3" data-correct="true">
+                                    Create a main feature branch with task sub-branches for different components
+                                </button>
+                                <button class="option-button collab-option" data-scenario="3" data-correct="false">
+                                    Wait until one component is finished before starting the next
+                                </button>
+                            </div>
+
+                            <div class="collab-feedback mt-4 p-3 rounded-lg bg-green-50 text-green-800 hidden"
+                                data-scenario="3">
+                                <p><strong>Correct!</strong> For complex features, organizing work into
+                                    component-specific branches allows parallel development while keeping related
+                                    changes grouped together.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commit Best Practices Content -->
+<div id="commit-practices-content" class="scenario-content">
+    <h2 class="text-3xl font-bold mb-6">Commit Best Practices</h2>
+    
+    <p class="text-lg mb-6">
+        Effective commit practices are essential for maintaining a clear project history and facilitating team collaboration.
+        This section covers best practices for creating meaningful commits and managing your changes.
+    </p>
+    
+    <!-- Good vs Bad Commits Comparison -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h3 class="text-xl font-bold mb-4">Effective vs. Ineffective Commits</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h4 class="font-bold text-lg mb-3 text-red-600">Ineffective Commits</h4>
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                    <pre class="text-sm mb-2 whitespace-pre-wrap">git add .
+git commit -m "fixes"</pre>
+                    <ul class="list-disc pl-6 space-y-2 text-red-800">
+                        <li>Uses <code>git add .</code> (adds everything)</li>
+                        <li>Vague commit message without context</li>
+                        <li>No reference to tickets or issues</li>
+                        <li>Potentially includes unrelated changes</li>
+                        <li>Could contain temporary files or logs</li>
+                    </ul>
+                    
+                    <div class="mt-4">
+                        <h5 class="font-semibold mb-2">Bad Message Examples:</h5>
+                        <div class="space-y-1">
+                            <div class="bg-white p-2 rounded border border-red-300 text-sm">"Fixed stuff"</div>
+                            <div class="bg-white p-2 rounded border border-red-300 text-sm">"WIP"</div>
+                            <div class="bg-white p-2 rounded border border-red-300 text-sm">"Updates"</div>
+                            <div class="bg-white p-2 rounded border border-red-300 text-sm">"Changed login.js"</div>
+                            <div class="bg-white p-2 rounded border border-red-300 text-sm">"asdf1234"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-3 text-green-600">Effective Commits</h4>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <pre class="text-sm mb-2 whitespace-pre-wrap">git add src/components/LoginForm.js
+git add src/services/auth.js
+git commit -m "Fix authentication timeout issue (#253)"</pre>
+                    <ul class="list-disc pl-6 space-y-2 text-green-800">
+                        <li>Adds specific files related to the change</li>
+                        <li>Clear, descriptive commit message</li>
+                        <li>References the issue number</li>
+                        <li>Contains only relevant changes</li>
+                        <li>Focused on a single logical change</li>
+                    </ul>
+                    
+                    <div class="mt-4">
+                        <h5 class="font-semibold mb-2">Good Message Examples:</h5>
+                        <div class="space-y-1">
+                            <div class="bg-white p-2 rounded border border-green-300 text-sm">"Add password reset functionality (#142)"</div>
+                            <div class="bg-white p-2 rounded border border-green-300 text-sm">"Fix data loading error in dashboard charts"</div>
+                            <div class="bg-white p-2 rounded border border-green-300 text-sm">"Improve form validation accessibility"</div>
+                            <div class="bg-white p-2 rounded border border-green-300 text-sm">"Refactor user authentication service for better testability"</div>
+                            <div class="bg-white p-2 rounded border border-green-300 text-sm">"Update dependencies to fix security vulnerabilities"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Commit Message Structure -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h3 class="text-xl font-bold mb-4">Commit Message Structure</h3>
+        
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-4">
+            <pre class="text-sm whitespace-pre"><span class="text-blue-800 font-semibold">Short summary (50 chars or less)</span>
+
+<span class="text-indigo-600 font-medium">More detailed explanatory text, if necessary. Wrap it to about 72
+characters. The blank line separating the summary from the body is
+critical.</span>
+
+<span class="text-purple-600 font-medium">Explain the problem that this commit is solving. Focus on why you
+are making this change as opposed to how (the code explains that).
+Are there side effects or other unintuitive consequences of this
+change? Here's the place to explain them.</span>
+
+<span class="text-gray-600 font-medium">Further paragraphs come after blank lines.</span>
+
+<span class="text-gray-600 font-medium">- Bullet points are okay, too</span>
+<span class="text-gray-600 font-medium">- Typically a hyphen or asterisk is used for the bullet, preceded</span>
+<span class="text-gray-600 font-medium">  by a single space</span>
+
+<span class="text-red-600 font-medium">Resolves: #123</span>
+<span class="text-red-600 font-medium">See also: #456, #789</span></pre>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="font-bold text-lg mb-3">Components:</h4>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><strong>Subject Line:</strong> Brief summary (50 chars max)</li>
+                    <li><strong>Body:</strong> Detailed explanation if needed</li>
+                    <li><strong>Problem Statement:</strong> Why this change is needed</li>
+                    <li><strong>Issue References:</strong> Links to related tickets</li>
+                </ul>
+                
+                <div class="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                    <h5 class="font-semibold mb-1 text-amber-800">Using Conventional Commits:</h5>
+                    <pre class="text-sm whitespace-pre mt-2"><span class="text-amber-800 font-medium">feat: add user authentication</span>
+<span class="text-amber-800 font-medium">fix: resolve login timeout issue (#123)</span>
+<span class="text-amber-800 font-medium">docs: update API documentation</span>
+<span class="text-amber-800 font-medium">style: format code according to style guide</span>
+<span class="text-amber-800 font-medium">refactor: simplify payment processing logic</span>
+<span class="text-amber-800 font-medium">test: add unit tests for auth service</span>
+<span class="text-amber-800 font-medium">chore: update dependencies</span></pre>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-3">Best Practices:</h4>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Use the imperative mood ("Add feature" not "Added feature")</li>
+                    <li>Capitalize the subject line</li>
+                    <li>Do not end the subject line with a period</li>
+                    <li>Separate subject from body with a blank line</li>
+                    <li>Use the body to explain what and why vs. how</li>
+                    <li>Reference issues and pull requests liberally</li>
+                </ul>
+                
+                <div class="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <h5 class="font-semibold mb-1 text-indigo-800">Multi-line Commit Example:</h5>
+                    <pre class="text-sm whitespace-pre mt-2"><span class="text-indigo-800 font-medium">Implement password reset functionality</span>
+
+<span class="text-indigo-800 font-medium">- Add password reset form component
+- Create email notification service
+- Connect to authentication API
+- Add unit tests for reset flow</span>
+
+<span class="text-indigo-800 font-medium">Resolves: #142</span></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Focused Commits Strategy -->
+    <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+        <h3 class="text-xl font-bold mb-4 text-blue-800">The Value of Specific File Additions</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="font-bold text-lg mb-3 text-blue-700">Why Avoid <code>git add .</code>?</h4>
+                <ul class="list-disc pl-6 space-y-2 text-blue-900">
+                    <li>Prevents accidental inclusion of:
+                        <ul class="list-disc pl-6 mt-1">
+                            <li>Temporary files (.tmp, .swp)</li>
+                            <li>Log files</li>
+                            <li>Local configuration changes</li>
+                            <li>Build artifacts</li>
+                            <li>Environment-specific files</li>
+                        </ul>
+                    </li>
+                    <li>Forces conscious review of each changed file</li>
+                    <li>Makes you think about logical grouping of changes</li>
+                    <li>Helps maintain atomic commits</li>
+                    <li>Prevents unrelated changes in single commits</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-3 text-blue-700">Better Alternatives:</h4>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h5 class="font-semibold mb-1">Use specific file paths:</h5>
+                        <pre class="bg-white p-2 rounded text-sm">git add src/components/LoginForm.js</pre>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-1">Add files interactively:</h5>
+                        <pre class="bg-white p-2 rounded text-sm">git add -p</pre>
+                        <p class="text-sm mt-1">Lets you review and select specific chunks of changes</p>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-1">Add by pattern (carefully):</h5>
+                        <pre class="bg-white p-2 rounded text-sm">git add src/components/*.js</pre>
+                        <p class="text-sm mt-1">Adds all JavaScript files in a specific directory</p>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-1">Use Visual Tools:</h5>
+                        <p class="text-sm">Use Git GUI tools like VS Code's source control panel to selectively stage changes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Advanced Tips -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-bold text-lg mb-3">Commit Organization Strategies</h4>
+            <ul class="list-disc pl-6 space-y-2">
+                <li><strong>Atomic Commits:</strong> Each commit should address a single logical change</li>
+                <li><strong>Frequent Small Commits:</strong> Commit often to create a detailed history</li>
+                <li><strong>Logical Grouping:</strong> Group related changes in a single commit</li>
+                <li><strong>Separate Concerns:</strong> Keep functional changes separate from style/refactoring changes</li>
+                <li><strong>Complete Changes:</strong> Ensure each commit leaves the codebase in a functioning state</li>
+            </ul>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h4 class="font-bold text-lg mb-3">Useful Git Commands</h4>
+            <div class="space-y-3">
+                <div>
+                    <p class="font-semibold">View changes before committing:</p>
+                    <pre class="bg-gray-100 p-2 rounded text-sm">git diff</pre>
+                </div>
+                <div>
+                    <p class="font-semibold">View staged changes:</p>
+                    <pre class="bg-gray-100 p-2 rounded text-sm">git diff --staged</pre>
+                </div>
+                <div>
+                    <p class="font-semibold">Unstage a file:</p>
+                    <pre class="bg-gray-100 p-2 rounded text-sm">git restore --staged &lt;file&gt;</pre>
+                </div>
+                <div>
+                    <p class="font-semibold">Amend the previous commit:</p>
+                    <pre class="bg-gray-100 p-2 rounded text-sm">git commit --amend</pre>
+                </div>
+                <div>
+                    <p class="font-semibold">View commit history for a file:</p>
+                    <pre class="bg-gray-100 p-2 rounded text-sm">git log --follow &lt;file&gt;</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Interactive Commit Practice -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-bold mb-4">Commit Message Challenge</h3>
+        <p class="mb-4">Rate these commit messages based on their effectiveness:</p>
+        
+        <div class="space-y-6">
+            <div class="commit-rating-item p-4 border rounded-lg">
+                <p class="font-semibold mb-3 commit-message">"fixed bugs"</p>
+                
+                <div class="flex items-center space-x-4 mb-3">
+                    <span class="text-sm text-gray-600">Rate this commit message:</span>
+                    <div class="rating-buttons">
+                        <button class="px-3 py-1 rounded border hover:bg-red-100" data-rating="1" data-correct="true">Poor</button>
+                        <button class="px-3 py-1 rounded border hover:bg-yellow-100" data-rating="2" data-correct="false">Fair</button>
+                        <button class="px-3 py-1 rounded border hover:bg-green-100" data-rating="3" data-correct="false">Good</button>
+                    </div>
+                </div>
+                
+                <div class="commit-feedback mt-3 p-3 rounded-lg hidden">
+                    <p><strong>Correct!</strong> This is a poor commit message. It's vague, doesn't specify which bugs were fixed, and provides no context for the changes.</p>
+                </div>
+            </div>
+            
+            <div class="commit-rating-item p-4 border rounded-lg">
+                <p class="font-semibold mb-3 commit-message">"Add password strength validation to registration form"</p>
+                
+                <div class="flex items-center space-x-4 mb-3">
+                    <span class="text-sm text-gray-600">Rate this commit message:</span>
+                    <div class="rating-buttons">
+                        <button class="px-3 py-1 rounded border hover:bg-red-100" data-rating="1" data-correct="false">Poor</button>
+                        <button class="px-3 py-1 rounded border hover:bg-yellow-100" data-rating="2" data-correct="false">Fair</button>
+                        <button class="px-3 py-1 rounded border hover:bg-green-100" data-rating="3" data-correct="true">Good</button>
+                    </div>
+                </div>
+                
+                <div class="commit-feedback mt-3 p-3 rounded-lg hidden">
+                    <p><strong>Correct!</strong> This is a good commit message. It clearly describes what was added and where, uses the imperative mood, and is specific about the change.</p>
+                </div>
+            </div>
+            
+            <div class="commit-rating-item p-4 border rounded-lg">
+                <p class="font-semibold mb-3 commit-message">"updated user.js"</p>
+                
+                <div class="flex items-center space-x-4 mb-3">
+                    <span class="text-sm text-gray-600">Rate this commit message:</span>
+                    <div class="rating-buttons">
+                        <button class="px-3 py-1 rounded border hover:bg-red-100" data-rating="1" data-correct="true">Poor</button>
+                        <button class="px-3 py-1 rounded border hover:bg-yellow-100" data-rating="2" data-correct="false">Fair</button>
+                        <button class="px-3 py-1 rounded border hover:bg-green-100" data-rating="3" data-correct="false">Good</button>
+                    </div>
+                </div>
+                
+                <div class="commit-feedback mt-3 p-3 rounded-lg hidden">
+                    <p><strong>Correct!</strong> This is a poor commit message. It only mentions which file was changed, but not what was updated or why the change was made.</p>
+                </div>
+            </div>
+            
+            <div class="commit-rating-item p-4 border rounded-lg">
+                <p class="font-semibold mb-3 commit-message">"fix: Handle API timeout errors in login form (#345)"</p>
+                
+                <div class="flex items-center space-x-4 mb-3">
+                    <span class="text-sm text-gray-600">Rate this commit message:</span>
+                    <div class="rating-buttons">
+                        <button class="px-3 py-1 rounded border hover:bg-red-100" data-rating="1" data-correct="false">Poor</button>
+                        <button class="px-3 py-1 rounded border hover:bg-yellow-100" data-rating="2" data-correct="false">Fair</button>
+                        <button class="px-3 py-1 rounded border hover:bg-green-100" data-rating="3" data-correct="true">Good</button>
+                    </div>
+                </div>
+                
+                <div class="commit-feedback mt-3 p-3 rounded-lg hidden">
+                    <p><strong>Correct!</strong> This is a good commit message. It uses the conventional commit format, clearly describes what was fixed, and references an issue number for more context.</p>
+                </div>
+            </div>
+            
+            <div class="commit-rating-item p-4 border rounded-lg">
+                <p class="font-semibold mb-3 commit-message">"CSS changes"</p>
+                
+                <div class="flex items-center space-x-4 mb-3">
+                    <span class="text-sm text-gray-600">Rate this commit message:</span>
+                    <div class="rating-buttons">
+                        <button class="px-3 py-1 rounded border hover:bg-red-100" data-rating="1" data-correct="true">Poor</button>
+                        <button class="px-3 py-1 rounded border hover:bg-yellow-100" data-rating="2" data-correct="false">Fair</button>
+                        <button class="px-3 py-1 rounded border hover:bg-green-100" data-rating="3" data-correct="false">Good</button>
+                    </div>
+                </div>
+                
+                <div class="commit-feedback mt-3 p-3 rounded-lg hidden">
+                    <p><strong>Correct!</strong> This is a poor commit message. It only mentions the type of files changed, but doesn't specify which CSS was changed, where, or why.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <!-- Enhanced JavaScript for interactivity -->
+    <script>
+        // Hotfix workflow interactive drag-and-drop functionality
+        function initHotfixChallenge() {
+            const hotfixStepsContainer = document.getElementById('hotfix-steps');
+            const checkHotfixButton = document.getElementById('check-hotfix');
+            const hotfixFeedback = document.getElementById('hotfix-feedback');
+
+            if (!hotfixStepsContainer || !checkHotfixButton) return;
+
+            // Make steps draggable
+            const hotfixSteps = hotfixStepsContainer.querySelectorAll('.hotfix-step');
+            let draggedElement = null;
+
+            hotfixSteps.forEach(step => {
+                // Make step draggable
+                step.setAttribute('draggable', 'true');
+
+                // Add drag start event
+                step.addEventListener('dragstart', function (e) {
+                    draggedElement = this;
+                    this.classList.add('bg-gray-100');
+
+                    // Required for Firefox
+                    e.dataTransfer.setData('text/plain', '');
+                });
+
+                // Add drag end event
+                step.addEventListener('dragend', function () {
+                    this.classList.remove('bg-gray-100');
+                    draggedElement = null;
+                });
+
+                // Add dragover event
+                step.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                });
+
+                // Add dragenter event
+                step.addEventListener('dragenter', function (e) {
+                    e.preventDefault();
+                    if (this !== draggedElement) {
+                        this.classList.add('border-blue-500');
+                    }
+                });
+
+                // Add dragleave event
+                step.addEventListener('dragleave', function () {
+                    this.classList.remove('border-blue-500');
+                });
+
+                // Add drop event
+                step.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    this.classList.remove('border-blue-500');
+
+                    if (this !== draggedElement) {
+                        // Get positions
+                        const allSteps = Array.from(hotfixStepsContainer.querySelectorAll('.hotfix-step'));
+                        const draggedIndex = allSteps.indexOf(draggedElement);
+                        const dropIndex = allSteps.indexOf(this);
+
+                        // Swap elements
+                        if (draggedIndex < dropIndex) {
+                            hotfixStepsContainer.insertBefore(draggedElement, this.nextSibling);
+                        } else {
+                            hotfixStepsContainer.insertBefore(draggedElement, this);
+                        }
+                    }
+                });
+            });
+
+            // Check order button
+            checkHotfixButton.addEventListener('click', function () {
+                const currentSteps = Array.from(hotfixStepsContainer.querySelectorAll('.hotfix-step'));
+                let correct = true;
+                let correctOrder = [];
+
+                // Check if steps are in correct order
+                currentSteps.forEach((step, index) => {
+                    const correctPosition = parseInt(step.getAttribute('data-order')) - 1;
+                    if (index !== correctPosition) {
+                        correct = false;
+                    }
+
+                    // Save correct order for display
+                    correctOrder[parseInt(step.getAttribute('data-order')) - 1] = step.textContent.trim();
+                });
+
+                // Display feedback
+                hotfixFeedback.classList.remove('hidden', 'bg-green-50', 'bg-red-50', 'text-green-800', 'text-red-800');
+
+                if (correct) {
+                    hotfixFeedback.classList.add('bg-green-50', 'text-green-800');
+                    hotfixFeedback.innerHTML = '<strong>Correct!</strong> You\'ve mastered the hotfix workflow process.';
+                } else {
+                    hotfixFeedback.classList.add('bg-red-50', 'text-red-800');
+                    hotfixFeedback.innerHTML = '<strong>Not quite!</strong> The correct order is:' +
+                        '<ol class="list-decimal pl-5 mt-2">' +
+                        correctOrder.map(function (step) { return '<li>' + step + '</li>'; }).join('') +
+                        '</ol>' +
+                        '<p class="mt-2">This sequence ensures your hotfix is properly applied to all branches.</p>';
+                }
+
+                hotfixFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        }
+
+        function initCollaborationTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            if (!tabButtons.length) return;
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get tab ID
+                    const tabId = this.getAttribute('data-tab');
+
+                    // Deactivate all tabs and buttons
+                    document.querySelectorAll('.tab-content').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Activate the selected tab and button
+                    document.getElementById(tabId).classList.add('active');
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Collaboration scenario interactive challenge
+        function initCollaborationChallenge() {
+            const collabOptions = document.querySelectorAll('.collab-option');
+            if (!collabOptions.length) return;
+
+            // Define feedback messages for each scenario
+            const feedbackMessages = {
+                '1': {
+                    correct: '<strong>Correct!</strong> Communication is key when working on the same files. Coordinate with your teammate to avoid duplicating work or creating conflicts.',
+                    incorrect: '<strong>Incorrect.</strong> Communication is key when working on the same files. You should coordinate with your teammate to avoid conflicts.'
+                },
+                '2': {
+                    correct: '<strong>Correct!</strong> Always pull the latest changes before starting work to ensure you have the most up-to-date code, especially when collaborating with others.',
+                    incorrect: '<strong>Incorrect.</strong> Always pull the latest changes before starting work to ensure you have the most up-to-date code.'
+                },
+                '3': {
+                    correct: '<strong>Correct!</strong> For complex features, organizing work into component-specific branches allows parallel development while keeping related changes grouped together.',
+                    incorrect: '<strong>Incorrect.</strong> For complex features, organizing work into component-specific branches is most effective.'
+                }
+            };
+
+            collabOptions.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get scenario ID
+                    const scenarioId = this.getAttribute('data-scenario');
+
+                    // Reset all buttons in this scenario
+                    const scenarioButtons = document.querySelectorAll(`.collab-option[data-scenario="${scenarioId}"]`);
+                    scenarioButtons.forEach(btn => {
+                        btn.classList.remove('correct', 'incorrect');
+                    });
+
+                    // Mark this button as correct or incorrect
+                    const isCorrect = this.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                    }
+
+                    // Show feedback for this scenario
+                    const feedback = document.querySelector(`.collab-feedback[data-scenario="${scenarioId}"]`);
+                    if (feedback) {
+                        feedback.classList.remove('hidden');
+
+                        // Update feedback text and styling based on correct/incorrect
+                        if (isCorrect) {
+                            feedback.classList.add('bg-green-50', 'text-green-800');
+                            feedback.classList.remove('bg-red-50', 'text-red-800');
+                            feedback.innerHTML = feedbackMessages[scenarioId].correct;
+                        } else {
+                            feedback.classList.add('bg-red-50', 'text-red-800');
+                            feedback.classList.remove('bg-green-50', 'text-green-800');
+                            feedback.innerHTML = feedbackMessages[scenarioId].incorrect;
+                        }
+                    }
+                });
+            });
+        }
+
+        function initCommitRating() {
+    // Get all commit rating items
+    const commitRatingItems = document.querySelectorAll('.commit-rating-item');
+    if (!commitRatingItems.length) return;
+    
+    commitRatingItems.forEach(item => {
+        const ratingButtons = item.querySelectorAll('.rating-buttons button');
+        const feedback = item.querySelector('.commit-feedback');
+        
+        // Add click event to each rating button
+        ratingButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Reset all buttons
+                ratingButtons.forEach(btn => {
+                    btn.classList.remove('bg-red-100', 'bg-yellow-100', 'bg-green-100', 'font-semibold');
+                    btn.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500', 'text-white');
+                });
+                
+                // Get the rating value
+                const rating = this.getAttribute('data-rating');
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Style the clicked button
+                if (isCorrect) {
+                    if (rating === '1') {
+                        this.classList.add('bg-red-500', 'text-white', 'font-semibold');
+                    } else if (rating === '2') {
+                        this.classList.add('bg-yellow-500', 'text-white', 'font-semibold');
+                    } else if (rating === '3') {
+                        this.classList.add('bg-green-500', 'text-white', 'font-semibold');
+                    }
+                } else {
+                    if (rating === '1') {
+                        this.classList.add('bg-red-100', 'font-semibold');
+                    } else if (rating === '2') {
+                        this.classList.add('bg-yellow-100', 'font-semibold');
+                    } else if (rating === '3') {
+                        this.classList.add('bg-green-100', 'font-semibold');
+                    }
+                }
+                
+                // Show feedback
+                if (feedback) {
+                    feedback.classList.remove('hidden', 'bg-green-50', 'bg-red-50', 'text-green-800', 'text-red-800');
+                    
+                    if (isCorrect) {
+                        feedback.classList.add('bg-green-50', 'text-green-800');
+                    } else {
+                        feedback.classList.add('bg-red-50', 'text-red-800');
+                        
+                        // Get the commit message
+                        const commitMessage = item.querySelector('.commit-message').textContent;
+                        
+                        // Update feedback for incorrect answers
+                        if (commitMessage.includes('fixed bugs')) {
+                            feedback.innerHTML = '<strong>Incorrect.</strong> This is a poor commit message. It\'s vague and provides no context for the changes.';
+                        } else if (commitMessage.includes('Add password strength')) {
+                            feedback.innerHTML = '<strong>Incorrect.</strong> This is actually a good commit message. It clearly describes the change and is specific.';
+                        } else if (commitMessage.includes('updated user.js')) {
+                            feedback.innerHTML = '<strong>Incorrect.</strong> This is a poor commit message. It only mentions which file was changed, but not what was updated.';
+                        } else if (commitMessage.includes('fix: Handle API timeout')) {
+                            feedback.innerHTML = '<strong>Incorrect.</strong> This is a good commit message. It follows conventions and references an issue number.';
+                        } else if (commitMessage.includes('CSS changes')) {
+                            feedback.innerHTML = '<strong>Incorrect.</strong> This is a poor commit message. It\'s too vague and doesn\'t specify what was changed or why.';
+                        }
+                    }
+                    
+                    feedback.classList.remove('hidden');
+                }
+            });
+        });
+    });
+}
+
+
+        // Enhanced JavaScript for interactivity
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hide initial message when a scenario is clicked
+            const scenarioCards = document.querySelectorAll('.scenario-card');
+            const initialMessage = document.querySelector('.initial-message');
+
+            scenarioCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const scenarioId = this.getAttribute('data-scenario');
+
+                    // Hide initial message
+                    if (initialMessage) {
+                        initialMessage.style.display = 'none';
+                    }
+
+                    // Hide all scenario contents
+                    document.querySelectorAll('.scenario-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    // Show the selected scenario content
+                    const selectedContent = document.getElementById(scenarioId + '-content');
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+
+                        // Scroll to content
+                        selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Quiz functionality for Branch Strategy section
+            const quizButtons = document.querySelectorAll('.quiz-question .option-button');
+            quizButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get all buttons in this question
+                    const questionButtons = this.parentElement.querySelectorAll('.option-button');
+
+                    // Reset all buttons
+                    questionButtons.forEach(btn => {
+                        btn.classList.remove('correct', 'incorrect');
+                    });
+
+                    // Mark this button as correct or incorrect
+                    if (this.getAttribute('data-correct') === 'true') {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                    }
+
+                    // Show feedback
+                    const feedback = this.parentElement.nextElementSibling;
+                    if (feedback) {
+                        feedback.classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Command sequence functionality for Feature Workflow
+            if (document.getElementById('check-sequence')) {
+                document.getElementById('check-sequence').addEventListener('click', function () {
+                    const buttons = document.querySelectorAll('.command-sequence .option-button');
+                    let correct = true;
+                    let orderedCommands = [];
+
+                    // Check if buttons are in correct order
+                    buttons.forEach(button => {
+                        const order = parseInt(button.getAttribute('data-order'));
+                        const expectedIndex = order - 1;
+                        const actualIndex = Array.from(buttons).indexOf(button);
+
+                        if (expectedIndex !== actualIndex) {
+                            correct = false;
+                        }
+
+                        // Store commands in correct order for display
+                        orderedCommands[expectedIndex] = button.getAttribute('data-command');
+                    });
+
+                    // Get feedback element
+                    const feedback = document.getElementById('sequence-feedback');
+                    feedback.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800');
+
+                    if (correct) {
+                        feedback.classList.add('bg-green-50', 'text-green-800');
+                        feedback.innerHTML = "<strong>Correct!</strong> That's the right sequence for starting work on a new feature.";
+
+                        // Show terminal simulation
+                        const terminal = document.getElementById('terminal-simulation');
+                        terminal.classList.remove('hidden');
+                        terminal.innerHTML = '';
+
+                        // Simulate terminal output with proper delay
+                        setTimeout(function () {
+                            addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[0]);
+                            addTerminalLine(terminal, 'output', "Switched to branch 'develop'");
+
+                            setTimeout(function () {
+                                addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[1]);
+                                addTerminalLine(terminal, 'output', 'Already up to date.');
+
+                                setTimeout(function () {
+                                    addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[2]);
+                                    addTerminalLine(terminal, 'output', "Switched to a new branch 'feature/user-profile'");
+
+                                    setTimeout(function () {
+                                        addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', '# Make changes to files...');
+
+                                        setTimeout(function () {
+                                            addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[3]);
+
+                                            setTimeout(function () {
+                                                addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[4]);
+                                                addTerminalLine(terminal, 'output', '[feature/user-profile abc1234] Add user profile component');
+                                                addTerminalLine(terminal, 'output', '1 file changed, 35 insertions(+), 0 deletions(-)');
+
+                                                setTimeout(function () {
+                                                    addTerminalLine(terminal, 'prompt', 'user@laptop:~/project$', orderedCommands[5]);
+                                                    addTerminalLine(terminal, 'output', 'Enumerating objects: 5, done.');
+                                                    addTerminalLine(terminal, 'output', 'Counting objects: 100% (5/5), done.');
+                                                    addTerminalLine(terminal, 'output', 'Delta compression using up to 8 threads');
+                                                    addTerminalLine(terminal, 'output', 'Compressing objects: 100% (3/3), done.');
+                                                    addTerminalLine(terminal, 'output', 'Writing objects: 100% (3/3), 546 bytes | 546.00 KiB/s, done.');
+                                                    addTerminalLine(terminal, 'output', 'Total 3 (delta 2), reused 0 (delta 0)');
+                                                    addTerminalLine(terminal, 'output', 'remote: Resolving deltas: 100% (2/2), completed with 2 local objects.');
+                                                    addTerminalLine(terminal, 'output', 'To github.com:company/project.git');
+                                                    addTerminalLine(terminal, 'output', ' * [new branch]      feature/user-profile -> feature/user-profile');
+                                                }, 500);
+                                            }, 500);
+                                        }, 500);
+                                    }, 500);
+                                }, 500);
+                            }, 500);
+                        }, 300);
+
+                    } else {
+                        feedback.classList.add('bg-red-50', 'text-red-800');
+                        feedback.innerHTML = '<strong>Not quite right!</strong> The correct sequence is:<ol class="list-decimal pl-5 mt-2">' +
+                            orderedCommands.map(function (cmd) { return '<li>' + cmd + '</li>'; }).join('') +
+                            '</ol><p class="mt-2">This sequence ensures you start from the latest develop version before creating your feature branch.</p>';
+                    }
+                });
+            }
+
+            // Helper function to add a line to terminal simulation
+            function addTerminalLine(terminal, type, prefix, content) {
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+
+                if (type === 'prompt') {
+                    line.innerHTML = '<span class="prompt">' + prefix + '</span> <span class="command">' + content + '</span>';
+                } else if (type === 'output') {
+                    line.innerHTML = '<span class="output">' + prefix + '</span>';
+                }
+
+                terminal.appendChild(line);
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+            // Add this to your existing JavaScript, after the section for command sequence functionality
+
+            // Conflict Resolution interactive functionality
+            const conflictOptions = document.querySelectorAll('.conflict-option');
+            conflictOptions.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get all buttons
+                    const allOptions = document.querySelectorAll('.conflict-option');
+
+                    // Reset all buttons
+                    allOptions.forEach(btn => {
+                        btn.classList.remove('correct', 'incorrect');
+                    });
+
+                    // Mark this button as correct or incorrect
+                    if (this.getAttribute('data-correct') === 'true') {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                    }
+
+                    // Show feedback
+                    const feedback = document.querySelector('.conflict-feedback');
+                    if (feedback) {
+                        feedback.classList.remove('hidden');
+                    }
+                });
+            });
+
+            initHotfixChallenge();
+            initCollaborationTabs();
+            initCollaborationChallenge();
+            initCommitRating();
+        });
+    </script>
+</body>
+
+</html>
