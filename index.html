@@ -1,1669 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreyas M Kaushik - Senior Software Engineer</title>
+    <title>Shreyas M Kaushik</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Add GSAP for animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <!-- Add Tween.js for more complex animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
     <style>
-        /* Core Styles */
-        
-         :root {
-            --primary-color: #3B82F6;
-            --secondary-color: #10B981;
-            --dark-bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.8);
-            --text-light: #f1f5f9;
+        :root {
+            --bg: #080c14;
+            --surface: #0d1421;
+            --border: rgba(56, 139, 253, 0.15);
+            --blue: #388bfd;
+            --green: #3fb950;
+            --orange: #f0883e;
+            --text: #e6edf3;
+            --muted: #7d8590;
         }
-        /* Reset default scrollbar */
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        /* Single scrollbar setup */
-        
-        html,
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Sans', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            font-family: 'Inter', sans-serif;
-            position: relative;
         }
-        
-        body {
-            position: relative;
-            height: 100%;
+        body::-webkit-scrollbar { width: 4px; }
+        body::-webkit-scrollbar-track { background: var(--bg); }
+        body::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+        code, .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        #bg-canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
-        /* Hide scrollbar but keep functionality */
-        
-        body::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
+
+        /* NAV */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
         }
-        
-        #experience-world {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            z-index: 0 !important;
-            pointer-events: none;
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 56px;
         }
-        
-        .content-section {
-            position: relative;
-            z-index: 1;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; color: var(--blue); letter-spacing: 0.05em; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.2s; letter-spacing: 0.03em; }
+        .nav-links a:hover { color: var(--text); }
+        .btn-resume {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem; padding: 6px 16px;
+            border: 1px solid var(--blue); color: var(--blue);
+            border-radius: 4px; text-decoration: none; transition: all 0.2s;
+            letter-spacing: 0.05em;
         }
-        
-        .glowing-border {
-            position: relative;
+        .btn-resume:hover { background: rgba(56, 139, 253, 0.1); color: var(--blue); }
+
+        /* SECTIONS */
+        section { position: relative; z-index: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* HERO */
+        #home {
+            min-height: 100vh; display: flex; align-items: center;
+            padding-top: 56px;
         }
-        
-        .glowing-border::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 1.1rem;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .hero-tag {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+            color: var(--green); letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 1.5rem;
         }
-        
-        .glowing-border:hover::after {
-            opacity: 1;
+        .hero-name {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 600;
+            line-height: 1.1; letter-spacing: -0.02em;
+            margin-bottom: 1rem;
         }
-        
-        .navigation-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #475569;
-            cursor: pointer;
-            transition: all 0.3s;
+        .hero-name span { color: var(--blue); }
+        .hero-sub {
+            font-size: 1.1rem; color: var(--muted); max-width: 520px;
+            line-height: 1.7; margin-bottom: 2.5rem;
         }
-        
-        .navigation-dot.active {
-            background: var(--primary-color);
-            transform: scale(1.2);
-            box-shadow: 0 0 10px var(--primary-color);
+        .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-link {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+            color: var(--muted); text-decoration: none;
+            border: 1px solid var(--border); padding: 8px 16px;
+            border-radius: 4px; transition: all 0.2s; letter-spacing: 0.03em;
         }
-        
-        .section-content {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s;
+        .hero-link:hover { color: var(--text); border-color: rgba(56,139,253,0.4); background: rgba(56,139,253,0.05); }
+        .hero-link.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .hero-link.primary:hover { background: #58a6ff; border-color: #58a6ff; }
+        .hero-stats {
+            display: flex; gap: 3rem; margin-top: 4rem;
+            padding-top: 2rem; border-top: 1px solid var(--border);
         }
-        
-        .section-content.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-        
+        .hero-stat-num { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 600; color: var(--blue); }
+        .hero-stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+        /* CARDS */
         .card {
-            transition: all 0.3s ease;
-            background: var(--card-bg);
-            border-radius: 1rem;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.75rem;
+            transition: border-color 0.2s, transform 0.2s;
         }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        .card:hover { border-color: rgba(56,139,253,0.35); transform: translateY(-2px); }
+
+        /* SECTION HEADER */
+        .section-label {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+            color: var(--green); letter-spacing: 0.12em; text-transform: uppercase;
+            margin-bottom: 0.75rem;
         }
-        /* 3D Interactive Elements */
-        
-        .interactive-element {
-            position: relative;
-            cursor: pointer;
-            perspective: 1000px;
+        .section-title {
+            font-size: 1.8rem; font-weight: 600; letter-spacing: -0.02em;
+            margin-bottom: 3rem;
         }
-        
-        .interactive-element .inner {
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        /* EXPERIENCE TIMELINE */
+        .timeline { position: relative; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 8px;
+            bottom: 0; width: 1px; background: var(--border);
         }
-        
-        .interactive-element:hover .inner {
-            transform: rotateY(180deg);
+        .timeline-item { position: relative; padding-left: 2rem; margin-bottom: 3rem; }
+        .timeline-dot {
+            position: absolute; left: -5px; top: 8px;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--blue); border: 2px solid var(--bg);
         }
-        
-        .interactive-element .front,
-        .interactive-element .back {
-            backface-visibility: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
+        .timeline-dot.green { background: var(--green); }
+        .timeline-company { font-size: 0.78rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 0.25rem; }
+        .timeline-role { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .timeline-period { font-size: 0.75rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 1rem; }
+        .timeline-projects { display: flex; flex-direction: column; gap: 1rem; }
+        .project-block {
+            background: rgba(13, 20, 33, 0.8); border: 1px solid var(--border);
+            border-radius: 6px; padding: 1.25rem;
         }
-        
-        .interactive-element .back {
-            transform: rotateY(180deg);
+        .project-block:hover { border-color: rgba(56,139,253,0.3); }
+        .project-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; }
+        .project-stack {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+            color: var(--orange); margin-bottom: 0.6rem; letter-spacing: 0.02em;
         }
-        /* Skill Bars */
-        
-        .skill-bar {
-            height: 8px;
-            background: #1e293b;
-            border-radius: 4px;
-            overflow: hidden;
+        .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .skill-category { font-size: 0.75rem; color: var(--green); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .skill-tag {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+            background: rgba(56,139,253,0.08); border: 1px solid rgba(56,139,253,0.2);
+            color: var(--blue); padding: 3px 10px; border-radius: 3px;
         }
-        
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border-radius: 4px;
-            transition: width 1s ease-out;
+
+        /* PROJECTS */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .project-card-link { text-decoration: none; color: inherit; }
+        .project-card-link .card { height: 100%; }
+        .project-card-type {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+            color: var(--orange); letter-spacing: 0.08em; margin-bottom: 0.75rem;
         }
-        /* Tech stack hexagons */
-        
-        .hexagon-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            grid-gap: 1.5rem;
+        .project-card-name { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .project-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+        .project-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .project-card-tag {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+            color: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px;
         }
-        
-        .hexagon {
-            position: relative;
-            width: 100px;
-            height: 115px;
-            background: var(--card-bg);
-            margin: 0 auto;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+        .project-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--blue); margin-top: 1rem; display: inline-flex; align-items: center; gap: 6px; }
+
+        /* BLOGS */
+        .blogs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .blog-link { text-decoration: none; color: inherit; }
+        .blog-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 0.5rem; }
+        .blog-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.4; }
+        .blog-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+        .blog-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .blog-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--green); border: 1px solid rgba(63,185,80,0.2); padding: 2px 8px; border-radius: 3px; }
+
+        /* CONTACT */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .contact-icon { width: 40px; height: 40px; border-radius: 6px; background: rgba(56,139,253,0.1); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--blue); flex-shrink: 0; }
+        .contact-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+        .contact-value { font-size: 0.9rem; color: var(--text); text-decoration: none; }
+        .contact-value:hover { color: var(--blue); }
+        .social-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+        .social-btn {
+            width: 40px; height: 40px; border-radius: 6px;
+            background: rgba(56,139,253,0.05); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--muted); text-decoration: none; transition: all 0.2s;
         }
-        
-        .hexagon:hover {
-            transform: translateY(-10px);
-            background: rgba(59, 130, 246, 0.3);
+        .social-btn:hover { color: var(--blue); border-color: rgba(56,139,253,0.4); background: rgba(56,139,253,0.1); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem; text-align: center;
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+            color: var(--muted);
         }
-        
-        .hexagon i {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-        /* Project showcase */
-        
-        .project-showcase {
-            position: relative;
-            height: 300px;
-            overflow: hidden;
-            border-radius: 1rem;
-        }
-        
-        .project-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .project-showcase:hover .project-bg {
-            transform: scale(1.05);
-        }
-        
-        .project-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 2rem;
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
-        }
-        /* Blog cards */
-        
-        .blog-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-            background: var(--card-bg);
-            transition: all 0.3s ease;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
-        }
-        
-        .blog-card-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.9));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .blog-card:hover .blog-card-overlay {
-            opacity: 1;
-        }
-        /* Responsive Design */
-        
+
+        /* FADE IN */
+        .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* MOBILE */
+        .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 1.2rem; cursor: pointer; }
         @media (max-width: 768px) {
-            .nav-dots {
-                display: none;
-            }
-            .hexagon {
-                width: 70px;
-                height: 80px;
-            }
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+            .contact-grid { grid-template-columns: 1fr; }
         }
-        
-        #contact-3d-element {
-            position: relative !important;
-            height: 40vh !important;
-            width: 100% !important;
-            overflow: hidden !important;
-        }
-        
-        #contact-3d-element canvas {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
+
+        /* SCROLL PROGRESS */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px;
+            background: var(--blue); z-index: 100;
+            transition: width 0.1s;
         }
     </style>
 </head>
+<body>
+<div id="scroll-progress"></div>
+<canvas id="bg-canvas"></canvas>
 
-<body class="bg-gray-900 text-gray-100">
-    <!-- Background Canvas -->
-    <canvas id="experience-world"></canvas>
+<!-- NAV -->
+<header>
+    <nav>
+        <span class="nav-logo">shreyas@mphasis:~$</span>
+        <div class="nav-links">
+            <a href="#about">about</a>
+            <a href="#experience">experience</a>
+            <a href="#projects">projects</a>
+            <a href="#skills">skills</a>
+            <a href="#blogs">writing</a>
+            <a href="#contact">contact</a>
+            <a href="Resume.pdf" class="btn-resume">resume.pdf</a>
+        </div>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </nav>
+</header>
 
-    <!-- Navigation Dots -->
-    <div class="nav-dots fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
-        <div class="navigation-dot active mb-4" data-section="home"></div>
-        <div class="navigation-dot mb-4" data-section="about"></div>
-        <div class="navigation-dot mb-4" data-section="experience"></div>
-        <div class="navigation-dot mb-4" data-section="projects"></div>
-        <div class="navigation-dot mb-4" data-section="skills"></div>
-        <div class="navigation-dot mb-4" data-section="blogs"></div>
-        <div class="navigation-dot" data-section="contact"></div>
+<!-- HERO -->
+<section id="home">
+    <div class="container">
+        <div style="max-width:700px; padding: 5rem 0;">
+            <div class="hero-tag">// Senior Software Engineer</div>
+            <h1 class="hero-name">Shreyas<br><span>M Kaushik</span></h1>
+            <p class="hero-sub">Building agentic AI platforms and cloud-native infrastructure at scale. Currently at Mphasis Applied AI — shipping ATOM, an on-premises agent development platform for BFSI, and NexusAI, an enterprise LLM gateway.</p>
+            <div class="hero-links">
+                <a href="Resume.pdf" class="hero-link primary"><i class="fas fa-download"></i> Download Resume</a>
+                <a href="https://github.com/shreyasY2k" target="_blank" class="hero-link"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="hero-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="mailto:shreyasmk.mathur@gmail.com" class="hero-link"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-num">4+</div>
+                    <div class="hero-stat-label">years experience</div>
+                </div>
+                <div>
+                    <div class="hero-stat-num">10M+</div>
+                    <div class="hero-stat-label">messages/day systems</div>
+                </div>
+                <div>
+                    <div class="hero-stat-num">4M+</div>
+                    <div class="hero-stat-label">images classified/month</div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
-        <nav class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16 items-center">
-                <span class="text-xl font-bold text-white">Shreyas M Kaushik</span>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#about" class="text-gray-300 hover:text-blue-400 transition">About</a>
-                    <a href="#experience" class="text-gray-300 hover:text-blue-400 transition">Experience</a>
-                    <a href="#projects" class="text-gray-300 hover:text-blue-400 transition">Projects</a>
-                    <a href="#skills" class="text-gray-300 hover:text-blue-400 transition">Skills</a>
-                    <a href="#blogs" class="text-gray-300 hover:text-blue-400 transition">Blogs</a>
-                    <a href="#contact" class="text-gray-300 hover:text-blue-400 transition">Get in Touch</a>
-                    <a href="Resume.pdf" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                        Resume
-                    </a>
-                </div>
-                <button class="md:hidden text-white">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center relative py-20">
-            <div class="max-w-7xl mx-auto px-4 text-center z-10">
-                <div class="text-6xl mb-6 floating">👨‍💻</div>
-                <h1 class="text-5xl font-bold text-white mb-4">Shreyas M Kaushik</h1>
-                <p class="text-xl text-gray-300 mb-8">Senior Software Engineer | Node.js | FastAPI | AI Integration Specialist
+<!-- ABOUT -->
+<section id="about" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">01 / about</div>
+        <h2 class="section-title">A bit about me</h2>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="card fade-in">
+                <p style="color:var(--muted); line-height:1.8; font-size:0.95rem;">
+                    I'm a Senior Software Engineer who specialises in agentic AI systems and cloud-native infrastructure.
+                    Started my career at IHX processing millions of medical documents daily, where I learned what it means to
+                    build systems that can't go down. Moved to Mphasis Applied AI to see how AI products get built and sold to
+                    enterprise — and ended up building ATOM, an agent platform I initially designed as an OSS project that's now
+                    running in production for BFSI clients.
                 </p>
-                <div class="flex justify-center space-x-6 mb-8">
-                    <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-300 hover:text-blue-400 transition">
-                        <i class="fas fa-envelope text-2xl"></i>
-                    </a>
-                    <a href="https://github.com/shreyasY2k" class="text-gray-300 hover:text-blue-400 transition">
-                        <i class="fab fa-github text-2xl"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/me-shreyasmk" class="text-gray-300 hover:text-blue-400 transition">
-                        <i class="fab fa-linkedin text-2xl"></i>
-                    </a>
-                    <a href="https://medium.com/@shreyasmk.mathur" class="text-gray-300 hover:text-blue-400 transition">
-                        <i class="fab fa-medium text-2xl"></i>
-                    </a>
-                </div>
-                <a href="Resume.pdf" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                    <i class="fas fa-download mr-2"></i> Download Resume
-                </a>
+                <p style="color:var(--muted); line-height:1.8; font-size:0.95rem; margin-top:1rem;">
+                    I care most about the control plane around agents — auth, policy enforcement, observability, isolation.
+                    The agent logic is often the easy part. The infra that makes it safe and auditable is where the real engineering is.
+                </p>
             </div>
-
-            <!-- 3D Elements for Hero will be added with ThreeJS -->
-            <div id="hero-3d-elements" class="absolute inset-0 z-0"></div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">About Me</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="section-content">
-                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                Senior Software Engineer specializing in Node.js and FastAPI, with extensive experience in integrating and optimizing AI/ML models through API implementation. My expertise lies in building scalable applications and implementing efficient solutions that
-                                bridge the gap between complex AI models and user-friendly interfaces.
-                            </p>
-                            <p class="text-gray-300 text-lg leading-relaxed">
-                                At IHX, I've led the development of critical systems that process millions of transactions daily, including the development of a high-performance Persistence Engine and sophisticated Orchestration systems.
-                            </p>
-                        </div>
-                        <div class="section-content">
-                            <div class="card p-6">
-                                <h3 class="text-xl font-semibold text-white mb-4">Key Highlights</h3>
-                                <ul class="space-y-4">
-                                    <li class="flex items-center space-x-3">
-                                        <span class="text-blue-400 text-xl">•</span>
-                                        <span class="text-gray-300">Reduced query times from 1-2s to 10-15ms</span>
-                                    </li>
-                                    <li class="flex items-center space-x-3">
-                                        <span class="text-blue-400 text-xl">•</span>
-                                        <span class="text-gray-300">Processing 10M+ messages daily</span>
-                                    </li>
-                                    <li class="flex items-center space-x-3">
-                                        <span class="text-blue-400 text-xl">•</span>
-                                        <span class="text-gray-300">Implemented comprehensive MFA solutions</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+            <div class="card fade-in">
+                <div class="skill-category" style="margin-bottom:1.25rem;">key highlights</div>
+                <div style="display:flex; flex-direction:column; gap:1rem;">
+                    <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+                        <span style="color:var(--blue); margin-top:2px;">▸</span>
+                        <span style="color:var(--muted); font-size:0.88rem; line-height:1.6;">Built ATOM — an on-prem agentic platform where engineers write agents via SDK and ship with a single command. Every LLM call is policy-checked and immutably logged.</span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">Professional Experience</h2>
-                    <div class="space-y-8">
-                        <!-- Current Role -->
-                        <div class="section-content card p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-white">Senior Software Engineer</h3>
-                                    <p class="text-gray-400">IHX</p>
-                                </div>
-                                <span class="text-gray-400">Jul 2024 - Present</span>
-                            </div>
-                            <ul class="list-disc list-inside text-gray-300 space-y-2">
-                                <li>Led development of Persistence Engine using TypeORM and Node.js/TypeScript</li>
-                                <li>Architected Orchestration Engine processing 10M+ messages daily</li>
-                                <li>Implemented comprehensive MFA and SSO solution using Keycloak</li>
-                                <li>Designed infrastructure for model security and scaling strategies</li>
-                            </ul>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">AWS</span>
-                            </div>
-                        </div>
-
-                        <!-- Previous Role -->
-                        <div class="section-content card p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-white">Software Engineer</h3>
-                                    <p class="text-gray-400">IHX</p>
-                                </div>
-                                <span class="text-gray-400">Aug 2022 - Jun 2024</span>
-                            </div>
-                            <ul class="list-disc list-inside text-gray-300 space-y-2">
-                                <li>Created QC UI Screens for ML model output enhancement</li>
-                                <li>Built secure and efficient API layers for AI model integration</li>
-                                <li>Increased model accuracy from 64% to 96% through feedback system</li>
-                                <li>Implemented comprehensive observability using Promtail, Loki, and Grafana</li>
-                            </ul>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">React</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">ML
-                                    Integration</span>
-                            </div>
-                        </div>
-
-                        <!-- Internship -->
-                        <div class="section-content card p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-white">Software Engineering Intern</h3>
-                                    <p class="text-gray-400">NULENTA PVT. LTD</p>
-                                </div>
-                                <span class="text-gray-400">Aug 2021 - Apr 2022</span>
-                            </div>
-                            <ul class="list-disc list-inside text-gray-300 space-y-2">
-                                <li>Developed core talent sourcing product Pro10X (Chrome Extension)</li>
-                                <li>Implemented automated talent discovery and assessment features</li>
-                            </ul>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Chrome
-                                    Extension</span>
-                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">JavaScript</span>
-                            </div>
-                        </div>
+                    <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+                        <span style="color:var(--blue); margin-top:2px;">▸</span>
+                        <span style="color:var(--muted); font-size:0.88rem; line-height:1.6;">Reduced DB query time from 1–2s to 10–15ms across 10 tables at IHX.</span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">Project Showcase</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Persistence Engine -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-full">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="text-xl font-semibold text-white">Persistence Engine</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
-                                </div>
-                                <p class="text-gray-300 mb-4">
-                                    A single-layer persistence solution for extraction engines, reducing query time from 1-2s to 10-15ms across 10 tables. Streamlined data storage processes for multiple extractors.
-                                </p>
-                                <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeORM</span>
-                                </div>
-                                <div class="relative h-40 overflow-hidden rounded-lg bg-gray-800 p-2">
-                                    <div class="text-blue-400 text-sm font-mono">
-                                        <span class="text-green-400">// Persistence Layer Implementation</span>
-                                        <br />
-                                        <span class="text-purple-400">import</span> { EntityRepository } <span class="text-purple-400">from</span> <span class="text-green-400">'typeorm'</span>;
-                                        <br />
-                                        <span class="text-purple-400">class</span> <span class="text-yellow-400">GenericRepository</span>&lt;T&gt; {
-                                        <br /> &nbsp;&nbsp;
-                                        <span class="text-purple-400">async</span> <span class="text-yellow-400">findById</span>(id: <span class="text-blue-400">string</span>): <span class="text-purple-400">Promise</span>&lt;T&gt; {
-                                        <br /> &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span class="text-purple-400">return</span> <span class="text-purple-400">await</span> <span class="text-yellow-400">this</span>.repository.findOne(id);
-                                        <br /> &nbsp;&nbsp;}
-                                        <br /> }
-                                    </div>
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/70">
-                                        <span class="text-white">Optimized Query Performance</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Orchestration Engine -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-full">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="text-xl font-semibold text-white">Orchestration Engine</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
-                                </div>
-                                <p class="text-gray-300 mb-4">
-                                    A scalable system to process digitization requests and track processes across AI/ML entities. Processes over 10 million messages daily and consolidates statuses for client visualization.
-                                </p>
-                                <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeScript</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">AWS
-                                        SQS</span>
-                                </div>
-                                <div class="relative h-40 overflow-hidden rounded-lg">
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 p-4">
-                                        <div class="w-full flex items-center justify-between mb-4">
-                                            <div class="h-10 w-10 rounded-lg bg-blue-500/50 flex items-center justify-center">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                            <div class="h-px w-16 bg-blue-400"></div>
-                                            <div class="h-10 w-10 rounded-lg bg-purple-500/50 flex items-center justify-center">
-                                                <i class="fas fa-brain text-white"></i>
-                                            </div>
-                                            <div class="h-px w-16 bg-blue-400"></div>
-                                            <div class="h-10 w-10 rounded-lg bg-green-500/50 flex items-center justify-center">
-                                                <i class="fas fa-check-circle text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div class="text-sm text-gray-300">
-                                            <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded-full text-xs mr-2">10M+</span> messages processed daily
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Document Classifier -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-full">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="text-xl font-semibold text-white">Document Classifier</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Production</span>
-                                </div>
-                                <p class="text-gray-300 mb-4">
-                                    Verification system for India's Largest Health Benefits Administrator. Increased "complete claim submissions" from 23% to 77% within 2 weeks.
-                                </p>
-                                <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Node.js</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MongoDB</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">OAuth
-                                        2.0</span>
-                                </div>
-                                <div class="relative h-40 overflow-hidden rounded-lg bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-4">
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex flex-col items-center">
-                                            <div class="text-2xl font-bold text-red-400">23%</div>
-                                            <div class="text-xs text-gray-300">Before</div>
-                                        </div>
-                                        <div class="w-32 h-2 bg-gray-700 rounded-full">
-                                            <div class="h-full bg-gradient-to-r from-red-400 to-green-400 rounded-full animate-pulse" style="width: 77%"></div>
-                                        </div>
-                                        <div class="flex flex-col items-center">
-                                            <div class="text-2xl font-bold text-green-400">77%</div>
-                                            <div class="text-xs text-gray-300">After</div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-6 text-center">
-                                        <p class="text-gray-300 text-sm">Complete claim submissions on first instance
-                                        </p>
-                                        <div class="mt-2 flex justify-center space-x-2">
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">
-                                                Prescription</div>
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Lab Report
-                                            </div>
-                                            <div class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Invoice
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- QC UI Screens -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-full">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="text-xl font-semibold text-white">QC UI Screens</h3>
-                                    <span class="px-3 py-1 bg-green-900/50 text-green-300 rounded-full text-sm">Completed</span>
-                                </div>
-                                <p class="text-gray-300 mb-4">
-                                    Quality Control UI screens for ML model output correction and enhancement. Improved ML model accuracy from 64% to 96% through feedback system.
-                                </p>
-                                <div class="mt-4 flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">React</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MUI</span>
-                                    <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Redux</span>
-                                </div>
-                                <div class="relative h-40 overflow-hidden rounded-lg bg-gray-800">
-                                    <div class="absolute inset-0 p-3">
-                                        <div class="border-b border-gray-700 pb-2 mb-2 flex justify-between items-center">
-                                            <div class="text-white text-sm">Document Preview</div>
-                                            <div class="text-xs text-green-400">Model Accuracy: 96%</div>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-2 h-24">
-                                            <div class="bg-gray-900 rounded p-2 text-xs text-gray-300 overflow-hidden">
-                                                <div class="text-blue-400 mb-1">Extracted Data:</div>
-                                                <div>Patient: <span class="text-green-400">John Doe</span></div>
-                                                <div>Date: <span class="text-green-400">2025-03-10</span></div>
-                                                <div>Amount: <span class="text-green-400">$1,250.00</span></div>
-                                            </div>
-                                            <div class="bg-gray-900 rounded p-2 flex items-center justify-center text-gray-500">
-                                                <i class="fas fa-file-medical fa-2x"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+                        <span style="color:var(--blue); margin-top:2px;">▸</span>
+                        <span style="color:var(--muted); font-size:0.88rem; line-height:1.6;">Status notification system processing 10M+ messages per day using SNS.</span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">Skills & Technologies</h2>
-
-                    <!-- Skills Grid -->
-                    <div class="grid md:grid-cols-3 gap-8 mb-12">
-                        <!-- Frontend -->
-                        <div class="section-content">
-                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
-                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
-                                    <i class="fas fa-code text-blue-400 mr-3"></i> Frontend
-                                </h3>
-
-                                <div class="space-y-6">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">React</span>
-                                            <span class="text-blue-400">95%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" style="width: 95%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">JavaScript/TypeScript</span>
-                                            <span class="text-blue-400">98%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" style="width: 98%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">HTML/CSS</span>
-                                            <span class="text-blue-400">90%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" style="width: 90%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-4 flex flex-wrap gap-2">
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Tailwind</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">MUI</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Redux</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Backend -->
-                        <div class="section-content">
-                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
-                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
-                                    <i class="fas fa-server text-green-400 mr-3"></i> Backend
-                                </h3>
-
-                                <div class="space-y-6">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">Node.js</span>
-                                            <span class="text-blue-400">95%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width: 95%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">FastAPI</span>
-                                            <span class="text-blue-400">90%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width: 90%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">Express</span>
-                                            <span class="text-blue-400">95%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width: 95%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-4 flex flex-wrap gap-2">
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">TypeORM</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">REST
-                                            APIs</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Django</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- DevOps & Cloud -->
-                        <div class="section-content">
-                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700 h-full">
-                                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
-                                    <i class="fas fa-cloud text-purple-400 mr-3"></i> DevOps & Cloud
-                                </h3>
-
-                                <div class="space-y-6">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">AWS</span>
-                                            <span class="text-blue-400">85%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">Docker</span>
-                                            <span class="text-blue-400">90%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full" style="width: 90%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-300">CI/CD</span>
-                                            <span class="text-blue-400">85%</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-4 flex flex-wrap gap-2">
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">Kubernetes</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">GitHub
-                                            Actions</span>
-                                        <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-sm">GCP</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Technology Stack -->
-                    <div class="section-content bg-gray-800/80 rounded-lg border border-gray-700 p-6 mb-12">
-                        <h3 class="text-2xl font-semibold text-white mb-8">Tech Stack</h3>
-
-                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
-                            <!-- Tech items -->
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-node-js text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Node.js</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-python text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Python</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-react text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">React</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-js text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">JavaScript</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-aws text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">AWS</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-docker text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Docker</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fas fa-database text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">MongoDB</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fas fa-table text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">PostgreSQL</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fas fa-brain text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">AI/ML</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fas fa-key text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Keycloak</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fas fa-chart-line text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Grafana</span>
-                            </div>
-
-                            <div class="flex flex-col items-center justify-center p-4 bg-gray-900/50 rounded-lg hover:bg-blue-900/30 transition-colors duration-300">
-                                <i class="fab fa-github text-3xl text-blue-400 mb-2"></i>
-                                <span class="text-gray-300 text-sm text-center">Git</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- AI Development Experience -->
-                    <h3 class="text-2xl font-semibold text-white mb-8">AI Development Experience</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="section-content">
-                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700">
-                                <h4 class="text-lg font-semibold text-white mb-4">AI Implementation Highlights</h4>
-                                <ul class="space-y-6">
-                                    <li class="flex items-start">
-                                        <div class="mr-4 mt-1 w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center text-blue-400">
-                                            <i class="fas fa-robot"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-200 font-medium">Mistral-7b LLM Integration</p>
-                                            <p class="text-gray-400 text-sm mt-1">Enhanced document processing accuracy by 32% through LLM model integration and fine-tuning.</p>
-                                        </div>
-                                    </li>
-
-                                    <li class="flex items-start">
-                                        <div class="mr-4 mt-1 w-10 h-10 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400">
-                                            <i class="fas fa-file-alt"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-200 font-medium">Document Classification System</p>
-                                            <p class="text-gray-400 text-sm mt-1">Developed AI-powered system processing 20k+ documents daily with seamless API interfaces for client integration.
-                                            </p>
-                                        </div>
-                                    </li>
-
-                                    <li class="flex items-start">
-                                        <div class="mr-4 mt-1 w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center text-green-400">
-                                            <i class="fas fa-code-branch"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-200 font-medium">AI Model Feedback Loop</p>
-                                            <p class="text-gray-400 text-sm mt-1">Created efficient feedback systems to improve model accuracy from 64% to 96% through QC UI interfaces.</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="section-content">
-                            <div class="card p-6 bg-gray-800/80 rounded-lg border border-gray-700">
-                                <h4 class="text-lg font-semibold text-white mb-4">AI Tools & Integration</h4>
-
-                                <div class="space-y-6">
-                                    <div>
-                                        <div class="flex justify-between mb-2">
-                                            <span class="text-gray-300 flex items-center">
-                                                <i class="fas fa-code-branch text-purple-400 mr-2"></i>
-                                                GitHub Copilot
-                                            </span>
-                                            <span class="text-blue-400">Expert</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-purple-400 to-blue-500 rounded-full" style="width: 95%"></div>
-                                        </div>
-                                        <p class="text-xs text-gray-400 mt-1">Daily use in development workflow</p>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-2">
-                                            <span class="text-gray-300 flex items-center">
-                                                <i class="fas fa-comment-dots text-green-400 mr-2"></i>
-                                                Claude API Integration
-                                            </span>
-                                            <span class="text-blue-400">Advanced</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full" style="width: 90%"></div>
-                                        </div>
-                                        <p class="text-xs text-gray-400 mt-1">Integration for intelligent processing</p>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between mb-2">
-                                            <span class="text-gray-300 flex items-center">
-                                                <i class="fas fa-microchip text-blue-400 mr-2"></i>
-                                                Keycloak MultiMFA Development
-                                            </span>
-                                            <span class="text-blue-400">Expert</span>
-                                        </div>
-                                        <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full" style="width: 95%"></div>
-                                        </div>
-                                        <p class="text-xs text-gray-400 mt-1">Custom Java SPI extension development</p>
-                                    </div>
-
-                                    <div class="mt-6 p-4 bg-blue-900/30 rounded-lg">
-                                        <a href="https://github.com/shreyasY2k/KeycloakMultiMFA" target="_blank" class="flex items-center justify-between group">
-                                            <span class="text-gray-200 group-hover:text-blue-400 transition-colors">
-                                                <i class="fab fa-github mr-2"></i>
-                                                Keycloak MultiMFA Project
-                                            </span>
-                                            <i class="fas fa-external-link-alt text-blue-400"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blogs Section -->
-        <section id="blogs" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">Technical Writing</h2>
-
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Blog 1: MFA in Keycloak -->
-                        <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/mastering-multi-factor-authentication-in-keycloak-sms-email-and-totp-setup-guide-957305b92be1" target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 transform group-hover:scale-105 transition-transform duration-500">
-                                </div>
-                                <div class="relative p-6 h-full flex flex-col justify-between z-10">
-                                    <div>
-                                        <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-blue-600/70 text-white rounded-full text-sm">Guide</span>
-                                            <i class="fas fa-external-link-alt text-blue-300"></i>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Mastering Multi-Factor Authentication in Keycloak</h3>
-                                        <p class="text-gray-300">A comprehensive guide to implementing SMS, Email, and TOTP authentication in Keycloak</p>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <div class="flex items-center text-sm text-gray-400">
-                                            <i class="far fa-calendar-alt mr-2"></i>
-                                            <span>March 2024</span>
-                                        </div>
-
-                                        <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">MFA</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Security</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Blog 2: Centralized User Management -->
-                        <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/unlocking-seamless-access-orchestrating-centralized-user-management-with-keycloak-d1c51b13456a" target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500">
-                                </div>
-                                <div class="relative p-6 h-full flex flex-col justify-between z-10">
-                                    <div>
-                                        <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-purple-600/70 text-white rounded-full text-sm">Tutorial</span>
-                                            <i class="fas fa-external-link-alt text-blue-300"></i>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Centralized User Management with Keycloak
-                                        </h3>
-                                        <p class="text-gray-300">Deep dive into orchestrating user management using Keycloak for enterprise applications</p>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <div class="flex items-center text-sm text-gray-400">
-                                            <i class="far fa-calendar-alt mr-2"></i>
-                                            <span>February 2024</span>
-                                        </div>
-
-                                        <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Keycloak</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">IAM</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Enterprise</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Blog 3: Custom MFA Plugin -->
-                        <div class="section-content">
-                            <a href="https://medium.com/@shreyasmk.mathur/building-a-custom-multi-factor-authentication-mfa-plugin-for-keycloak-sms-email-telegram-152e33f2a02f" target="_blank" class="blog-card block h-80 relative rounded-lg overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-br from-green-900/80 to-blue-900/80 transform group-hover:scale-105 transition-transform duration-500">
-                                </div>
-                                <div class="relative p-6 h-full flex flex-col justify-between z-10">
-                                    <div>
-                                        <div class="flex justify-between items-start mb-4">
-                                            <span class="px-3 py-1 bg-green-600/70 text-white rounded-full text-sm">Development</span>
-                                            <i class="fas fa-external-link-alt text-blue-300"></i>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-white mb-2">Building a Custom MFA Plugin for Keycloak
-                                        </h3>
-                                        <p class="text-gray-300">How to build a Java SPI extension for Keycloak supporting SMS, Email, and Telegram authentication</p>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <div class="flex items-center text-sm text-gray-400">
-                                            <i class="far fa-calendar-alt mr-2"></i>
-                                            <span>March 2025</span>
-                                        </div>
-
-                                        <div class="mt-4 flex flex-wrap gap-2">
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Java</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">SPI</span>
-                                            <span class="px-2 py-1 bg-gray-800/70 text-blue-300 rounded text-xs">Open
-                                                Source</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- GitHub Repository Card -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-80 flex flex-col">
-                                <div class="flex justify-between items-start mb-6">
-                                    <h3 class="text-xl font-bold text-white flex items-center">
-                                        <i class="fab fa-github text-blue-400 mr-3"></i> KeycloakMultiMFA
-                                    </h3>
-                                </div>
-
-                                <p class="text-gray-300 mb-4">Open-source Java SPI extension for Keycloak providing multi-channel MFA authentication capabilities.</p>
-
-                                <div class="flex items-center mb-6">
-                                    <div class="mr-6 flex items-center">
-                                        <i class="fas fa-star text-yellow-400 mr-2"></i>
-                                        <span class="text-gray-300">32 stars</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-code-branch text-blue-400 mr-2"></i>
-                                        <span class="text-gray-300">8 forks</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">Java</span>
-                                    <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">Keycloak</span>
-                                    <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">SPI</span>
-                                    <span class="px-2 py-1 bg-gray-800 text-blue-300 rounded text-xs">MFA</span>
-                                </div>
-
-                                <div class="mt-auto">
-                                    <a href="https://github.com/shreyasY2k/KeycloakMultiMFA" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                                        <i class="fab fa-github mr-2"></i> View Repository
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Writing Stats -->
-                    <div class="section-content mt-12">
-                        <div class="card p-6 glowing-border">
-                            <h3 class="text-xl font-semibold text-white mb-6">Writing & Community Impact</h3>
-
-                            <div class="grid md:grid-cols-3 gap-6">
-                                <div class="bg-blue-900/30 rounded-lg p-4 text-center">
-                                    <div class="text-3xl font-bold text-blue-400 mb-2">3+</div>
-                                    <div class="text-sm text-gray-300">Technical Articles</div>
-                                </div>
-
-                                <div class="bg-green-900/30 rounded-lg p-4 text-center">
-                                    <div class="text-3xl font-bold text-green-400 mb-2">1000+</div>
-                                    <div class="text-sm text-gray-300">Article Views</div>
-                                </div>
-
-                                <div class="bg-purple-900/30 rounded-lg p-4 text-center">
-                                    <div class="text-3xl font-bold text-purple-400 mb-2">30+</div>
-                                    <div class="text-sm text-gray-300">GitHub Stars</div>
-                                </div>
-                            </div>
-
-                            <div class="mt-6 p-4 bg-gray-800/50 rounded-lg text-center">
-                                <p class="text-gray-300 italic">
-                                    "Sharing knowledge through writing has been one of the most rewarding aspects of my technical journey."
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="min-h-screen py-20 flex items-center">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="content-section p-8">
-                    <h2 class="text-3xl font-bold text-white mb-8">Get In Touch</h2>
-                    <div class="grid md:grid-cols-1 gap-8">
-                        <!-- Contact Information -->
-                        <div class="section-content">
-                            <div class="card p-6 glowing-border h-full">
-                                <h3 class="text-xl font-semibold text-white mb-6">Let's Connect</h3>
-
-                                <p class="text-gray-300 mb-8">
-                                    I'm always interested in hearing about new projects and opportunities. Feel free to reach out if you'd like to collaborate or just have a chat about technology.
-                                </p>
-
-                                <div class="space-y-6">
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
-                                            <i class="fas fa-envelope text-blue-400"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-white font-medium">Email</h4>
-                                            <a href="mailto:shreyasmk.mathur@gmail.com" class="text-gray-300 hover:text-blue-400 transition">
-                                                shreyasmk.mathur@gmail.com
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
-                                            <i class="fas fa-phone text-blue-400"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-white font-medium">Phone</h4>
-                                            <a href="tel:+918867229568" class="text-gray-300 hover:text-blue-400 transition">
-                                                +91 8867229568
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-4">
-                                            <i class="fas fa-map-marker-alt text-blue-400"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-white font-medium">Location</h4>
-                                            <p class="text-gray-300">
-                                                Bengaluru, Karnataka, India
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mt-8">
-                                    <h4 class="text-white font-medium mb-4">Social Profiles</h4>
-                                    <div class="flex space-x-4">
-                                        <a href="https://github.com/shreyasY2k" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
-                                            <i class="fab fa-github"></i>
-                                        </a>
-                                        <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
-                                            <i class="fab fa-linkedin-in"></i>
-                                        </a>
-                                        <a href="https://medium.com/@shreyasmk.mathur" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900 hover:text-white transition">
-                                            <i class="fab fa-medium-m"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900/80 backdrop-blur-md text-white py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">About Me</h3>
-                    <p class="text-gray-300 text-sm">Senior Software Engineer specializing in Node.js, FastAPI, and AI Integration. Building scalable solutions and sharing knowledge through technical writing.</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-300 hover:text-blue-400 transition">About</a></li>
-                        <li><a href="#experience" class="text-gray-300 hover:text-blue-400 transition">Experience</a></li>
-                        <li><a href="#projects" class="text-gray-300 hover:text-blue-400 transition">Projects</a></li>
-                        <li><a href="#blogs" class="text-gray-300 hover:text-blue-400 transition">Blogs</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Contact</h3>
-                    <div class="space-y-2">
-                        <a href="mailto:shreyasmk.mathur@gmail.com" class="flex items-center text-gray-300 hover:text-blue-400 transition">
-                            <i class="fas fa-envelope mr-2"></i> shreyasmk.mathur@gmail.com
-                        </a>
-                        <a href="tel:+918867229568" class="flex items-center text-gray-300 hover:text-blue-400 transition">
-                            <i class="fas fa-phone mr-2"></i> +91 8867229568
-                        </a>
-                        <div class="flex items-center text-gray-300">
-                            <i class="fas fa-map-marker-alt mr-2"></i> Bengaluru, Karnataka, India
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Connect</h3>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/shreyasY2k" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900/50 hover:text-white transition">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900/50 hover:text-white transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://medium.com/@shreyasmk.mathur" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:bg-blue-900/50 hover:text-white transition">
-                            <i class="fab fa-medium-m"></i>
-                        </a>
-                    </div>
-                    <div class="mt-4">
-                        <a href="Resume.pdf" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                            <i class="fas fa-download mr-2"></i> Download Resume
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-8 border-t border-gray-800">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm">&copy; ${new Date().getFullYear()} Shreyas M Kaushik. All rights reserved.</p>
-                    <div class="mt-4 md:mt-0">
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition text-sm">Privacy Policy</a>
-                        <span class="mx-2 text-gray-600">|</span>
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition text-sm">Terms of Service</a>
+                    <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+                        <span style="color:var(--blue); margin-top:2px;">▸</span>
+                        <span style="color:var(--muted); font-size:0.88rem; line-height:1.6;">Document intelligence platform that improved first-submission claim rate from 23% → 77% in 2 weeks. Now classifies 4M+ images/month.</span>
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        // Initialize ThreeJS scene
-        const initThreeJSBackground = () => {
-            // Scene setup
-            const scene = new THREE.Scene();
-
-            // Camera setup with better initial position
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 15;
-            camera.position.y = 0;
-
-            // Renderer setup with proper canvas targeting and size
-            const canvas = document.querySelector('#experience-world');
-            if (!canvas) {
-                console.error('Canvas not found');
-                return;
-            }
-
-            const renderer = new THREE.WebGLRenderer({
-                canvas,
-                antialias: true,
-                alpha: true
-            });
-
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x0f172a, 1);
-
-            // Create particles with increased size and count
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 5000;
-            const posArray = new Float32Array(particlesCount * 3);
-
-            for (let i = 0; i < particlesCount * 3; i += 3) {
-                const radius = Math.random() * 20;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.random() * Math.PI;
-
-                posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
-                posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                posArray[i + 2] = radius * Math.cos(phi);
-            }
-
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.05,
-                color: 0x3B82F6,
-                transparent: true,
-                opacity: 0.8,
-                blending: THREE.AdditiveBlending,
-                sizeAttenuation: true
-            });
-
-            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particlesMesh);
-
-            // Mouse movement tracking
-            let mouseX = 0;
-            let mouseY = 0;
-            let targetX = 0;
-            let targetY = 0;
-
-            const windowHalfX = window.innerWidth / 2;
-            const windowHalfY = window.innerHeight / 2;
-
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX - windowHalfX);
-                mouseY = (event.clientY - windowHalfY);
-            });
-
-            // Animation loop
-            const clock = new THREE.Clock();
-
-            const animate = () => {
-                requestAnimationFrame(animate);
-
-                const elapsedTime = clock.getElapsedTime();
-
-                // Update particles
-                particlesMesh.rotation.y = elapsedTime * 0.05;
-                particlesMesh.rotation.x = elapsedTime * 0.03;
-
-                // Smooth camera movement based on mouse position
-                targetX = mouseX * 0.001;
-                targetY = mouseY * 0.001;
-
-                camera.position.x += (targetX - camera.position.x) * 0.05;
-                camera.position.y += (-targetY - camera.position.y) * 0.05;
-                camera.lookAt(scene.position);
-
-                // Add wave effect to particles
-                const positions = particlesGeometry.attributes.position.array;
-                for (let i = 0; i < positions.length; i += 3) {
-                    const x = positions[i];
-                    const z = positions[i + 2];
-                    positions[i + 1] += Math.sin(elapsedTime + x) * 0.01;
-                }
-                particlesGeometry.attributes.position.needsUpdate = true;
-
-                renderer.render(scene, camera);
-            };
-
-            animate();
-
-            // Handle window resize
-            const handleResize = () => {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-
-                renderer.setSize(width, height);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            };
-
-            window.addEventListener('resize', handleResize);
-            handleResize();
-        };
-
-        // Initialize scroll animations
-        const initScrollAnimations = () => {
-            // Get all sections
-            const sections = document.querySelectorAll('section');
-            const navDots = document.querySelectorAll('.navigation-dot');
-
-            // Create scroll progress indicator
-            const createScrollIndicator = () => {
-                const scrollProgress = document.createElement('div');
-                scrollProgress.classList.add('fixed', 'top-0', 'left-0', 'h-1', 'bg-gradient-to-r', 'from-blue-500', 'to-green-500', 'z-50');
-                document.body.appendChild(scrollProgress);
-
-                window.addEventListener('scroll', () => {
-                    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const progress = (scrollTop / scrollHeight) * 100;
-
-                    scrollProgress.style.width = progress + '%';
-                });
-            };
-
-            createScrollIndicator();
-
-            // Intersection observer for section animations
-            const observerOptions = {
-                root: null,
-                threshold: 0.25,
-                rootMargin: "0px"
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Update navigation dots
-                        navDots.forEach(dot => dot.classList.remove('active'));
-                        const currentDot = document.querySelector(`.navigation-dot[data-section="${entry.target.id}"]`);
-                        if (currentDot) currentDot.classList.add('active');
-
-                        // Animate content
-                        entry.target.querySelectorAll('.section-content').forEach(content => {
-                            content.classList.add('visible');
-                        });
-
-                        // Animate skill bars in skills section
-                        if (entry.target.id === 'skills') {
-                            const progressBars = entry.target.querySelectorAll('.skill-progress');
-                            progressBars.forEach(bar => {
-                                const width = bar.getAttribute('data-width');
-                                setTimeout(() => {
-                                    bar.style.width = width;
-                                }, 300);
-                            });
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => observer.observe(section));
-
-            // Navigation dots click handler
-            navDots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const sectionId = dot.getAttribute('data-section');
-                    document.getElementById(sectionId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Smooth scrolling for all anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-
-                    document.querySelector(targetId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        };
-
-        // Initialize mobile menu
-        const initMobileMenu = () => {
-            const menuButton = document.querySelector('button.md\\:hidden');
-            if (!menuButton) return;
-
-            const mobileMenu = document.createElement('div');
-
-            mobileMenu.classList.add('mobile-menu', 'fixed', 'inset-0', 'bg-gray-900/95', 'z-50', 'flex', 'flex-col', 'items-center', 'justify-center', 'transform', 'translate-x-full', 'transition-transform', 'duration-300');
-
-            mobileMenu.innerHTML = `
-                <button class="absolute top-5 right-5 text-white text-2xl">
-                    <i class="fas fa-times"></i>
-                </button>
-                <nav class="flex flex-col items-center space-y-6 text-xl">
-                    <a href="#home" class="text-white hover:text-blue-400 transition py-2">Home</a>
-                    <a href="#about" class="text-white hover:text-blue-400 transition py-2">About</a>
-                    <a href="#experience" class="text-white hover:text-blue-400 transition py-2">Experience</a>
-                    <a href="#projects" class="text-white hover:text-blue-400 transition py-2">Projects</a>
-                    <a href="#skills" class="text-white hover:text-blue-400 transition py-2">Skills</a>
-                    <a href="#blogs" class="text-white hover:text-blue-400 transition py-2">Blogs</a>
-                    <a href="#contact" class="text-white hover:text-blue-400 transition py-2">Contact</a>
-                    <a href="Resume.pdf" class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                        Download Resume
-                    </a>
-                </nav>
-            `;
-
-            document.body.appendChild(mobileMenu);
-
-            // Handle menu toggle
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('translate-x-full');
-            });
-
-            // Handle close button
-            const closeButton = mobileMenu.querySelector('button');
-            closeButton.addEventListener('click', () => {
-                mobileMenu.classList.add('translate-x-full');
-            });
-
-            // Handle menu item clicks (close menu after navigation)
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('translate-x-full');
-                });
-            });
-        };
-
-        // Handle form submission
-        const initContactForm = () => {
-            const form = document.querySelector('#contact form');
-            if (!form) return;
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Get form values
-                const name = form.querySelector('#name').value;
-                const email = form.querySelector('#email').value;
-                const subject = form.querySelector('#subject').value;
-                const message = form.querySelector('#message').value;
-
-                // In a real implementation, you would send this data to a server
-                // For GitHub Pages, you might use a service like Formspree or EmailJS
-
-                // For now, just show a success message
-                const submitButton = form.querySelector('button[type="submit"]');
-                const originalText = submitButton.innerHTML;
-
-                submitButton.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Message Sent!';
-                submitButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                submitButton.classList.add('bg-green-600', 'hover:bg-green-700');
-
-                // Reset the form
-                form.reset();
-
-                // Reset the button after a delay
-                setTimeout(() => {
-                    submitButton.innerHTML = originalText;
-                    submitButton.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    submitButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                }, 3000);
-            });
-        };
-
-        // Create typing animation for hero section
-        const initTypingAnimation = () => {
-            const heroSubtitle = document.querySelector('#home p.text-xl');
-            if (!heroSubtitle) return;
-
-            const originalText = heroSubtitle.textContent;
-            heroSubtitle.textContent = '';
-
-            const typeText = () => {
-                let i = 0;
-                const typingInterval = setInterval(() => {
-                    if (i < originalText.length) {
-                        heroSubtitle.textContent += originalText.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(typingInterval);
-
-                        // Add blinking cursor
-                        const cursor = document.createElement('span');
-                        cursor.textContent = '|';
-                        cursor.classList.add('animate-pulse', 'text-blue-400');
-                        heroSubtitle.appendChild(cursor);
-                    }
-                }, 40);
-            };
-
-            // Start typing animation after a short delay
-            setTimeout(typeText, 500);
-        };
-
-        // Add floating effect to cards
-        const initCardAnimations = () => {
-            document.querySelectorAll('.card.glowing-border').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-10px)';
-                    card.style.transition = 'transform 0.3s ease';
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
-        };
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                console.log('Initializing components...');
-                initThreeJSBackground();
-                initScrollAnimations();
-                initMobileMenu();
-                initContactForm();
-                initTypingAnimation();
-                initCardAnimations();
-            } catch (error) {
-                console.error('Error during initialization:', error);
-            }
-        });
-    </script>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">02 / experience</div>
+        <h2 class="section-title">Where I've worked</h2>
+        <div class="timeline">
+
+            <!-- Mphasis -->
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-company">MPHASIS</div>
+                <div class="timeline-role">Senior Software Engineer, Applied AI</div>
+                <div class="timeline-period">Feb 2025 → Present</div>
+                <div class="timeline-projects">
+                    <div class="project-block">
+                        <div class="project-name">ATOM — Agentic Development &amp; Deployment Platform</div>
+                        <div class="project-stack">AgentScope · TypeScript · Golang · FastAPI · Docker · Kubernetes · Kafka/Redpanda · OPA · PostgreSQL · Redis · Grafana Alloy · Loki · Tempo</div>
+                        <div class="project-desc">On-premises agentic platform for financial services — write agents via SDK, deploy with a single command. Infrastructure, compliance, guardrails, and LLM routing are fully abstracted. Every LLM call flows through GATE (JWT auth, OPA policy, rate limits, immutable audit log). Agents run as isolated containers via atom-runtime; Studio UI handles lifecycle and HITL. OSS core at <a href="https://github.com/shreyasY2k/atom" target="_blank" style="color:var(--blue);">github.com/shreyasY2k/atom</a>.</div>
+                    </div>
+                    <div class="project-block">
+                        <div class="project-name">NexusAI — Enterprise LLM Gateway</div>
+                        <div class="project-stack">LiteLLM · FastAPI · Python · PostgreSQL · Redis · Docker</div>
+                        <div class="project-desc">Multi-tenant LLM gateway serving enterprise BFSI clients. Per-tenant API key management, budget governance, PII-aware routing, and audit logging. Full compliance coverage for PCI-DSS, FIPS, GDPR, and DORA.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IHX Senior -->
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot green"></div>
+                <div class="timeline-company">IHX — A PERFIOS COMPANY</div>
+                <div class="timeline-role">Senior Software Engineer</div>
+                <div class="timeline-period">Jul 2024 → Feb 2025</div>
+                <div class="timeline-projects">
+                    <div class="project-block">
+                        <div class="project-name">Orchestration Engine</div>
+                        <div class="project-stack">Netflix Conductor · Zookeeper · Redis Sentinel · TypeScript</div>
+                        <div class="project-desc">Comprehensive workflow orchestration for document processing pipelines — extraction, OCR, classification, quality control. Parallel processing patterns reduced processing time by 40%.</div>
+                    </div>
+                    <div class="project-block">
+                        <div class="project-name">Persistence Engine</div>
+                        <div class="project-stack">TypeScript · TypeORM · PostgreSQL · Redis</div>
+                        <div class="project-desc">Single-layer persistence solution reducing average query time from 1–2s to 10–15ms across 10 tables.</div>
+                    </div>
+                    <div class="project-block">
+                        <div class="project-name">Status Notification Service</div>
+                        <div class="project-stack">TypeScript · AWS SQS · AWS SNS · MongoDB</div>
+                        <div class="project-desc">High-throughput system processing 10M+ messages daily, providing real-time status visibility across AI/ML entities to client dashboards.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IHX SE -->
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot green"></div>
+                <div class="timeline-company">IHX — A PERFIOS COMPANY</div>
+                <div class="timeline-role">Software Engineer</div>
+                <div class="timeline-period">Aug 2022 → Jun 2024</div>
+                <div class="timeline-projects">
+                    <div class="project-block">
+                        <div class="project-name">Document Intelligence Platform</div>
+                        <div class="project-stack">TypeScript · FastAPI · AWS EKS · MongoDB · S3</div>
+                        <div class="project-desc">Document processing platform for India's largest health benefits administrator. Took first-submission claim rate from 23% → 77% in 2 weeks. The platform now classifies over 4 million medical images every month.</div>
+                    </div>
+                    <div class="project-block">
+                        <div class="project-name">Infrastructure Transformation</div>
+                        <div class="project-stack">Kubernetes · Helm · NGINX · Grafana · Loki · Promtail · Prometheus · Service Accounts</div>
+                        <div class="project-desc">Led Kubernetes and AWS infrastructure design for AI model security and scaling. Introduced full observability stack, enabling rapid feature deployment.</div>
+                    </div>
+                    <div class="project-block">
+                        <div class="project-name">Authentication Solution</div>
+                        <div class="project-stack">Keycloak · Java · OAuth 2.0 · JWT · NGINX</div>
+                        <div class="project-desc">MFA and SSO with Keycloak custom plugins across multiple services — reduced login time by 50%.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">03 / skills</div>
+        <h2 class="section-title">Tech stack</h2>
+        <div class="skills-grid">
+            <div class="card fade-in">
+                <div class="skill-category">Languages</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Golang</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Bash</span>
+                    <span class="skill-tag">SQL</span>
+                </div>
+            </div>
+            <div class="card fade-in">
+                <div class="skill-category">Agentic AI &amp; LLMs</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">LLM Gateway design</span>
+                    <span class="skill-tag">Multi-agent orchestration</span>
+                    <span class="skill-tag">Tool use</span>
+                    <span class="skill-tag">RAG pipelines</span>
+                    <span class="skill-tag">OpenAI API</span>
+                    <span class="skill-tag">Anthropic API</span>
+                    <span class="skill-tag">Gemini API</span>
+                </div>
+            </div>
+            <div class="card fade-in">
+                <div class="skill-category">Web Technologies</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">Express</span>
+                    <span class="skill-tag">React.js</span>
+                    <span class="skill-tag">Django</span>
+                    <span class="skill-tag">NGINX</span>
+                </div>
+            </div>
+            <div class="card fade-in">
+                <div class="skill-category">Cloud &amp; DevOps</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">AWS EKS</span>
+                    <span class="skill-tag">AWS S3/SQS/SNS</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">Helm</span>
+                    <span class="skill-tag">GitHub Actions</span>
+                </div>
+            </div>
+            <div class="card fade-in">
+                <div class="skill-category">Databases &amp; Messaging</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Redis</span>
+                    <span class="skill-tag">Redis Sentinel</span>
+                    <span class="skill-tag">Kafka / Redpanda</span>
+                    <span class="skill-tag">TypeORM</span>
+                </div>
+            </div>
+            <div class="card fade-in">
+                <div class="skill-category">Observability &amp; Security</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Grafana</span>
+                    <span class="skill-tag">Loki</span>
+                    <span class="skill-tag">Promtail</span>
+                    <span class="skill-tag">Prometheus</span>
+                    <span class="skill-tag">OPA</span>
+                    <span class="skill-tag">Keycloak</span>
+                    <span class="skill-tag">OAuth 2.0</span>
+                    <span class="skill-tag">JWT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">04 / projects</div>
+        <h2 class="section-title">Things I've built</h2>
+        <div class="projects-grid">
+            <a href="https://github.com/shreyasY2k/atom" target="_blank" class="project-card-link">
+                <div class="card">
+                    <div class="project-card-type">OSS · AGENTIC PLATFORM</div>
+                    <div class="project-card-name">ATOM</div>
+                    <div class="project-card-desc">On-premises agentic development and deployment platform. Write agents via SDK, deploy with a single command. GATE enforces auth, policy, and logs every LLM call immutably. Adopted at Mphasis for BFSI enterprise deployments.</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">TypeScript</span>
+                        <span class="project-card-tag">Golang</span>
+                        <span class="project-card-tag">FastAPI</span>
+                        <span class="project-card-tag">OPA</span>
+                        <span class="project-card-tag">Kubernetes</span>
+                    </div>
+                    <div class="project-link"><i class="fab fa-github"></i> github.com/shreyasY2k/atom</div>
+                </div>
+            </a>
+            <a href="https://github.com/shreyasY2k/python-spawn" target="_blank" class="project-card-link">
+                <div class="card">
+                    <div class="project-card-type">OSS · NPM PACKAGE · 500+ weekly downloads</div>
+                    <div class="project-card-name">Python Spawn</div>
+                    <div class="project-card-desc">NPM package bridging Node.js and Python. Automatic environment detection, robust error handling, and seamless function execution across runtimes.</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">Node.js</span>
+                        <span class="project-card-tag">Python</span>
+                        <span class="project-card-tag">npm</span>
+                    </div>
+                    <div class="project-link"><i class="fab fa-github"></i> github.com/shreyasY2k/python-spawn</div>
+                </div>
+            </a>
+            <a href="https://github.com/shreyasY2k/secure-files" target="_blank" class="project-card-link">
+                <div class="card">
+                    <div class="project-card-type">OSS · SECURITY DEMO</div>
+                    <div class="project-card-name">Secure Files</div>
+                    <div class="project-card-desc">Full-stack MFA integration demo with Keycloak — custom Java SPI plugin, self-signed certs, RBAC, and SSO across multiple services.</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">Django</span>
+                        <span class="project-card-tag">React</span>
+                        <span class="project-card-tag">Keycloak</span>
+                        <span class="project-card-tag">Java</span>
+                    </div>
+                    <div class="project-link"><i class="fab fa-github"></i> github.com/shreyasY2k/secure-files</div>
+                </div>
+            </a>
+            <a href="https://shreyasy2k.github.io/contra" target="_blank" class="project-card-link">
+                <div class="card">
+                    <div class="project-card-type">PERSONAL · AI-ASSISTED · BUILT IN 2 HOURS</div>
+                    <div class="project-card-name">Contra</div>
+                    <div class="project-card-desc">Full 3D run &amp; gun shooter with enemy AI, vehicle physics, and particle effects — built in 2 hours using GitHub Copilot and Claude. Because why not.</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">Three.js</span>
+                        <span class="project-card-tag">JavaScript</span>
+                        <span class="project-card-tag">AI-assisted</span>
+                    </div>
+                    <div class="project-link"><i class="fas fa-external-link-alt"></i> shreyasy2k.github.io/contra</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- WRITING -->
+<section id="blogs" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">05 / writing</div>
+        <h2 class="section-title">Technical writing</h2>
+        <div class="blogs-grid">
+            <a href="https://medium.com/@shreyasmk.mathur/building-a-custom-multi-factor-authentication-mfa-plugin-for-keycloak-sms-email-telegram-152e33f2a02f?sk=2f4ac75673a9b79536a690880dd3f7c3" target="_blank" class="blog-link">
+                <div class="card">
+                    <div class="blog-date">2025</div>
+                    <div class="blog-title">Building a Custom MFA Plugin for Keycloak</div>
+                    <div class="blog-desc">How to write a Java SPI extension for Keycloak supporting SMS, Email, and Telegram authentication channels.</div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Java</span>
+                        <span class="blog-tag">Keycloak</span>
+                        <span class="blog-tag">SPI</span>
+                        <span class="blog-tag">MFA</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://medium.com/@shreyasmk.mathur/mastering-multi-factor-authentication-in-keycloak-sms-email-and-totp-setup-guide-957305b92be1?sk=c8da3df152326b6ef0683533500dc899" target="_blank" class="blog-link">
+                <div class="card">
+                    <div class="blog-date">2024</div>
+                    <div class="blog-title">Mastering Multi-Factor Authentication in Keycloak</div>
+                    <div class="blog-desc">End-to-end setup guide for SMS, Email, and TOTP MFA flows in Keycloak — from config to custom flows.</div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Keycloak</span>
+                        <span class="blog-tag">MFA</span>
+                        <span class="blog-tag">Security</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://medium.com/@shreyasmk.mathur/unlocking-seamless-access-orchestrating-centralized-user-management-with-keycloak-d1c51b13456a" target="_blank" class="blog-link">
+                <div class="card">
+                    <div class="blog-date">2024</div>
+                    <div class="blog-title">Orchestrating Centralized User Management with Keycloak</div>
+                    <div class="blog-desc">Deep dive into centralised IAM — federating multiple services under a single Keycloak realm with proper RBAC.</div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Keycloak</span>
+                        <span class="blog-tag">IAM</span>
+                        <span class="blog-tag">SSO</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="section-label">06 / contact</div>
+        <h2 class="section-title">Get in touch</h2>
+        <div class="contact-grid">
+            <div class="card fade-in">
+                <p style="color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:2rem;">
+                    Open to conversations about interesting engineering problems, agentic AI infrastructure, and roles where the work involves real systems at real scale. Not looking for something passive — if you have a hard problem, let's talk.
+                </p>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope fa-sm"></i></div>
+                    <div>
+                        <div class="contact-label">email</div>
+                        <a href="mailto:shreyasmk.mathur@gmail.com" class="contact-value">shreyasmk.mathur@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone fa-sm"></i></div>
+                    <div>
+                        <div class="contact-label">phone</div>
+                        <a href="tel:+918867229568" class="contact-value">+91 88672 29568</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt fa-sm"></i></div>
+                    <div>
+                        <div class="contact-label">location</div>
+                        <span class="contact-value">Bengaluru, India</span>
+                    </div>
+                </div>
+                <div class="social-row">
+                    <a href="https://github.com/shreyasY2k" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/me-shreyasmk" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://medium.com/@shreyasmk.mathur" target="_blank" class="social-btn"><i class="fab fa-medium-m"></i></a>
+                </div>
+            </div>
+            <div class="card fade-in" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:1.5rem;">
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--muted); line-height:2;">
+                    <div style="color:var(--green);">$ cat contact.json</div>
+                    <div>{</div>
+                    <div>&nbsp;&nbsp;"status": <span style="color:var(--orange);">"open to conversations"</span>,</div>
+                    <div>&nbsp;&nbsp;"interests": [</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--orange);">"agentic infra"</span>,</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--orange);">"high-scale systems"</span>,</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--orange);">"ai security"</span></div>
+                    <div>&nbsp;&nbsp;],</div>
+                    <div>&nbsp;&nbsp;"response_time": <span style="color:var(--orange);">"fast"</span></div>
+                    <div>}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <span>© 2026 Shreyas M Kaushik — built with intention, not a template</span>
+</footer>
+
+<script>
+// THREE.JS BACKGROUND
+const initBg = () => {
+    const canvas = document.getElementById('bg-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x080c14, 1);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 20;
+
+    const geo = new THREE.BufferGeometry();
+    const count = 4000;
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i += 3) {
+        const r = 15 + Math.random() * 15;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI;
+        pos[i] = r * Math.sin(phi) * Math.cos(theta);
+        pos[i+1] = r * Math.sin(phi) * Math.sin(theta);
+        pos[i+2] = r * Math.cos(phi);
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.PointsMaterial({ size: 0.04, color: 0x388bfd, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => { mx = (e.clientX / window.innerWidth - 0.5); my = (e.clientY / window.innerHeight - 0.5); });
+
+    const clock = new THREE.Clock();
+    const animate = () => {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        points.rotation.y = t * 0.04 + mx * 0.3;
+        points.rotation.x = t * 0.02 + my * 0.2;
+        renderer.render(scene, camera);
+    };
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+};
+
+// SCROLL PROGRESS
+window.addEventListener('scroll', () => {
+    const el = document.getElementById('scroll-progress');
+    const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    el.style.width = pct + '%';
+});
+
+// FADE IN OBSERVER
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// TYPING ANIMATION
+const initTyping = () => {
+    const el = document.querySelector('.hero-tag');
+    if (!el) return;
+    const txt = el.textContent;
+    el.textContent = '';
+    let i = 0;
+    const type = setInterval(() => {
+        el.textContent += txt[i++];
+        if (i >= txt.length) clearInterval(type);
+    }, 40);
+};
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+});
+
+// MOBILE HAMBURGER
+document.getElementById('hamburger').addEventListener('click', () => {
+    const existing = document.getElementById('mobile-menu');
+    if (existing) { existing.remove(); return; }
+    const menu = document.createElement('div');
+    menu.id = 'mobile-menu';
+    menu.style.cssText = 'position:fixed;inset:0;background:rgba(8,12,20,0.97);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;font-family:IBM Plex Mono,monospace;font-size:1.1rem;';
+    ['about','experience','projects','skills','blogs','contact'].forEach(id => {
+        const a = document.createElement('a');
+        a.href = '#' + id; a.textContent = id; a.style.cssText = 'color:#e6edf3;text-decoration:none;';
+        a.onclick = () => menu.remove();
+        menu.appendChild(a);
+    });
+    const close = document.createElement('button');
+    close.textContent = '✕'; close.style.cssText = 'position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:#7d8590;font-size:1.5rem;cursor:pointer;';
+    close.onclick = () => menu.remove();
+    menu.appendChild(close);
+    document.body.appendChild(menu);
+});
+
+document.addEventListener('DOMContentLoaded', () => { initBg(); initTyping(); });
+</script>
 </body>
-
 </html>
