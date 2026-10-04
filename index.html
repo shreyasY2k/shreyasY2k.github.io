@@ -164,6 +164,11 @@
   .item h4 .sub { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--muted); margin-left: 4px; }
   .item p { margin: 6px 0 0; color: var(--ink-2); font-size: 15.5px; max-width: 70ch; }
   .metric { color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .badge { display: inline-block; vertical-align: 2px; margin-left: 6px; font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); border: 1px solid currentColor; border-radius: 999px; padding: 1px 8px; }
+  .stages { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0; margin-top: 14px; font-size: 13px; font-weight: 500; }
+  .stages span { color: var(--ink); }
+  .stages span + span::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--line-strong); vertical-align: middle; margin: 0 10px; }
+  .stages span:last-child { color: var(--accent); }
 
   /* writing */
   .essay { display: grid; grid-template-columns: 1fr auto; gap: 8px 24px; padding: 30px 0; border-bottom: 1px solid var(--line); }
@@ -357,14 +362,15 @@
               <div class="tags"><span class="tag">TypeScript</span><span class="tag">Golang</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">Kubernetes</span><span class="tag">Kafka / Redpanda</span><span class="tag">OPA</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span></div>
             </div>
             <div class="item">
+              <h4>OathKeeper <span class="sub">intelligent RPA for BFSI operations</span> <span class="badge">In progress</span></h4>
+              <p>Today you can automate an SOP with RPA, but the intelligence is lost: the factors that made a BPS operator take a decision never make it into the bot. OathKeeper keeps that oath. It captures operators working across Java, C#, web, mail and mainframe applications, with redaction applied at capture and every step audited, and moves each process through four stages until the automation runs it end to end. The recorded behaviour, screenshots and sessions then train a foundation model to decide the next action itself, cutting human-in-the-loop down to the decisions that truly need a person.</p>
+              <div class="stages" aria-label="Automation stages"><span>Record</span><span>Replay</span><span>Shadow</span><span>Takeover</span></div>
+              <div class="tags"><span class="tag">RPA</span><span class="tag">Java</span><span class="tag">C# / .NET</span><span class="tag">Web</span><span class="tag">Mail</span><span class="tag">Mainframe</span><span class="tag">Foundation models</span><span class="tag">PII redaction</span><span class="tag">Audit</span></div>
+            </div>
+            <div class="item">
               <h4>Ontologic <span class="sub">an AI co-designed knowledge graph</span></h4>
               <p>Domain experts and an AI co-designer build an ontology together. The AI proposes classes and relations, a named human confirms each one, and the approved model ships as validated Turtle onto ArcadeDB, with Apache Jena as the reasoning layer. Bi-temporal provenance, append-only corrections and a single validated write path mean the system can say what it believed at any past moment, what is missing, and where sources disagree.</p>
               <div class="tags"><span class="tag">RDF / OWL</span><span class="tag">Turtle</span><span class="tag">SHACL</span><span class="tag">Apache Jena</span><span class="tag">ArcadeDB</span><span class="tag">LLMs</span></div>
-            </div>
-            <div class="item">
-              <h4>NexusAI <span class="sub">enterprise LLM gateway</span></h4>
-              <p>A multi-tenant gateway with API-key management, per-tenant budget governance, PII-aware routing and audit logging across multiple model providers.</p>
-              <div class="tags"><span class="tag">LiteLLM</span><span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Docker</span></div>
             </div>
           </div>
         </article>
@@ -501,7 +507,7 @@
       </div>
       <div class="toolkit reveal">
         <div class="tk"><h4>AI governance &amp; security</h4><p>LLM gateway design, OPA / Rego policy-as-code, agent identity and short-lived service tokens, SCIM 2.0, access reviews, red-teaming (OWASP LLM and Agentic Top 10, MITRE ATT&amp;CK), PII-aware routing, budget governance, immutable audit logging</p></div>
-        <div class="tk"><h4>Agents &amp; LLMs</h4><p>Multi-agent orchestration, agent evals and grading, human-in-the-loop workflows, RAG, LiteLLM, LangGraph, LangChain, AgentScope</p></div>
+        <div class="tk"><h4>Agents &amp; LLMs</h4><p>Multi-agent orchestration, agent evals and grading, human-in-the-loop workflows, intelligent RPA (record, replay, shadow, takeover), RAG, LiteLLM, LangGraph, LangChain, AgentScope</p></div>
         <div class="tk"><h4>Knowledge graphs</h4><p>RDF / OWL ontologies, Turtle, SHACL, SPARQL, Apache Jena, ArcadeDB, bi-temporal data modeling</p></div>
         <div class="tk"><h4>Languages &amp; backend</h4><p>TypeScript, Golang, Python, SQL · Node.js, FastAPI, Django, Express · REST, WebSockets, Kafka / Redpanda, Temporal, event-driven architecture</p></div>
         <div class="tk"><h4>Data &amp; infrastructure</h4><p>PostgreSQL, MongoDB, Redis · AWS (EKS, SQS, SNS, S3, API Gateway, Cognito) · Docker, Kubernetes, Helm, GitHub Actions</p></div>

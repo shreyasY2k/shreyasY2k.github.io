@@ -1,0 +1,144 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\oddsidemargin}{-0.530in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.45in}
+\addtolength{\textheight}{1in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\titleformat{\section}{\vspace{-6pt}\scshape\raggedright\large}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+\newcommand{\resumeItem}[2]{\item\small{\textbf{#1}{: #2 \vspace{-1pt}}}}
+\newcommand{\resumeSubheading}[4]{\vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{#3} & \textit{#4} \\
+    \end{tabular*}\vspace{-4pt}}
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-2pt}}
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+\begin{document}
+
+%-----HEADING---------
+\begin{center}
+  {\LARGE \textbf{Shreyas M Kaushik}} \\ \vspace{4pt}
+  \small
+  Email: \href{mailto:shreyasmk.mathur@gmail.com}{shreyasmk.mathur@gmail.com} $\cdot$
+  Phone: +91 8867229568 $\cdot$
+  Live product: \href{https://praxis.shreyasmk.fyi/}{praxis.shreyasmk.fyi} \\ \vspace{2pt}
+  LinkedIn: \href{https://linkedin.com/in/me-shreyasmk}{linkedin.com/in/me-shreyasmk} $\cdot$
+  GitHub: \href{https://shreyasY2k.github.io}{shreyasY2k.github.io} $\cdot$
+  Medium: \href{https://medium.com/@shreyasmk.mathur}{@shreyasmk.mathur}
+\end{center}
+
+%------SUMMARY---------
+\section{Summary}
+\small{
+Senior engineer building the control plane for enterprise AI: LLM gateways with per-tenant budgets, policy-as-code (OPA/Rego) enforced fail-closed at runtime, non-human identity for agents, per-identity usage and spend attribution, red-team and eval gates before deploy, and tamper-evident audit trails across humans, agents, and tool calls. 4+ years shipping production platforms end-to-end at startups and in BFSI - TypeScript, Golang, Python, Kubernetes, AWS, Keycloak/OAuth. Currently building agentic, intelligent-automation, and knowledge-graph platforms at Mphasis, and independently built and launched \textbf{Praxis}, a live platform to build, prove, and run governed AI agents.
+}
+
+%------PRAXIS---------
+\section{Independent Product}
+  \resumeSubHeadingListStart
+  \resumeSubheading{Praxis - The Platform for Your AI Workforce}{\href{https://praxis.shreyasmk.fyi/}{praxis.shreyasmk.fyi}}
+    {Solo builder $\cdot$ Golang, TypeScript, AgentScope, LiteLLM, Temporal, OPA, Keycloak}{}
+    \resumeItemListStart
+        \resumeItem{Identity-aware gateway}{Every LLM and tool call passes one chokepoint (GATE) that verifies identity, enforces role-based authorization, runs inline prompt-injection/jailbreak guardrails, and signs an audit event. Each agent is a non-human identity minting short-lived tokens: no standing keys, forged actor headers ignored, suspension revokes token issuance instantly. Joiner/mover/leaver lifecycle, periodic access reviews, and SCIM 2.0 for enterprise IGA tooling.}
+        \resumeItem{Attribution \& audit}{Token spend and guardrail events attributed to the exact human or agent identity; provider-agnostic model routing with budgets via LiteLLM. Humans, agents, and service calls land on one signed, tamper-evident, object-locked timeline, queryable via an audit API for who did what, under which identity and role, against which model and data.}
+        \resumeItem{Proof before production}{WARDEN red-team gate runs adversarial and functional tests tagged to OWASP LLM/Agentic Top 10, MITRE ATT\&CK, GDPR, and the EU AI Act, and can block a deploy; Agent Evals grade runs on versioned datasets with optimization runs committable as the new baseline; a Policy Engine compiles natural-language rules to Rego, enforced fail-closed by OPA.}
+        \resumeItem{Build \& run}{Agents are declared as a versioned spec plus role file and generated onto AgentScope, each running as its own service; tools flagged for confirmation pause for human approve/deny. Workflow Composer runs business processes as durable Temporal graphs (agent, HTTP/MCP, rule-based decision, and human-task nodes), with a human gate on every state-changing external call. Driven by a CLI and an installable builder skill for Claude Code / Cursor.}
+    \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%------EXPERIENCE---------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+  \resumeSubheading{Mphasis}{Bangalore, India}
+    {Senior Software Engineer, Applied AI}{Feb 2026 - Present}
+    \resumeItemListStart
+        \resumeItem{ATOM - Enterprise Agentic Platform}
+          {\textit{TypeScript, Golang, FastAPI, React, Kubernetes, Kafka (Redpanda), OPA, PostgreSQL, Redis}\newline
+          Architected and shipped a multi-tenant platform for BFSI clients - TypeScript/Golang/FastAPI services, a web Studio UI, and a policy gateway (auth, OPA, rate-limiting, immutable audit log) - now running 500+ agents at 1M+ requests/day. Built AEGIS, its security layer, which red-teams agents (prompt injection, jailbreak, goal-hijacking) and enforces PCI-DSS/GDPR/DORA guardrails.}
+        \resumeItem{OathKeeper - Intelligent RPA for BFSI Operations (in progress)}
+          {\textit{RPA across Java, C\#, Web, Mail \& Mainframe; PII redaction; audit; foundation-model training}\newline
+          Today an SOP can be automated with RPA, but the intelligence is lost: the factors that made a BPS operator take a decision never reach the bot. OathKeeper keeps that oath. It captures operators across Java, C\#, web, mail, and mainframe applications, with redaction at capture and every step audited, and moves each process through record, replay, shadow, and takeover. The recorded behaviour, screenshots, and sessions then train a foundation model to decide the next action, cutting human-in-the-loop to the calls that need a person.}
+        \resumeItem{Ontologic - AI-Co-Designed Knowledge Graph for Enterprise Intelligence}
+          {\textit{RDF/OWL, Turtle, SHACL, Apache Jena, ArcadeDB, LLMs}\newline
+          Designing a system where domain experts and an AI co-designer build a domain ontology together: the AI proposes classes and relations, a named human confirms each definition, and the approved model is emitted as a validated TTL file and deployed onto a data-intelligence platform with ArcadeDB as the graph store and Apache Jena as the reasoning layer. Modeled bi-temporal provenance (valid time vs.\ belief time), first-class relations, a single validated write path, and append-only corrections, so the system can answer what it believed at any past moment, what is missing, and where sources disagree.}
+    \resumeItemListEnd
+
+  \resumeSubheading{IHX - A Perfios Company}{Bangalore, India}
+    {Senior Software Engineer}{Jul 2024 - Feb 2026}
+    \resumeItemListStart
+        \resumeItem{Persistence Engine}
+          {\textit{TypeScript, TypeORM, PostgreSQL, Redis}\newline
+          Architected a single-layer persistence solution that cut average query time from 1-2s to 10-15ms across 10 tables.}
+        \resumeItem{Status Notification Service}
+          {\textit{TypeScript, AWS SQS/SNS, MongoDB}\newline
+          Built a high-throughput system processing 10M+ messages/day to track state across AI/ML entities, surfacing unified real-time status to clients.}
+        \resumeItem{Workflow Orchestration Engine}
+          {\textit{Netflix Conductor, Zookeeper, Redis Sentinel, TypeScript}\newline
+          Architected orchestration for document pipelines (extraction, OCR, classification, QC) with parallel processing, cutting processing time 40\%.}
+    \resumeItemListEnd
+
+\resumeSubheading{IHX - A Perfios Company}{Bangalore, India}
+    {Software Engineer}{Aug 2022 - Jul 2024}
+    \resumeItemListStart
+        \resumeItem{Document Intelligence Platform}
+          {\textit{TypeScript, FastAPI, AWS EKS, MongoDB, S3}\newline
+          Built the document-processing platform for India's largest health benefits administrator, lifting first-instance complete claim submissions from 23\% to 77\% within 2 weeks; now classifies 4M+ medical images a month.}
+        \resumeItem{Platform Infrastructure \& Identity (End-to-End Ownership)}
+          {\textit{Kubernetes, Helm, NGINX, AWS, Grafana, Loki, Prometheus, Keycloak, OAuth 2.0, JWT}\newline
+          As an early engineer, owned infrastructure and access control end-to-end: Kubernetes/Helm scaling and hardening for AI-model serving, the full observability stack, and a Keycloak MFA/SSO solution with custom plugins that cut login time 50\%.}
+    \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%------SKILLS---------
+\section{Technical Skills}
+  \resumeSubHeadingListStart
+    \resumeSubItem{AI Governance \& Security}{LLM gateway design, OPA / Rego policy-as-code, agent identity \& short-lived service tokens, SCIM 2.0, access reviews, red-teaming (OWASP LLM/Agentic Top 10, MITRE ATT\&CK), PII-aware routing, budget governance, immutable audit logging}
+    \resumeSubItem{Agents \& LLMs}{Multi-agent orchestration, agent evals \& grading, human-in-the-loop workflows, intelligent RPA (record, replay, shadow, takeover), RAG, LiteLLM, LangGraph, LangChain, AgentScope}
+    \resumeSubItem{Knowledge Graphs}{RDF / OWL ontologies, Turtle (TTL), SHACL, SPARQL, Apache Jena, ArcadeDB, bi-temporal data modeling}
+    \resumeSubItem{Languages \& Backend}{TypeScript, Golang, Python, SQL; Node.js, FastAPI, Django, Express, REST, WebSockets, Kafka (Redpanda), Temporal, event-driven architecture}
+    \resumeSubItem{Data \& Infra}{PostgreSQL, MongoDB, Redis; AWS (EKS, SQS, SNS, S3, API Gateway, Cognito), Docker, Kubernetes, Helm, GitHub Actions}
+    \resumeSubItem{Identity \& Observability}{Keycloak, OAuth 2.0, JWT, MFA, SSO; Grafana, Loki, Tempo, Prometheus}
+  \resumeSubHeadingListEnd
+
+%------PROJECTS---------
+\section{Other Projects}
+  \resumeSubHeadingListStart
+    \resumeSubItem{Collaborative Compiler (JavaScript, WebSockets)}
+      {Real-time multi-user code editor with autocomplete, built by hand before AI coding assistants existed. \href{https://github.com/shreyasY2k/Collaborative-Compiler}{github.com/shreyasY2k/Collaborative-Compiler}}
+    \resumeSubItem{Contra (Three.js)}
+      {Complete 3D run-and-gun shooter built in 2 hours with AI tooling - enemy AI, vehicle physics, particle systems. \href{https://shreyasy2k.github.io/contra}{shreyasy2k.github.io/contra}}
+  \resumeSubHeadingListEnd
+
+%------WRITING & EDUCATION---------
+\section{Technical Writing, Education \& Certifications}
+  \resumeSubHeadingListStart
+    \resumeSubItem{AI Governance \& Knowledge Graphs}{\href{https://medium.com/@shreyasmk.mathur/nobody-left-to-ask-51ebbe36e5d7}{\textit{Nobody Left to Ask}} (2026) - why automated decisions make provenance the only witness left, and three questions vector/RAG stacks structurally cannot answer. \href{https://medium.com/@shreyasmk.mathur/your-database-has-one-clock-it-needs-two-9890210cb73f}{\textit{Your Database Has One Clock. It Needs Two.}} (2026) - bi-temporal modeling for security and audit data.}
+    \resumeSubItem{Identity}{Multi-part series on Keycloak MFA/SSO (custom plugins, SMS/Email/TOTP/Telegram, centralized user management).}
+    \resumeSubItem{Education}{B.E., Information Science, Sapthagiri College of Engineering, Bangalore (2018-2022); CGPA 8.5}
+    \resumeSubItem{Certifications}{Architecting with Google Compute Engine (Coursera); The Modern JavaScript Bootcamp (Udemy)}
+  \resumeSubHeadingListEnd
+
+\end{document}
