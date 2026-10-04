@@ -209,6 +209,16 @@
   @media (max-width: 720px) { .facts { grid-template-columns: 1fr; gap: 18px; } }
   .fact .v { margin-top: 6px; font-size: 15px; }
   .fact .v span { display: block; color: var(--muted); font-size: 14px; }
+  .offclock { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .about-body .offclock p { font-size: 17px; margin: 10px 0 0; }
+  .moments { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .moments li { padding: 0 18px; border-left: 1px solid var(--line); font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+  .moments li:first-child { padding-left: 0; border-left: 0; }
+  .moments .where { display: block; font-family: var(--display); font-size: 22px; line-height: 1.2; color: var(--ink); margin-bottom: 6px; }
+  @media (max-width: 720px) {
+    .moments { grid-template-columns: 1fr 1fr; gap: 22px 0; }
+    .moments li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  }
 
   /* contact */
   .contact { padding: clamp(88px, 12vw, 160px) 0 clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); }
@@ -530,6 +540,16 @@
           <div class="fact"><div class="caps">Based in</div><div class="v">Bengaluru, India</div></div>
           <div class="fact"><div class="caps">Education</div><div class="v">B.E., Information Science <span>Sapthagiri College of Engineering, 2018 to 2022 · CGPA 8.5</span></div></div>
           <div class="fact"><div class="caps">Certifications</div><div class="v">Architecting with Google Compute Engine <span>The Modern JavaScript Bootcamp</span></div></div>
+        </div>
+        <div class="offclock">
+          <div class="caps">Off the clock</div>
+          <p>Away from the keyboard I'm usually headed somewhere new, ideally with a little adrenaline involved. Closer to home I practise Isha Yoga and volunteer with Isha. It's the stillness that balances everything else.</p>
+          <ul class="moments">
+            <li><span class="where">Dubai</span>Skydiving</li>
+            <li><span class="where">Singapore</span>The giant swing</li>
+            <li><span class="where">Central &amp; South India</span>A 15-day road trip by car</li>
+            <li><span class="where">Isha Yoga</span>Practitioner and volunteer</li>
+          </ul>
         </div>
       </div>
     </div>
